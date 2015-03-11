@@ -1,0 +1,20 @@
+language: c
+
+os:
+ - osx
+ - linux
+
+branches:
+ only:
+   - master
+
+before_install:
+ - date -u
+ - uname -a
+ - env | grep -v "BINTRAY_API_KEY" | sort
+
+install: true
+
+script: ./build.libgit2.sh
+
+after_success: ./uploadbinaries.sh

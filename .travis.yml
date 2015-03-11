@@ -1,0 +1,14 @@
+language: c
+
+os:
+ - osx
+ - linux
+
+before_install:
+ - date -u
+ - uname -a
+ - env | sort
+
+install: true
+
+script: ./build.libgit2.sh

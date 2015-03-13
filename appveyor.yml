@@ -13,10 +13,10 @@ build_script:
 
 after_build:
 - ps: |
-    $pre = $false
-    if ($Env:APPVEYOR_REPO_BRANCH -ne "master")
+    $pre = $true
+    if (($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
     {
-    	$pre = $true
+    	$pre = $false
     }
     .\buildpackage.ps1 $env:VERSION -pre:$pre
 

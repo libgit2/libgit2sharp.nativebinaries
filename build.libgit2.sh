@@ -41,6 +41,6 @@ fi
 rm -rf $PACKAGEPATH$OSPATH
 mkdir -p $PACKAGEPATH$OSPATH$ARCHPATH
 
-cp libgit2/build/libgit2-???????.$LIBEXT $PACKAGEPATH$OSPATH$ARCHPATH
+cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH$OSPATH$ARCHPATH
 
 exit $?

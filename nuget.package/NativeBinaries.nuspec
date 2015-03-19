@@ -5,11 +5,10 @@
         <version>0.0.0</version>
         <authors>LibGit2Sharp contributors</authors>
         <owners>nulltoken</owners>
-        <licenseUrl>https://github.com/libgit2/libgit2sharp/raw/master/LICENSE.md</licenseUrl>
-        <projectUrl>https://github.com/libgit2/libgit2sharp/</projectUrl>
-        <iconUrl>https://github.com/libgit2/libgit2sharp/raw/master/square-logo.png</iconUrl>
+        <licenseUrl>https://raw.githubusercontent.com/libgit2/libgit2/master/COPYING</licenseUrl>
+        <projectUrl>https://github.com/libgit2/libgit2sharp.nativebinaries</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/libgit2/libgit2sharp/master/square-logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Native binaries for LibGit2Sharp</description>
-        <releaseNotes>https://github.com/libgit2/libgit2sharp/blob/master/CHANGES.md#libgit2sharp-changes</releaseNotes>
     </metadata>
 </package>

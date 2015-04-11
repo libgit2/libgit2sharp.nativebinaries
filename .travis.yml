@@ -12,3 +12,5 @@ before_install:
 install: true
 
 script: ./build.libgit2.sh
+
+after_success: ./uploadbinaries.sh

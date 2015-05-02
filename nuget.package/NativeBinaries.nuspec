@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>LibGit2Sharp.NativeBinaries</id>
+        <version>0.0.0</version>
+        <authors>LibGit2Sharp contributors</authors>
+        <owners>nulltoken</owners>
+        <licenseUrl>https://raw.githubusercontent.com/libgit2/libgit2/master/COPYING</licenseUrl>
+        <projectUrl>https://github.com/libgit2/libgit2sharp.nativebinaries</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/libgit2/libgit2sharp/master/square-logo.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Native binaries for LibGit2Sharp</description>
+    </metadata>
+</package>

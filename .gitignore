@@ -1,0 +1,9 @@
+*.nupkg
+*.dll
+*.pdb
+*.dylib
+*.so
+*.zip
+
+# nuget package placeholder
+*.here

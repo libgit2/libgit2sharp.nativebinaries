@@ -4,6 +4,9 @@ os:
  - osx
  - linux
 
+env:
+  - secure: "oHrjeGkWTUiPLsdYGb4n4lI37EURXVDT1bJ4a4CXfwnFlxXjWF3ixaYqg88o5weT/L/OPhjRdf3GVqmdxPeUYNeF8ImdewcFwJ4C3jLtl2G9CGAP0xVsbyQHxjDi07MHcSbnNorQI0QSEta9bdP6EprNcoEwd/Vi1u14f5g40tk="
+
 before_install:
  - date -u
  - uname -a

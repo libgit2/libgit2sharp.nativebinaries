@@ -4,9 +4,8 @@ pushd nuget.package
 
 zip -r binaries.zip libgit2
 
-BINTRAYUSER="bording"
-BINTRAYKEY="51d19b77bad09256980e7904f540bf012436a32f"
+BINTRAY_API_USER="nulltoken"
 
-curl -T binaries.zip -u$BINTRAYUSER:$BINTRAYKEY https://api.bintray.com/content/libgit2/compiled-binaries/$TRAVIS_OS_NAME/$TRAVIS_BUILD_NUMBER/binaries-$TRAVIS_OS_NAME-$TRAVIS_BUILD_NUMBER.zip?publish=1
+curl -T binaries.zip -u$BINTRAY_API_USER:$BINTRAY_API_KEY https://api.bintray.com/content/libgit2/compiled-binaries/$TRAVIS_OS_NAME/$TRAVIS_BUILD_NUMBER/binaries-$TRAVIS_OS_NAME-$TRAVIS_BUILD_NUMBER.zip?publish=1
 
 popd

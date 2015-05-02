@@ -7,7 +7,7 @@ os:
 before_install:
  - date -u
  - uname -a
- - env | sort
+ - env | grep -v "BINTRAY_API_KEY" | sort
 
 install: true
 

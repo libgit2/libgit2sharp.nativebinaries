@@ -4,6 +4,10 @@ os:
  - osx
  - linux
 
+branches:
+ only:
+   - master
+
 before_install:
  - date -u
  - uname -a

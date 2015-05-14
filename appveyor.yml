@@ -1,0 +1,23 @@
+version: 1.0.{build}
+
+skip_tags: true
+
+install:
+- git submodule update --init --recursive
+
+build_script:
+- ps: .\build.libgit2.ps1 -vs 12
+
+after_build:
+- ps: |
+    $pre = $true
+    if (($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) -and ($env:APPVEYOR_REPO_BRANCH -eq "master"))
+    {
+    	$pre = $false
+    }
+    .\buildpackage.ps1 $env:APPVEYOR_BUILD_VERSION -pre:$pre
+
+test: off
+
+artifacts:
+- path: '*.nupkg'

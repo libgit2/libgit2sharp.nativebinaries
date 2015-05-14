@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
+    </ItemGroup>
+    <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-9bbc8f3.dll">
+            <Link>NativeBinaries\amd64\git2-9bbc8f3.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-9bbc8f3.pdb">
+            <Link>NativeBinaries\amd64\git2-9bbc8f3.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-9bbc8f3.dll">
+            <Link>NativeBinaries\x86\git2-9bbc8f3.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-9bbc8f3.pdb">
+            <Link>NativeBinaries\x86\git2-9bbc8f3.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup Condition=" '$(OS)' == 'Unix' And Exists('/Library/Frameworks') ">
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-9bbc8f3.dylib">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+        <ItemGroup Condition=" '$(OS)' == 'Unix' And !Exists('/Library/Frameworks') ">
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-9bbc8f3.so">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+</Project>

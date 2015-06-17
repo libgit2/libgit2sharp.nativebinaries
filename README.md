@@ -220,3 +220,5 @@ $ git push origin master
    </packages>
   \ No newline at end of file
   ```
+- Update LibGit2Sharp to cope with the potential changes in the libgit2 API
+- Locally run all the LibGit2Sharp tests

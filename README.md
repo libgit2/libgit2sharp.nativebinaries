@@ -151,3 +151,72 @@ $ git push origin master
   ```
 
 - Navigate to your fork and open a Pull Request
+
+## Testing the upgraded libgit2 bits from LibGit2Sharp
+
+- From the opened pull request, navigate to the related `AppVeyor` build
+ - Switch the `Artifacts` tab
+ - Download the generated NuGet package (eg. `LibGit2Sharp.NativeBinaries.1.0.52-pre20150617064648.nupkg`)
+
+- Create a local topic branch
+- Configure VisualStudio to accept a local NuGet package source
+ - Tools > Options > NuGet Package Manager > Package Sources
+ - Create a new source pointing at the folder containing the generated package
+
+- Make LibGit2Sharp leverage the new libgit2 binaries
+ - Open the `LibGit2Sharp\packages.config` file
+ - Change the value of the `allowedVersions` attribute to target the new package (eg. [1.0.51] -> [1.0.52-pre20150617064648])
+ - Save your changes
+ - Right-click the LibGit2Sharp project in the Solution Explorer, then select `Manage NuGet Packages`
+ - Switch over to the `Updates` tabs, select your local source
+ - Ensure the `Include Prerelease` option has been selected
+ - The new package should be listed. Click `Update`
+
+- Check the changes
+
+  ```bash
+  $ git status
+  On branch libgit2_upgrade
+  Changes not staged for commit:
+    (use "git add <file>..." to update what will be committed)
+    (use "git checkout -- <file>..." to discard changes in working directory)
+
+          modified:   LibGit2Sharp/LibGit2Sharp.csproj
+          modified:   LibGit2Sharp/packages.config
+
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+  $ git diff
+  diff --git a/LibGit2Sharp/LibGit2Sharp.csproj b/LibGit2Sharp/LibGit2Sharp.csproj
+  index 7215309..586c343 100644
+  --- a/LibGit2Sharp/LibGit2Sharp.csproj
+  +++ b/LibGit2Sharp/LibGit2Sharp.csproj
+  @@ -1,6 +1,6 @@
+   ﻿<?xml version="1.0" encoding="utf-8"?>
+   <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  -  <Import Project="..\packages\LibGit2Sharp.NativeBinaries.1.0.51\build\LibGit2Sharp.NativeBinaries.props" Condition="Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.51\build\LibGit2Sharp.NativeBinaries.props')" />
+  +  <Import Project="..\packages\LibGit2Sharp.NativeBinaries.1.0.52-pre20150617064648\build\LibGit2Sharp.NativeBinaries.props" Condition="Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.52-pre20150617064648\build\LibGit2Sharp.NativeBinaries.props')" />
+     <PropertyGroup>
+       <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+       <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  @@ -392,7 +392,7 @@
+       <PropertyGroup>
+         <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+       </PropertyGroup>
+  -    <Error Condition="!Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.51\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LibGit2Sharp.NativeBinaries.1.0.51\build\LibGit2Sharp.NativeBinaries.props'))" />
+  +    <Error Condition="!Exists('..\packages\LibGit2Sharp.NativeBinaries.1.0.52-pre20150617064648\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LibGit2Sharp.NativeBinaries.1.0.52-pre20150617064648\build\LibGit2Sharp.NativeBinaries.props'))" />
+     </Target>
+     <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+          Other similar extension points exist, see Microsoft.Common.targets.
+  diff --git a/LibGit2Sharp/packages.config b/LibGit2Sharp/packages.config
+  index 6565d17..5331bee 100644
+  --- a/LibGit2Sharp/packages.config
+  +++ b/LibGit2Sharp/packages.config
+  @@ -1,4 +1,4 @@
+  <?xml version="1.0" encoding="utf-8"?>
+   <packages>
+  -  <package id="LibGit2Sharp.NativeBinaries" version="1.0.51" targetFramework="net40" allowedVersions="[1.0.51]" />
+  +  <package id="LibGit2Sharp.NativeBinaries" version="1.0.52-pre20150617064648" targetFramework="net40" allowedVersions="[1.0.52-pre20150617064648]" />
+   </packages>
+  \ No newline at end of file
+  ```

@@ -111,11 +111,13 @@ Push-Location $libgit2Directory
     </ItemGroup>
     <ItemGroup Condition=" '`$(OS)' == 'Unix' And Exists('/Library/Frameworks') ">
         <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib">
+            <Link>lib$binaryFilename.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
         <ItemGroup Condition=" '`$(OS)' == 'Unix' And !Exists('/Library/Frameworks') ">
         <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so">
+            <Link>lib$binaryFilename.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

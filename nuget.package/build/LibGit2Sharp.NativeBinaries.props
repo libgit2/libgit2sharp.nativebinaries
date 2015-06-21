@@ -23,11 +23,13 @@
     </ItemGroup>
     <ItemGroup Condition=" '$(OS)' == 'Unix' And Exists('/Library/Frameworks') ">
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-a56db99.dylib">
+            <Link>libgit2-a56db99.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
         <ItemGroup Condition=" '$(OS)' == 'Unix' And !Exists('/Library/Frameworks') ">
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-a56db99.so">
+            <Link>libgit2-a56db99.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

@@ -91,7 +91,7 @@ Push-Location $libgit2Directory
     <ItemGroup>
         <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
     </ItemGroup>
-    <ItemGroup Condition=" '`$(OS)' == 'Windows_NT' ">
+    <ItemGroup>
         <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll">
             <Link>NativeBinaries\amd64\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -108,16 +108,16 @@ Push-Location $libgit2Directory
             <Link>NativeBinaries\x86\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-    <ItemGroup Condition=" '`$(OS)' == 'Unix' And Exists('/Library/Frameworks') ">
         <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib">
-            <Link>lib$binaryFilename.dylib</Link>
+            <Link>NativeBinaries\osx\lib$binaryFilename.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-        <ItemGroup Condition=" '`$(OS)' == 'Unix' And !Exists('/Library/Frameworks') ">
         <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so">
-            <Link>lib$binaryFilename.so</Link>
+            <Link>NativeBinaries\linux\amd64\lib$binaryFilename.so</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">
+            <Link>LibGit2Sharp.dll.config</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -125,6 +125,15 @@ Push-Location $libgit2Directory
 "@
 
     sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
+
+    $dllConfig = @"
+<configuration>
+    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="NativeBinaries/linux/amd64/lib$binaryFilename.so" />
+    <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="NativeBinaries/osx/lib$binaryFilename.dylib" />
+</configuration>
+"@
+
+    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\libgit2\LibGit2Sharp.dll.config") $dllConfig
 
     Write-Output "Done!"
 }

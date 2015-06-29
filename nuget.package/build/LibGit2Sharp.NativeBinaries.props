@@ -3,7 +3,7 @@
     <ItemGroup>
         <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
     </ItemGroup>
-    <ItemGroup Condition=" '$(OS)' == 'Windows_NT' ">
+    <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-a56db99.dll">
             <Link>NativeBinaries\amd64\git2-a56db99.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -20,16 +20,16 @@
             <Link>NativeBinaries\x86\git2-a56db99.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-    <ItemGroup Condition=" '$(OS)' == 'Unix' And Exists('/Library/Frameworks') ">
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-a56db99.dylib">
-            <Link>libgit2-a56db99.dylib</Link>
+            <Link>NativeBinaries\osx\libgit2-a56db99.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-        <ItemGroup Condition=" '$(OS)' == 'Unix' And !Exists('/Library/Frameworks') ">
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-a56db99.so">
-            <Link>libgit2-a56db99.so</Link>
+            <Link>NativeBinaries\linux\amd64\libgit2-a56db99.so</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">
+            <Link>LibGit2Sharp.dll.config</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

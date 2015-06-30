@@ -92,27 +92,27 @@ Push-Location $libgit2Directory
         <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll">
             <Link>NativeBinaries\amd64\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.pdb">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.pdb">
             <Link>NativeBinaries\amd64\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.dll">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.dll">
             <Link>NativeBinaries\x86\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.pdb">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.pdb">
             <Link>NativeBinaries\x86\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib">
             <Link>NativeBinaries\osx\lib$binaryFilename.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so">
             <Link>NativeBinaries\linux\amd64\lib$binaryFilename.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

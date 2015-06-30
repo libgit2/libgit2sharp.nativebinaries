@@ -4,28 +4,28 @@
         <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-a56db99.dll')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-a56db99.dll">
-            <Link>NativeBinaries\amd64\git2-a56db99.dll</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-cb58fb2.dll')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-cb58fb2.dll">
+            <Link>NativeBinaries\amd64\git2-cb58fb2.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-a56db99.pdb')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-a56db99.pdb">
-            <Link>NativeBinaries\amd64\git2-a56db99.pdb</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-cb58fb2.pdb')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\git2-cb58fb2.pdb">
+            <Link>NativeBinaries\amd64\git2-cb58fb2.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-a56db99.dll')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-a56db99.dll">
-            <Link>NativeBinaries\x86\git2-a56db99.dll</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-cb58fb2.dll')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-cb58fb2.dll">
+            <Link>NativeBinaries\x86\git2-cb58fb2.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-a56db99.pdb')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-a56db99.pdb">
-            <Link>NativeBinaries\x86\git2-a56db99.pdb</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-cb58fb2.pdb')" Include="$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\git2-cb58fb2.pdb">
+            <Link>NativeBinaries\x86\git2-cb58fb2.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-a56db99.dylib')" Include="$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-a56db99.dylib">
-            <Link>NativeBinaries\osx\libgit2-a56db99.dylib</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-cb58fb2.dylib')" Include="$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-cb58fb2.dylib">
+            <Link>NativeBinaries\osx\libgit2-cb58fb2.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-a56db99.so')" Include="$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-a56db99.so">
-            <Link>NativeBinaries\linux\amd64\libgit2-a56db99.so</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-cb58fb2.so')" Include="$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\libgit2-cb58fb2.so">
+            <Link>NativeBinaries\linux\amd64\libgit2-cb58fb2.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">

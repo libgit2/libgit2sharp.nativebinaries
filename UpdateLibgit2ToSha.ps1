@@ -6,7 +6,8 @@
 #>
 
 Param(
-    [string]$sha = 'HEAD'
+    [string]$sha = 'HEAD',
+    [string]$libgit2Name = ''
 )
 
 Set-StrictMode -Version Latest
@@ -83,7 +84,11 @@ Push-Location $libgit2Directory
 
     sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
     
-    $binaryFilename = "git2-" + $sha.Substring(0,7)
+    if (![string]::IsNullOrEmpty($libgit2Name)) {
+        $binaryFilename = $libgit2Name
+    } else {
+        $binaryFilename = "git2-" + $sha.Substring(0,7)
+    }
 
     $buildProperties = @"
 <?xml version="1.0" encoding="utf-8"?>

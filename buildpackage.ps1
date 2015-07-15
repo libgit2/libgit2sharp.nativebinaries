@@ -38,4 +38,4 @@ if ( -Not (Test-Path $linuxDirectory\*.so) )
     Set-Content $linuxDirectory\addbinaries.here $null
 }
 
-Nuget.exe Pack nuget.package\NativeBinaries.nuspec -Version $version$versionSuffix -NoPackageAnalysis
+.\Nuget.exe Pack nuget.package\NativeBinaries.nuspec -Version $version$versionSuffix -NoPackageAnalysis

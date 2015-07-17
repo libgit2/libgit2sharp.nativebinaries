@@ -11,6 +11,7 @@
 
 Param(
     [string]$vs = '10',
+    [string]$libgit2Name = '',
     [switch]$test,
     [switch]$debug
 )
@@ -23,7 +24,12 @@ $x86Directory = Join-Path $projectDirectory "nuget.package\libgit2\windows\x86"
 $x64Directory = Join-Path $projectDirectory "nuget.package\libgit2\windows\amd64"
 $hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
 $sha = Get-Content $hashFile 
-$binaryFilename = "git2-" + $sha.Substring(0,7)
+
+if (![string]::IsNullOrEmpty($libgit2Name)) {
+    $binaryFilename = $libgit2Name
+} else {
+    $binaryFilename = "git2-" + $sha.Substring(0,7)
+}
 
 $build_clar = 'OFF'
 if ($test.IsPresent) { $build_clar = 'ON' }

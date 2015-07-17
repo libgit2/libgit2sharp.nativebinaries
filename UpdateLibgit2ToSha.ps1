@@ -6,7 +6,8 @@
 #>
 
 Param(
-    [string]$sha = 'HEAD'
+    [string]$sha = 'HEAD',
+    [string]$libgit2Name = ''
 )
 
 Set-StrictMode -Version Latest
@@ -81,15 +82,21 @@ Push-Location $libgit2Directory
 
     Pop-Location
 
+    if (![string]::IsNullOrEmpty($libgit2Name)) {
+        $binaryFilename = $libgit2Name
+    } else {
+        $binaryFilename = "git2-" + $sha.Substring(0,7)
+    }
+
     sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
-    
-    $binaryFilename = "git2-" + $sha.Substring(0,7)
+    sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_filename.txt") $binaryFilename
 
     $buildProperties = @"
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <ItemGroup>
         <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
+        <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
         <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll">

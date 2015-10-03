@@ -1,11 +1,28 @@
-Native Binaries NuGet Package for LibGit2Sharp
-==============================================
+# LibGit2Sharp.NativeBinaries
 
-[Libgit2Sharp](https://github.com/libgit2/libgit2sharp) is a managed
-wrapper around [libgit2](https://github.com/libgit2/libgit2), and as
-such requires compilation of libgit2 for your platform.  LibGit2Sharp
-makes this easy by distributing NuGet packages that include precompiled
-versions of these native binaries.
+**[Libgit2Sharp][lg2s]** is a managed wrapper around **[libgit2][lg2]**, and as
+such requires compilation of libgit2 for your platform.  
+
+LibGit2Sharp makes this easy by distributing, and leveraging as a dependency,
+the **[LibGit2Sharp.NativeBinaries][lg2s-nb]** NuGet package.
+
+This package contains the compiled versions of the libgit2 native library for
+the following platforms:
+
+ - Windows (x86/amd64)
+ - Mac OS X (x86/amd64)
+ - Linux (amd64)
+
+**Note:** Due to the large number of distributions, the Linux support is
+currently *experimental*. Would you encounter any issue with it, please open an
+**[issue][tracker]**.
+
+ [lg2s-nb]: https://www.nuget.org/packages/LibGit2Sharp.NativeBinaries
+ [lg2]: https://libgit2.github.com/
+ [lg2s]: http://libgit2sharp.com/
+ [tracker]: https://github.com/libgit2/libgit2sharp.nativebinaries/issues
+
+## How to build your own native binaries
 
 If you need to build your own native binaries for some reason, you can
 do so easily with the scripts in this repository:
@@ -63,8 +80,8 @@ do so easily with the scripts in this repository:
    any mixups with the official packages, but may also require you to
    opt-in to prerelease packages in your NuGet package manager.
 
-Specifying custom DLL names
----------------------------
+## Specifying custom DLL names
+
 If you want to redistribute a LibGit2Sharp that uses a custom libgit2,
 you may want to change the name of the libgit2 shared library file to
 disambiguate it from other installations.  This may be useful if you
@@ -84,8 +101,8 @@ Then build the NuGet package as described above, making sure to provide
 a helpful suffix to ensure that your NuGet package will not be confused
 with the official packages.
 
-Notes on Visual Studio
-----------------------
+### Notes on Visual Studio
+
 Visual Studio is required to build the native binaries, however you
 do not need to install a *paid* version of Visual Studio.  libgit2
 can be compiled using [Visual Studio Community](https://www.visualstudio.com/en-us/products/visual-studio-community-vs),
@@ -101,4 +118,3 @@ product, but its actual version number is "12.0".)  A handy guide:
 | Visual Studio 2012 | 11
 | Visual Studio 2013 | 12
 | Visual Studio 2015 | 14
-

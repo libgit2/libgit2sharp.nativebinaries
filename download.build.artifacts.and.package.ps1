@@ -126,6 +126,9 @@ Remove-Item "$($package.FullName).ext\libgit2\osx\addbinaries.here"
 
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"
+Remove-Item -Path ".\_rels\" -Recurse
+Remove-Item -Path ".\package\" -Recurse
+Remove-Item -Path '.\`[Content_Types`].xml'
 & "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
 Pop-Location
 Remove-Item "$path\*.ext" -Recurse

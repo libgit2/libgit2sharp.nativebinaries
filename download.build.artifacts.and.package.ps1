@@ -112,11 +112,8 @@ $osxBins = Get-ChildItem -Path $path -Filter "binaries-osx-*.zip"
 Write-Host -ForegroundColor "Yellow" "Extracting build artifacts"
 Add-Type -assembly "System.Io.Compression.Filesystem"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($package.FullName)", "$($package.FullName).ext")
-Remove-Item "$($package.FullName)"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($linuxBins.FullName)", "$($linuxBins.FullName).ext")
-Remove-Item "$($linuxBins.FullName)"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($osxBins.FullName)", "$($osxBins.FullName).ext")
-Remove-Item "$($osxBins.FullName)"
 
 Write-Host -ForegroundColor "Yellow" "Including non Windows build artifacts"
 Move-Item "$($linuxBins.FullName).ext\libgit2\linux\amd64\*.so" "$($package.FullName).ext\libgit2\linux\amd64"
@@ -130,7 +127,13 @@ Remove-Item -Path ".\_rels\" -Recurse
 Remove-Item -Path ".\package\" -Recurse
 Remove-Item -Path '.\`[Content_Types`].xml'
 & "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
-Pop-Location
-Remove-Item "$path\*.ext" -Recurse
 
-explorer "$path"
+$newPackage = Get-ChildItem -Path $path -Filter "*.nupkg"
+Pop-Location
+
+Write-Host -ForegroundColor "Yellow" "Copying package `"$($newPackage.Name)`" to `"$root`""
+
+Move-Item -Path "$($newPackage.FullName)" -Destination "$root\$($newPackage.Name)"
+
+Write-Host -ForegroundColor "Yellow" "Removing temporary folder"
+Remove-Item "$path" -Recurse

@@ -124,15 +124,9 @@ Remove-Item "$($package.FullName).ext\libgit2\linux\amd64\addbinaries.here"
 Move-Item "$($osxBins.FullName).ext\libgit2\osx\*.dylib" "$($package.FullName).ext\libgit2\osx"
 Remove-Item "$($package.FullName).ext\libgit2\osx\addbinaries.here"
 
-Write-Host -ForegroundColor "Yellow" "Listing binaries to be packaged"
-Foreach ($item in (Get-ChildItem "$path" -Filter "*git2-*.*" -Recurse))
-{
-  Write-Host -ForegroundColor "White" "-> $($item.FullName)"
-}
-
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"
-& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis
+& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
 Pop-Location
 Remove-Item "$path\*.ext" -Recurse
 

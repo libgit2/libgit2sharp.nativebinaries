@@ -132,7 +132,7 @@ Foreach ($item in (Get-ChildItem "$path" -Filter "*git2-*.*" -Recurse))
 
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"
-& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path"
+& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis
 Pop-Location
 Remove-Item "$path\*.ext" -Recurse
 

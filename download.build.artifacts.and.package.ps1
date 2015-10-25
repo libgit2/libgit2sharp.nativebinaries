@@ -112,11 +112,8 @@ $osxBins = Get-ChildItem -Path $path -Filter "binaries-osx-*.zip"
 Write-Host -ForegroundColor "Yellow" "Extracting build artifacts"
 Add-Type -assembly "System.Io.Compression.Filesystem"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($package.FullName)", "$($package.FullName).ext")
-Remove-Item "$($package.FullName)"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($linuxBins.FullName)", "$($linuxBins.FullName).ext")
-Remove-Item "$($linuxBins.FullName)"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($osxBins.FullName)", "$($osxBins.FullName).ext")
-Remove-Item "$($osxBins.FullName)"
 
 Write-Host -ForegroundColor "Yellow" "Including non Windows build artifacts"
 Move-Item "$($linuxBins.FullName).ext\libgit2\linux\amd64\*.so" "$($package.FullName).ext\libgit2\linux\amd64"
@@ -124,16 +121,19 @@ Remove-Item "$($package.FullName).ext\libgit2\linux\amd64\addbinaries.here"
 Move-Item "$($osxBins.FullName).ext\libgit2\osx\*.dylib" "$($package.FullName).ext\libgit2\osx"
 Remove-Item "$($package.FullName).ext\libgit2\osx\addbinaries.here"
 
-Write-Host -ForegroundColor "Yellow" "Listing binaries to be packaged"
-Foreach ($item in (Get-ChildItem "$path" -Filter "*git2-*.*" -Recurse))
-{
-  Write-Host -ForegroundColor "White" "-> $($item.FullName)"
-}
-
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"
-& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path"
-Pop-Location
-Remove-Item "$path\*.ext" -Recurse
+Remove-Item -Path ".\_rels\" -Recurse
+Remove-Item -Path ".\package\" -Recurse
+Remove-Item -Path '.\`[Content_Types`].xml'
+& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
 
-explorer "$path"
+$newPackage = Get-ChildItem -Path $path -Filter "*.nupkg"
+Pop-Location
+
+Write-Host -ForegroundColor "Yellow" "Copying package `"$($newPackage.Name)`" to `"$root`""
+
+Move-Item -Path "$($newPackage.FullName)" -Destination "$root\$($newPackage.Name)"
+
+Write-Host -ForegroundColor "Yellow" "Removing temporary folder"
+Remove-Item "$path" -Recurse

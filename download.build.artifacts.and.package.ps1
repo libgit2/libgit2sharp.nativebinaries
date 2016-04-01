@@ -116,8 +116,8 @@ Add-Type -assembly "System.Io.Compression.Filesystem"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($osxBins.FullName)", "$($osxBins.FullName).ext")
 
 Write-Host -ForegroundColor "Yellow" "Including non Windows build artifacts"
-Move-Item "$($linuxBins.FullName).ext\libgit2\linux\amd64\*.so" "$($package.FullName).ext\libgit2\linux\amd64"
-Remove-Item "$($package.FullName).ext\libgit2\linux\amd64\addbinaries.here"
+Move-Item "$($linuxBins.FullName).ext\libgit2\linux\x86_64\*.so" "$($package.FullName).ext\libgit2\linux\x86_64"
+Remove-Item "$($package.FullName).ext\libgit2\linux\x86_64\addbinaries.here"
 Move-Item "$($osxBins.FullName).ext\libgit2\osx\*.dylib" "$($package.FullName).ext\libgit2\osx"
 Remove-Item "$($package.FullName).ext\libgit2\osx\addbinaries.here"
 

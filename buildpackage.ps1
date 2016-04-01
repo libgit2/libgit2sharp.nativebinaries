@@ -9,10 +9,10 @@ $versionSuffix = ""
 if ($pre.IsPresent) { $versionSuffix = "-pre$BuildDate" }
 
 $projectDirectory = Split-Path $MyInvocation.MyCommand.Path
-$x86Directory = Join-Path $projectDirectory "nuget.package\libgit2\windows\x86"
-$x64Directory = Join-Path $projectDirectory "nuget.package\libgit2\windows\amd64"
+$x86Directory = Join-Path $projectDirectory "nuget.package\libgit2\win32\x86"
+$x64Directory = Join-Path $projectDirectory "nuget.package\libgit2\win32\x64"
 $osxDirectory = Join-Path $projectDirectory "nuget.package\libgit2\osx"
-$linuxDirectory = Join-Path $projectDirectory "nuget.package\libgit2\linux\amd64"
+$linuxDirectory = Join-Path $projectDirectory "nuget.package\libgit2\linux\x86_64"
 
 if ( -Not (Test-Path $x86Directory\*.dll) )
 {

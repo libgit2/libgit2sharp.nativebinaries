@@ -99,28 +99,28 @@ Push-Location $libgit2Directory
         <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.dll">
-            <Link>NativeBinaries\amd64\$binaryFilename.dll</Link>
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.dll">
+            <Link>lib\win32\x64\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\amd64\$binaryFilename.pdb">
-            <Link>NativeBinaries\amd64\$binaryFilename.pdb</Link>
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.pdb">
+            <Link>lib\win32\x64\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.dll">
-            <Link>NativeBinaries\x86\$binaryFilename.dll</Link>
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.dll">
+            <Link>lib\win32\x86\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\windows\x86\$binaryFilename.pdb">
-            <Link>NativeBinaries\x86\$binaryFilename.pdb</Link>
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.pdb">
+            <Link>lib\win32\x86\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib">
-            <Link>NativeBinaries\osx\lib$binaryFilename.dylib</Link>
+            <Link>lib\osx\lib$binaryFilename.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\amd64\lib$binaryFilename.so">
-            <Link>NativeBinaries\linux\amd64\lib$binaryFilename.so</Link>
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\linux\x86_64\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\x86_64\lib$binaryFilename.so">
+            <Link>lib\linux\x86_64\lib$binaryFilename.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Include="`$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">
@@ -135,8 +135,8 @@ Push-Location $libgit2Directory
 
     $dllConfig = @"
 <configuration>
-    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="NativeBinaries/linux/amd64/lib$binaryFilename.so" />
-    <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="NativeBinaries/osx/lib$binaryFilename.dylib" />
+    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/linux/x86_64/lib$binaryFilename.so" />
+    <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="lib/osx/lib$binaryFilename.dylib" />
 </configuration>
 "@
 

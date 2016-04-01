@@ -28,9 +28,7 @@ LIBEXT="so"
 
 if [ $OS == "Linux" ]; then
 	OSPATH="/linux"
-	if [ $ARCH == "x86_64" ]; then
-		ARCHPATH="/amd64"
-	fi
+	ARCHPATH="/${ARCH}"
 elif [ $OS == "Darwin" ]; then
 	OSPATH="/osx"
 	LIBEXT="dylib"

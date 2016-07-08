@@ -1,4 +1,5 @@
 Param(
+	[string]$ref = "master",
     [switch]$verbose = $False
 )
 
@@ -50,8 +51,13 @@ function Extract-BuildIdentifier($statuses, $forContext) {
 }
 
 function Download-AppVeyor-Artifacts($statuses, $downloadLocation) {
+  $prOrBranch = "branch"
 
-  $buildIdentifier = Extract-BuildIdentifier $statuses "continuous-integration/appveyor/branch"
+  if ($ref.StartsWith("pull/")) {
+    $prOrBranch = "pr"
+  }
+
+  $buildIdentifier = Extract-BuildIdentifier $statuses "continuous-integration/appveyor/$prOrBranch"
 
   Write-Host -ForegroundColor "Yellow" "Retrieving AppVeyor build `"$buildIdentifier`""
   $build = Invoke-RestMethod-Ex "https://ci.appveyor.com/api/projects/libgit2/libgit2sharp-nativebinaries/build/$buildIdentifier"
@@ -71,8 +77,13 @@ function Download-AppVeyor-Artifacts($statuses, $downloadLocation) {
 }
 
 function Download-Travis-Artifacts($statuses, $downloadLocation) {
+  $prOrBranch = "push"
 
-  $buildIdentifier = Extract-BuildIdentifier $statuses "continuous-integration/travis-ci/push"
+  if ($ref.StartsWith("pull/")) {
+    $prOrBranch = "pr"
+  }
+
+  $buildIdentifier = Extract-BuildIdentifier $statuses "continuous-integration/travis-ci/$prOrBranch"
 
   Write-Host -ForegroundColor "Yellow" "Retrieving Travis build `"$buildIdentifier`""
   $build = Invoke-RestMethod-Ex "https://api.travis-ci.org/builds/$buildIdentifier"
@@ -96,9 +107,18 @@ $path = [System.IO.Path]::Combine($env:Temp, [System.IO.Path]::GetRandomFileName
 Write-Host -ForegroundColor "Yellow" "Creating temporary folder at `"$path`""
 New-Item "$path" -type Directory > $null
 
-$ref = "master"
+if ($ref.StartsWith("pull/")) {
+  $pr = $ref.Replace("pull/", "")
+  Write-Host -ForegroundColor "Yellow" "Retrieving pull request information for pull request $pr"
+
+  $prData = Invoke-RestMethod-Ex "https://api.github.com/repos/libgit2/libgit2sharp.nativebinaries/pulls/$pr"
+  $statusesUrl = $prData.statuses_url
+} else {
+  $statusesUrl = "https://api.github.com/repos/libgit2/libgit2sharp.nativebinaries/commits/$ref/statuses"
+}
+
 Write-Host -ForegroundColor "Yellow" "Retrieving LibGit2Sharp.NativeBinaries latest CI statuses of `"$ref`""
-$statuses = Invoke-RestMethod-Ex "https://api.github.com/repos/libgit2/libgit2sharp.nativebinaries/commits/$ref/statuses"
+$statuses = Invoke-RestMethod-Ex $statusesUrl
 
 Download-AppVeyor-Artifacts $statuses $path
 Download-Travis-Artifacts $statuses $path
@@ -116,10 +136,10 @@ Add-Type -assembly "System.Io.Compression.Filesystem"
 [Io.Compression.ZipFile]::ExtractToDirectory("$($osxBins.FullName)", "$($osxBins.FullName).ext")
 
 Write-Host -ForegroundColor "Yellow" "Including non Windows build artifacts"
-Move-Item "$($linuxBins.FullName).ext\runtimes\linux-x64\*.so" "$($package.FullName).ext\runtimes\linux-x64"
-Remove-Item "$($package.FullName).ext\runtimes\linux-x64\addbinaries.here"
-Move-Item "$($osxBins.FullName).ext\runtimes\osx\*.dylib" "$($package.FullName).ext\runtimes\osx"
-Remove-Item "$($package.FullName).ext\runtimes\osx\addbinaries.here"
+Move-Item "$($linuxBins.FullName).ext\libgit2\linux-x64\native\*.so" "$($package.FullName).ext\runtimes\linux-x64\native"
+Remove-Item "$($package.FullName).ext\runtimes\linux-x64\native\addbinaries.here"
+Move-Item "$($osxBins.FullName).ext\libgit2\osx\native\*.dylib" "$($package.FullName).ext\runtimes\osx\native"
+Remove-Item "$($package.FullName).ext\runtimes\osx\native\addbinaries.here"
 
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"

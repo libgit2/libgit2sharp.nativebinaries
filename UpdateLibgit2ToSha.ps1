@@ -99,27 +99,27 @@ Push-Location $libgit2Directory
         <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.dll">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.dll">
             <Link>lib\win32\x64\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\$binaryFilename.pdb">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.pdb">
             <Link>lib\win32\x64\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.dll">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.dll">
             <Link>lib\win32\x86\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\$binaryFilename.pdb">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.pdb">
             <Link>lib\win32\x86\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\osx\lib$binaryFilename.dylib">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\osx\native\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\osx\native\lib$binaryFilename.dylib">
             <Link>lib\osx\lib$binaryFilename.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\libgit2\linux\x86_64\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\libgit2\linux\x86_64\lib$binaryFilename.so">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\lib$binaryFilename.so">
             <Link>lib\linux\x86_64\lib$binaryFilename.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

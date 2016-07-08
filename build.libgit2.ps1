@@ -20,8 +20,8 @@ Set-StrictMode -Version Latest
 
 $projectDirectory = Split-Path $MyInvocation.MyCommand.Path
 $libgit2Directory = Join-Path $projectDirectory "libgit2"
-$x86Directory = Join-Path $projectDirectory "nuget.package\libgit2\win32\x86"
-$x64Directory = Join-Path $projectDirectory "nuget.package\libgit2\win32\x64"
+$x86Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x86\native"
+$x64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x64\native"
 $hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
 $sha = Get-Content $hashFile 
 

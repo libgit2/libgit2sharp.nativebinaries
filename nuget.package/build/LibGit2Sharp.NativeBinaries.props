@@ -5,27 +5,27 @@
         <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\git2-381caf5.dll">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x64\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x64\git2-381caf5.dll">
             <Link>lib\win32\x64\git2-381caf5.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\libgit2\win32\x64\git2-381caf5.pdb">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x64\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x64\git2-381caf5.pdb">
             <Link>lib\win32\x64\git2-381caf5.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\git2-381caf5.dll">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x86\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x86\git2-381caf5.dll">
             <Link>lib\win32\x86\git2-381caf5.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\libgit2\win32\x86\git2-381caf5.pdb">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x86\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x86\git2-381caf5.pdb">
             <Link>lib\win32\x86\git2-381caf5.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-381caf5.dylib')" Include="$(MSBuildThisFileDirectory)\..\libgit2\osx\libgit2-381caf5.dylib">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\osx\libgit2-381caf5.dylib')" Include="$(MSBuildThisFileDirectory)\..\runtimes\osx\libgit2-381caf5.dylib">
             <Link>lib\osx\libgit2-381caf5.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\libgit2\linux\x86_64\libgit2-381caf5.so')" Include="$(MSBuildThisFileDirectory)\..\libgit2\linux\x86_64\libgit2-381caf5.so">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\libgit2-381caf5.so')" Include="$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\libgit2-381caf5.so">
             <Link>lib\linux\x86_64\libgit2-381caf5.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

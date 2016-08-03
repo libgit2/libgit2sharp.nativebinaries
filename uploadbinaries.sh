@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $TRAVIS_SECURE_ENV_VARS == "true" ] && [ $TRAVIS_PULL_REQUEST == "false" ]; then
+if [ $TRAVIS_SECURE_ENV_VARS == "true" ]; then
 
 pushd nuget.package
 

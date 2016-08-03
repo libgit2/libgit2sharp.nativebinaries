@@ -27,8 +27,12 @@ PACKAGEPATH="nuget.package/libgit2"
 LIBEXT="so"
 
 if [ $OS == "Linux" ]; then
+	if [ "$ARCH" == "x86_64" ]; then
+		ARCH="x64"
+	fi
+
 	OSPATH="/linux"
-	ARCHPATH="/${ARCH}"
+	ARCHPATH="-$ARCH"
 elif [ $OS == "Darwin" ]; then
 	OSPATH="/osx"
 	LIBEXT="dylib"
@@ -37,8 +41,8 @@ else
 fi
 
 rm -rf $PACKAGEPATH$OSPATH
-mkdir -p $PACKAGEPATH$OSPATH$ARCHPATH
+mkdir -p $PACKAGEPATH$OSPATH$ARCHPATH/native
 
-cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH$OSPATH$ARCHPATH
+cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH$OSPATH$ARCHPATH/native
 
 exit $?

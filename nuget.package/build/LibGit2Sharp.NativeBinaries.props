@@ -5,19 +5,19 @@
         <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\git2-381caf5.dll">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-381caf5.dll">
             <Link>lib\win32\x64\git2-381caf5.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\git2-381caf5.pdb">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-381caf5.pdb">
             <Link>lib\win32\x64\git2-381caf5.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\git2-381caf5.dll">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-381caf5.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-381caf5.dll">
             <Link>lib\win32\x86\git2-381caf5.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\git2-381caf5.pdb">
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-381caf5.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-381caf5.pdb">
             <Link>lib\win32\x86\git2-381caf5.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

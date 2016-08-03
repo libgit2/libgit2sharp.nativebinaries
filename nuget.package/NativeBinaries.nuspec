@@ -10,8 +10,5 @@
         <iconUrl>https://raw.githubusercontent.com/libgit2/libgit2sharp/master/square-logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Native binaries for LibGit2Sharp</description>
-        <dependencies>
-            <group targetFramework=".NETStandard1.0" />
-        </dependencies>
     </metadata>
 </package>

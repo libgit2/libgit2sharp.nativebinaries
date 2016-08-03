@@ -99,19 +99,19 @@ Push-Location $libgit2Directory
         <EmbeddedResource Include="`$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.dll">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\$binaryFilename.dll">
             <Link>lib\win32\x64\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x64\native\$binaryFilename.pdb">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\$binaryFilename.pdb">
             <Link>lib\win32\x64\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.dll">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\$binaryFilename.dll">
             <Link>lib\win32\x86\$binaryFilename.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win-x86\native\$binaryFilename.pdb">
+        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\$binaryFilename.pdb">
             <Link>lib\win32\x86\$binaryFilename.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

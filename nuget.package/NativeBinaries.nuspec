@@ -9,6 +9,6 @@
         <projectUrl>https://github.com/libgit2/libgit2sharp.nativebinaries</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/libgit2/libgit2sharp/master/square-logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Native binaries for LibGit2Sharp</description>
+        <description>Native binaries for LibGit2Sharp (SSH)</description>
     </metadata>
 </package>

@@ -1,3 +1,9 @@
 [submodule "libgit2"]
 	path = libgit2
 	url = https://github.com/libgit2/libgit2.git
+[submodule "libssh2"]
+	path = libssh2
+	url = https://github.com/libssh2/libssh2.git
+[submodule "zlib"]
+	path = zlib
+	url = https://github.com/madler/zlib.git

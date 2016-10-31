@@ -10,7 +10,7 @@ install:
 - git submodule update --init --recursive
 
 build_script:
-- ps: .\build.libgit2.ps1 -vs 12
+- ps: .\build.libgit2.ps1 -vs 14 -libssh2
 
 after_build:
 - ps: |

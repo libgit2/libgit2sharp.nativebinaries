@@ -1,4 +1,4 @@
-# LibGit2Sharp.NativeBinaries
+# LibGit2Sharp-SSH.NativeBinaries
 
 **[Libgit2Sharp][lg2s]** is a managed wrapper around **[libgit2][lg2]**, and as
 such requires compilation of libgit2 for your platform.  

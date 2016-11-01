@@ -216,7 +216,7 @@ function Build-Libssh2([switch]$x64) {
 	
 	Push-Location build/$arch
 	# Make STDCALL and static linked CRT
-	Run-Command -Quiet -Fatal { & $cmake -G $gen -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /W3 /Gz" -DCMAKE_C_FLAGS_DEBUG="/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" -DCMAKE_C_FLAGS_MINSIZEREL="/MT /O1 /Ob1 /D NDEBUG" -DCMAKE_FLAGS_RELEASE="/MT /O2 /Ob2 /D NDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/MT /Zi /O2 /Ob1 /D NDEBUG" -D "CMAKE_INSTALL_PREFIX=$libssh2Dir/install/$arch" -D BUILD_TESTING=ON -D BUILD_SHARED_LIBS=ON -D ENABLE_ZLIB_COMPRESSION=ON -D "ZLIB_LIBRARY=$zlibDir/$zlibBinaryFilename.lib" -D "ZLIB_INCLUDE_DIR=$zlibDir/include" ../.. }
+	Run-Command -Quiet -Fatal { & $cmake -G $gen -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /W3 /Gz" -DCMAKE_C_FLAGS_DEBUG="/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" -DCMAKE_C_FLAGS_MINSIZEREL="/MT /O1 /Ob1 /D NDEBUG" -DCMAKE_FLAGS_RELEASE="/MT /O2 /Ob2 /D NDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/MT /Zi /O2 /Ob1 /D NDEBUG" -D "CMAKE_INSTALL_PREFIX=$libssh2Dir/install/$arch" -D BUILD_TESTING=ON -D BUILD_SHARED_LIBS=ON -D ENABLE_ZLIB_COMPRESSION=ON -D "ZLIB_LIBRARY=$zlibDir/$zlibBinaryFilename.lib" -D "ZLIB_INCLUDE_DIR=$zlibDir/include" -D "CRYPTO_BACKEND=WinCNG" ../.. }
 	Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration --target install }
 	Pop-Location
 	

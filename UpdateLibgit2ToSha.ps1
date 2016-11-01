@@ -85,7 +85,7 @@ Push-Location $libgit2Directory
     if (![string]::IsNullOrEmpty($libgit2Name)) {
         $binaryFilename = $libgit2Name
     } else {
-        $binaryFilename = "libgit2-ssh-" + $sha.Substring(0,7)
+        $binaryFilename = "git2-ssh-" + $sha.Substring(0,7)
     }
 
     sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha

@@ -53,7 +53,7 @@ $zlibSha = Get-Content $zlibHashFile
 if (![string]::IsNullOrEmpty($libgit2Name)) {
     $libgit2BinaryFilename = $libgit2Name
 } else {
-    $libgit2BinaryFilename = "libgit2-ssh-" + $libgit2Sha.Substring(0,7)
+    $libgit2BinaryFilename = "git2-ssh-" + $libgit2Sha.Substring(0,7)
 }
 
 $libssh2BinaryFilename = "libssh2"

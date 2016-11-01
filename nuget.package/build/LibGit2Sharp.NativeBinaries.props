@@ -5,28 +5,28 @@
         <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-67dd314.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-67dd314.dll">
-            <Link>lib\win32\x64\git2-67dd314.dll</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-67dd314.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-67dd314.dll">
+            <Link>lib\win32\x64\git2-ssh-67dd314.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-67dd314.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-67dd314.pdb">
-            <Link>lib\win32\x64\git2-67dd314.pdb</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-67dd314.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-67dd314.pdb">
+            <Link>lib\win32\x64\git2-ssh-67dd314.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-67dd314.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-67dd314.dll">
-            <Link>lib\win32\x86\git2-67dd314.dll</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-67dd314.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-67dd314.dll">
+            <Link>lib\win32\x86\git2-ssh-67dd314.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-67dd314.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-67dd314.pdb">
-            <Link>lib\win32\x86\git2-67dd314.pdb</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-67dd314.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-67dd314.pdb">
+            <Link>lib\win32\x86\git2-ssh-67dd314.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-67dd314.dylib')" Include="$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-67dd314.dylib">
-            <Link>lib\osx\libgit2-67dd314.dylib</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-ssh-67dd314.dylib')" Include="$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-ssh-67dd314.dylib">
+            <Link>lib\osx\libgit2-ssh-67dd314.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-67dd314.so')" Include="$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-67dd314.so">
-            <Link>lib\linux\x86_64\libgit2-67dd314.so</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-ssh-67dd314.so')" Include="$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-ssh-67dd314.so">
+            <Link>lib\linux\x86_64\libgit2-ssh-67dd314.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">

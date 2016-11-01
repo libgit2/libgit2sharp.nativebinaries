@@ -20,8 +20,8 @@
 Param(
     [string]$vs = '10',
     [string]$libgit2Name = '',
-	#[string]$libssh2Name = '',
-	#[string]$zlibName = '',
+	[string]$libssh2Name = 'libssh2',
+	[string]$zlibName = 'zlib',
     [switch]$test,
     [switch]$debug,
 	[switch]$libssh2,
@@ -56,20 +56,17 @@ if (![string]::IsNullOrEmpty($libgit2Name)) {
     $libgit2BinaryFilename = "git2-ssh-" + $libgit2Sha.Substring(0,7)
 }
 
-$libssh2BinaryFilename = "libssh2"
-#if (![string]::IsNullOrEmpty($libssh2Name)) {
-#    $libssh2BinaryFilename = $libssh2Name
-#} else {
-#    $libssh2BinaryFilename = "libssh2-" + $libssh2Sha.Substring(0,7)
-#}
+if (![string]::IsNullOrEmpty($libssh2Name)) {
+    $libssh2BinaryFilename = $libssh2Name
+} else {
+    $libssh2BinaryFilename = "libssh2-" + $libssh2Sha.Substring(0,7)
+}
 
-$zlibBinaryFilename = "zlib"
-#if (![string]::IsNullOrEmpty($zlibName)) {
-#    $zlibBinaryFilename = $zlibName
-#} else {
-#    #$zlibBinaryFilename = "zlib-" + $zlibSha.Substring(0,7)
-#	$zlibBinaryFilename = "zlib.dll"
-#}
+if (![string]::IsNullOrEmpty($zlibName)) {
+    $zlibBinaryFilename = $zlibName
+} else {
+    $zlibBinaryFilename = "zlib-" + $zlibSha.Substring(0,7)
+}
 
 $build_clar = 'OFF'
 if ($test.IsPresent) { $build_clar = 'ON' }

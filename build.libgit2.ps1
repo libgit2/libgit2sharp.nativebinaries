@@ -12,7 +12,7 @@
 .PARAMETER embed
     If set, build embedded libssh2.
 .PARAMETER cdecl
-	If set, build all libraries with STDCALL convention, otherwise CDECL (default)
+	If set, build all libraries with CDECL convention, otherwise STDCALL (default)
 .PARAMETER dynamic
 	If set, build all libraries with static linked CRT, otherwise dynamic (default)
 #>
@@ -20,12 +20,14 @@
 Param(
     [string]$vs = '10',
     [string]$libgit2Name = '',
+	#[string]$libssh2Name = '',
+	#[string]$zlibName = '',
     [switch]$test,
-    [switch]$debug
+    [switch]$debug,
 	[switch]$libssh2,
 	[switch]$embed,
 	[switch]$cdecl,
-	[switch]$dynamic,
+	[switch]$dynamic
 )
 
 Set-StrictMode -Version Latest
@@ -34,16 +36,40 @@ $projectDirectory = Split-Path $MyInvocation.MyCommand.Path
 $libgit2Directory = Join-Path $projectDirectory "libgit2"
 $libssh2Directory = Join-Path $projectDirectory "libssh2"
 $zlibDirectory = Join-Path $projectDirectory "zlib"
+
 $x86Directory = Join-Path $projectDirectory "nuget.package\runtimes\win7-x86\native"
 $x64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win7-x64\native"
-$hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
-$sha = Get-Content $hashFile 
+
+$depsDirectory = Join-Path $projectDirectory "deps"
+
+$libgit2HashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
+$libssh2HashFile = Join-Path $projectDirectory "nuget.package\libgit2\libssh2_hash.txt"
+$zlibHashFile = Join-Path $projectDirectory "nuget.package\libgit2\zlib_hash.txt"
+
+$libgit2Sha = Get-Content $libgit2HashFile 
+$libssh2Sha = Get-Content $libssh2HashFile 
+$zlibSha = Get-Content $zlibHashFile 
 
 if (![string]::IsNullOrEmpty($libgit2Name)) {
-    $binaryFilename = $libgit2Name
+    $libgit2BinaryFilename = $libgit2Name
 } else {
-    $binaryFilename = "libgit2-ssh-" + $sha.Substring(0,7)
+    $libgit2BinaryFilename = "libgit2-ssh-" + $libgit2Sha.Substring(0,7)
 }
+
+$libssh2BinaryFilename = "libssh2"
+#if (![string]::IsNullOrEmpty($libssh2Name)) {
+#    $libssh2BinaryFilename = $libssh2Name
+#} else {
+#    $libssh2BinaryFilename = "libssh2-" + $libssh2Sha.Substring(0,7)
+#}
+
+$zlibBinaryFilename = "zlib"
+#if (![string]::IsNullOrEmpty($zlibName)) {
+#    $zlibBinaryFilename = $zlibName
+#} else {
+#    #$zlibBinaryFilename = "zlib-" + $zlibSha.Substring(0,7)
+#	$zlibBinaryFilename = "zlib.dll"
+#}
 
 $build_clar = 'OFF'
 if ($test.IsPresent) { $build_clar = 'ON' }
@@ -132,23 +158,34 @@ function Build-Zlib([switch]$x64) {
 	
 	Push-Location $zlibDirectory
 	
-	Write-Output "`tBuilding $architecture zlib..."
+	Write-Output "Building $architecture zlib..."
 	
 	Run-Command -Quiet { & remove-item build/$arch -recurse -force }
 	Run-Command -Quiet { & remove-item install/$arch -recurse -force }
 	Run-Command -Quiet { & mkdir build/$arch }
-	cd build/$arch
+	
+	Push-Location build/$arch
 	# Make STDCALL and static linked CRT
 	Run-Command -Quiet -Fatal { & $cmake -G $gen -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /W3 /Gz" -DCMAKE_C_FLAGS_DEBUG="/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" -DCMAKE_C_FLAGS_MINSIZEREL="/MT /O1 /Ob1 /D NDEBUG" -DCMAKE_FLAGS_RELEASE="/MT /O2 /Ob2 /D NDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/MT /Zi /O2 /Ob1 /D NDEBUG" -D "CMAKE_INSTALL_PREFIX=$zlibDirectory/install/$arch" ../.. }
 	Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration --target install }
+	Pop-Location
 	
-	# Prepare to publish
-	cd $zlibDirectory/install/$arch/bin
-    Run-Command -Quiet -Fatal { & copy -fo * $outputDirectory -Exclude *.lib }
+	# Clear deps
+	Run-Command -Quiet { & remove-item $depsDirectory/$arch/zlib -recurse -force }
+	Run-Command -Quiet { & mkdir $depsDirectory/$arch/zlib/include }
+	
+	# Prepare to publish libraries / binaries
+    Run-Command -Quiet -Fatal { & copy -fo $zlibDirectory/install/$arch/lib/zlib.lib $depsDirectory/$arch/zlib/$zlibBinaryFilename.lib }
+	Run-Command -Quiet -Fatal { & copy -fo $zlibDirectory/install/$arch/include/* $depsDirectory/$arch/zlib/include }
+    Run-Command -Quiet -Fatal { & copy -fo $zlibDirectory/install/$arch/bin/zlib.dll $outputDirectory/$zlibBinaryFilename.dll }
+	if ($configuration -eq "RelWithDebInfo" -Or $configuration -eq "Debug") {
+		Run-Command -Quiet -Fatal { & copy -fo $zlibDirectory/build/$arch/$configuration/zlib.pdb $outputDirectory/$zlibBinaryFilename.pdb }
+	}	
 	
 	# Clear submodule
-	Run-Command -Quiet { & remove-item build/$arch -recurse -force }
-	Run-Command -Quiet { & remove-item install/$arch -recurse -force }
+	Run-Command -Quiet { & remove-item $zlibDirectory/build -recurse -force }
+	Run-Command -Quiet { & remove-item $zlibDirectory/install -recurse -force }
+	Run-Command -Quiet { & rename-item -path $zlibDirectory/zconf.h.included -newName $zlibDirectory/zconf.h -force }
 			
 	Pop-Location
 }
@@ -157,37 +194,47 @@ function Build-Libssh2([switch]$x64) {
 	$architecture = "32-bit"
 	$arch = "x86"
 	$gen = "Visual Studio $vs"
-	$outputDirectory = $x86Directory
+	$binDirectory = $x86Directory
 	
 	if ($x64) {
 		$architecture = "64-bit"
 		$arch = "x64"
 		$gen = "Visual Studio $vs Win64"
-		$outputDirectory = $x64Directory
+		$binDirectory = $x64Directory
 	}
 	
 	$libssh2Dir = $libssh2Directory -replace "\\", "/"
-	$zlibDir = $zlibDirectory -replace "\\", "/"
+	$zlibDir = "$depsDirectory/$arch/zlib" -replace "\\", "/"
 	
 	Push-Location $libssh2Directory
 	
-	Write-Output "`tBuilding $architecture libssh2..."
+	Write-Output "Building $architecture libssh2..."
 	
 	Run-Command -Quiet { & remove-item build/$arch -recurse -force }
 	Run-Command -Quiet { & remove-item install/$arch -recurse -force }
 	Run-Command -Quiet { & mkdir build/$arch }
-	cd build/$arch
-	# Make STDCALL and static linked CRT
-	Run-Command -Quiet -Fatal { & $cmake -G $gen -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /W3 /Gz" -DCMAKE_C_FLAGS_DEBUG="/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" -DCMAKE_C_FLAGS_MINSIZEREL="/MT /O1 /Ob1 /D NDEBUG" -DCMAKE_FLAGS_RELEASE="/MT /O2 /Ob2 /D NDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/MT /Zi /O2 /Ob1 /D NDEBUG" -D "CMAKE_INSTALL_PREFIX=$libssh2Dir/install/$arch" -D BUILD_TESTING=ON -D BUILD_SHARED_LIBS=ON -D ENABLE_ZLIB_COMPRESSION=ON -D "ZLIB_LIBRARY=$zlibDir/install/$arch/lib/zlib.lib" -D "ZLIB_INCLUDE_DIR=$zlibDir/install/$arch/include" ../.. }
-	Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration --target install }
 	
-	# Prepare to publish
-	cd $libssh2Dir/install/$arch/bin
-    Run-Command -Quiet -Fatal { & copy -fo * $outputDirectory -Exclude *.lib }
+	Push-Location build/$arch
+	# Make STDCALL and static linked CRT
+	Run-Command -Quiet -Fatal { & $cmake -G $gen -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /W3 /Gz" -DCMAKE_C_FLAGS_DEBUG="/D_DEBUG /MTd /Zi /Ob0 /Od /RTC1" -DCMAKE_C_FLAGS_MINSIZEREL="/MT /O1 /Ob1 /D NDEBUG" -DCMAKE_FLAGS_RELEASE="/MT /O2 /Ob2 /D NDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/MT /Zi /O2 /Ob1 /D NDEBUG" -D "CMAKE_INSTALL_PREFIX=$libssh2Dir/install/$arch" -D BUILD_TESTING=ON -D BUILD_SHARED_LIBS=ON -D ENABLE_ZLIB_COMPRESSION=ON -D "ZLIB_LIBRARY=$zlibDir/$zlibBinaryFilename.lib" -D "ZLIB_INCLUDE_DIR=$zlibDir/include" ../.. }
+	Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration --target install }
+	Pop-Location
+	
+	# Clear deps
+	Run-Command -Quiet { & remove-item $depsDirectory/$arch/libssh2 -recurse -force }
+	Run-Command -Quiet { & mkdir $depsDirectory/$arch/libssh2/include }
+	
+	# Prepare to publish libraries / binaries
+    Run-Command -Quiet -Fatal { & copy -fo $libssh2Dir/install/$arch/lib/libssh2.lib $depsDirectory/$arch/libssh2/$libssh2BinaryFilename.lib }
+	Run-Command -Quiet -Fatal { & copy -fo $libssh2Dir/install/$arch/include/* $depsDirectory/$arch/libssh2/include }
+    Run-Command -Quiet -Fatal { & copy -fo $libssh2Dir/install/$arch/bin/libssh2.dll $binDirectory/$libssh2BinaryFilename.dll }
+	if ($configuration -eq "RelWithDebInfo" -Or $configuration -eq "Debug") {
+		Run-Command -Quiet -Fatal { & copy -fo $libssh2Dir/build/$arch/src/$configuration/libssh2.pdb $binDirectory/$libssh2BinaryFilename.pdb }
+	}
 	
 	# Clear submodule
-	Run-Command -Quiet { & remove-item build/$arch -recurse -force }
-	Run-Command -Quiet { & remove-item install/$arch -recurse -force }
+	Run-Command -Quiet { & remove-item $libssh2Dir/build -recurse -force }
+	Run-Command -Quiet { & remove-item $libssh2Dir/install -recurse -force }
 			
 	Pop-Location
 }
@@ -212,26 +259,28 @@ function Build-Libgit2([switch]$x64, [switch]$extZlib) {
 	}
 	
 	$libgit2Dir = $libgit2Directory -replace "\\", "/"
-	$libssh2Dir = $libssh2Directory -replace "\\", "/"	
+	
+	$libssh2Dir = "$depsDirectory/$arch/libssh2" -replace "\\", "/"
+	$zlibDir = "$depsDirectory/$arch/zlib" -replace "\\", "/"
 	
 	Push-Location $libgit2Directory
 	
-	Write-Output "`tBuilding $architecture libgit2..."
+	Write-Output "Building $architecture libgit2..."
 	
 	Run-Command -Quiet { & remove-item $build -recurse -force }
 	Run-Command -Quiet { & mkdir $build }
 	cd $build
 
 	if ($extZlib) {
-		Run-Command -Quiet -Fatal { & $cmake -G $gen -DSTDCALL=ON -D ENABLE_TRACE=ON -D "ZLIB_LIBRARY_RELEASE=$zlibDir/install/$arch/lib/zlib.lib" -D "ZLIB_INCLUDE_DIR=$zlibDir/install/$arch/include" -D USE_SSH=ON -D LIBSSH2_FOUND=ON -D "LIBSSH2_INCLUDE_DIRS=$libssh2Dir/install/$arch/include" -D "LIBSSH2_LIBRARIES=$libssh2Dir/install/$arch/lib/libssh2.lib" -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" -D "EMBED_SSH_PATH=$libssh2_embed" $root }
+		Run-Command -Quiet -Fatal { & $cmake -G $gen -DSTDCALL=ON -D ENABLE_TRACE=ON -D "ZLIB_LIBRARY_RELEASE=$zlibDir/$zlibBinaryFilename.lib" -D "ZLIB_INCLUDE_DIR=$zlibDir/include" -D USE_SSH=ON -D LIBSSH2_FOUND=ON -D "LIBSSH2_INCLUDE_DIRS=$libssh2Dir/include" -D "LIBSSH2_LIBRARIES=$libssh2Dir/$libssh2BinaryFilename.lib" -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$libgit2BinaryFilename" -D "EMBED_SSH_PATH=$libssh2_embed" $root }
 	} else {
-		Run-Command -Quiet -Fatal { & $cmake -G $gen -DSTDCALL=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" -D "EMBED_SSH_PATH=$libssh2_embed" $root }
+		Run-Command -Quiet -Fatal { & $cmake -G $gen -DSTDCALL=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$libgit2BinaryFilename" -D "EMBED_SSH_PATH=$libssh2_embed" $root }
 	}
 
 	Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration }
 	if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
     cd $configuration
-    Assert-Consistent-Naming "$binaryFilename.dll" "*.dll"
+    Assert-Consistent-Naming "$libgit2BinaryFilename.dll" "*.dll"
     Run-Command -Quiet { & rm *.exp }
     Run-Command -Quiet -Fatal { & copy -fo * $outputDirectory -Exclude *.lib }
 			
@@ -244,7 +293,10 @@ try {
     $cmake = Find-CMake
     $ctest = Join-Path (Split-Path -Parent $cmake) "ctest.exe"
 
-    # Write-Output "Building 32-bit..."
+    # Building 32-bit
+	
+	#Run-Command -Quiet { & rm $depsDirectory\x86\* }
+    #Run-Command -Quiet { & mkdir -fo $depsDirectory\x86 }
 
 	Run-Command -Quiet { & rm $x86Directory\* }
     Run-Command -Quiet { & mkdir -fo $x86Directory }
@@ -257,7 +309,10 @@ try {
 		Build-Libgit2
 	}
 		
-	# Write-Output "Building 64-bit..."
+	# Building 64-bit
+	
+	#Run-Command -Quiet { & rm $depsDirectory\x64\* }
+    #Run-Command -Quiet { & mkdir -fo $depsDirectory\x64 }
 	
 	Run-Command -Quiet { & rm $x64Directory\* }
     Run-Command -Quiet { & mkdir -fo $x64Directory }

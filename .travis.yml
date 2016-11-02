@@ -1,19 +1,25 @@
 language: c
 
-os:
- - osx
- - linux
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: osx
 
 branches:
  only:
    - master
+   
+addons:
+  apt:
+    packages:
+      - libssl-dev
 
 before_install:
  - date -u
  - uname -a
  - env | grep -v "BINTRAY_API_KEY" | sort
- - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update           ; fi
- - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libssl-dev; fi  
  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update         ; fi
  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install openssl; fi 
 

@@ -60,7 +60,7 @@ function Download-AppVeyor-Artifacts($statuses, $downloadLocation) {
   $buildIdentifier = Extract-BuildIdentifier $statuses "continuous-integration/appveyor/$prOrBranch"
 
   Write-Host -ForegroundColor "Yellow" "Retrieving AppVeyor build `"$buildIdentifier`""
-  $build = Invoke-RestMethod-Ex "https://ci.appveyor.com/api/projects/libgit2/libgit2sharp-nativebinaries/build/$buildIdentifier"
+  $build = Invoke-RestMethod-Ex "https://ci.appveyor.com/api/projects/leobuskin/libgit2sharp-ssh-nativebinaries/build/$buildIdentifier"
 
   $jobId = $build.build.jobs[0].jobId
 
@@ -111,10 +111,10 @@ if ($ref.StartsWith("pull/")) {
   $pr = $ref.Replace("pull/", "")
   Write-Host -ForegroundColor "Yellow" "Retrieving pull request information for pull request $pr"
 
-  $prData = Invoke-RestMethod-Ex "https://api.github.com/repos/libgit2/libgit2sharp.nativebinaries/pulls/$pr"
+  $prData = Invoke-RestMethod-Ex "https://api.github.com/repos/leobuskin/libgit2sharp-ssh.nativebinaries/pulls/$pr"
   $statusesUrl = $prData.statuses_url
 } else {
-  $statusesUrl = "https://api.github.com/repos/libgit2/libgit2sharp.nativebinaries/commits/$ref/statuses"
+  $statusesUrl = "https://api.github.com/repos/leobuskin/libgit2sharp-ssh.nativebinaries/commits/$ref/statuses"
 }
 
 Write-Host -ForegroundColor "Yellow" "Retrieving LibGit2Sharp.NativeBinaries latest CI statuses of `"$ref`""

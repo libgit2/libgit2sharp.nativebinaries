@@ -220,7 +220,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
+    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp-SSH.NativeBinaries.props") $buildProperties
 
     $dllConfig = @"
 <configuration>

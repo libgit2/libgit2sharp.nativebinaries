@@ -95,7 +95,7 @@ function Download-Travis-Artifacts($statuses, $downloadLocation) {
     $localArtifactPath = "$downloadLocation\$artifactFileName"
 
     Write-Host -ForegroundColor "Yellow" "Downloading `"$artifactFileName`""
-    Invoke-RestMethod-Ex "https://dl.bintray.com/libgit2/compiled-binaries/$artifactFileName" $localArtifactPath
+    Invoke-RestMethod-Ex "https://dl.bintray.com/libgit2-ssh/compiled-binaries/$artifactFileName" $localArtifactPath
   }
 }
 
@@ -146,14 +146,14 @@ Push-location "$($package.FullName).ext"
 Remove-Item -Path ".\_rels\" -Recurse
 Remove-Item -Path ".\package\" -Recurse
 Remove-Item -Path '.\`[Content_Types`].xml'
-& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
+& "$root/Nuget.exe" pack "LibGit2Sharp-SSH.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
 
 $newPackage = Get-ChildItem -Path $path -Filter "*.nupkg"
 Pop-Location
 
 Write-Host -ForegroundColor "Yellow" "Copying package `"$($newPackage.Name)`" to `"$root`""
 
-Move-Item -Path "$($newPackage.FullName)" -Destination "$root\$($newPackage.Name)"
+Move-Item -Path "$($newPackage.FullName)" -Destination "$root\$($newPackage.Name)" -force
 
 Write-Host -ForegroundColor "Yellow" "Removing temporary folder"
 Remove-Item "$path" -Recurse

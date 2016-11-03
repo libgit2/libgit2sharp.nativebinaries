@@ -22,9 +22,9 @@ before_install:
  - date -u
  - uname -a
  - env | grep -v "BINTRAY_API_KEY" | sort
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update         ; fi
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install openssl; fi 
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libssh2; fi 
+ - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                                     ; fi
+ - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install openssl                            ; fi 
+ - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew unlink openssl && brew link openssl --force; fi 
 
 install: true
 

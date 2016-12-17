@@ -5,28 +5,28 @@
         <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
     </ItemGroup>
     <ItemGroup>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-baa87df.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-baa87df.dll">
-            <Link>lib\win32\x64\git2-baa87df.dll</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-c655def.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-c655def.dll">
+            <Link>lib\win32\x64\git2-c655def.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-baa87df.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-baa87df.pdb">
-            <Link>lib\win32\x64\git2-baa87df.pdb</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-c655def.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-c655def.pdb">
+            <Link>lib\win32\x64\git2-c655def.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-baa87df.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-baa87df.dll">
-            <Link>lib\win32\x86\git2-baa87df.dll</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-c655def.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-c655def.dll">
+            <Link>lib\win32\x86\git2-c655def.dll</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-baa87df.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-baa87df.pdb">
-            <Link>lib\win32\x86\git2-baa87df.pdb</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-c655def.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-c655def.pdb">
+            <Link>lib\win32\x86\git2-c655def.pdb</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-baa87df.dylib')" Include="$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-baa87df.dylib">
-            <Link>lib\osx\libgit2-baa87df.dylib</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-c655def.dylib')" Include="$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-c655def.dylib">
+            <Link>lib\osx\libgit2-c655def.dylib</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-baa87df.so')" Include="$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-baa87df.so">
-            <Link>lib\linux\x86_64\libgit2-baa87df.so</Link>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-c655def.so')" Include="$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-c655def.so">
+            <Link>lib\linux\x86_64\libgit2-c655def.so</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Include="$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">

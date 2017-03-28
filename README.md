@@ -118,3 +118,4 @@ product, but its actual version number is "12.0".)  A handy guide:
 | Visual Studio 2012 | 11
 | Visual Studio 2013 | 12
 | Visual Studio 2015 | 14
+| Visual Studio 2017 | 15

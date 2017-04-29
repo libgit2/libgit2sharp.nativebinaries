@@ -22,7 +22,7 @@ $projectDirectory = Split-Path $MyInvocation.MyCommand.Path
 $libgit2Directory = Join-Path $projectDirectory "libgit2"
 $x86Directory = Join-Path $projectDirectory "nuget.package\runtimes\win7-x86\native"
 $x64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win7-x64\native"
-$hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
+$hashFile = Join-Path $projectDirectory "nuget.package\contentFiles\any\any\libgit2_hash.txt"
 $sha = Get-Content $hashFile 
 
 if (![string]::IsNullOrEmpty($libgit2Name)) {

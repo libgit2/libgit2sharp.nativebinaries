@@ -4,6 +4,3 @@
 *.dylib
 *.so
 *.zip
-
-# nuget package placeholder
-*.here

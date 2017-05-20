@@ -3,9 +3,18 @@ git:
 
 language: c
 
-os:
- - osx
- - linux
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=ubuntu
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=centos
+    - os: osx
+      env: RID=osx
 
 branches:
  only:

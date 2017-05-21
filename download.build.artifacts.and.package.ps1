@@ -91,8 +91,11 @@ function Download-Travis-Artifacts($statuses, $downloadLocation) {
 
     $buildNumber = $build.number
 
-    ForEach ($platform in @("linux", "osx")) {
-        $artifactFileName = "binaries-$platform-$buildNumber.zip"
+    Write-Host -ForegroundColor "Yellow" "Retrieving Bintray version `"$buildNumber`" artifact list"
+    $files = Invoke-RestMethod-Ex "https://api.bintray.com/packages/libgit2/compiled-binaries/libgit2/versions/$buildNumber/files"
+
+    ForEach ($file in $files) {
+        $artifactFileName = $file.name
         $localArtifactPath = "$downloadLocation\$artifactFileName"
 
         Write-Host -ForegroundColor "Yellow" "Downloading `"$artifactFileName`""
@@ -128,18 +131,15 @@ Download-Travis-Artifacts $statuses $path
 Write-Host -ForegroundColor "Yellow" "Build artifacts have been downloaded at `"$path`""
 
 $package = Get-ChildItem -Path $path -Filter "*.nupkg"
-$linuxBins = Get-ChildItem -Path $path -Filter "binaries-linux-*.zip"
-$osxBins = Get-ChildItem -Path $path -Filter "binaries-osx-*.zip"
+$binaries = Get-ChildItem -Path $path -Filter "*.zip"
 
 Write-Host -ForegroundColor "Yellow" "Extracting build artifacts"
-Add-Type -assembly "System.Io.Compression.Filesystem"
-[Io.Compression.ZipFile]::ExtractToDirectory("$($package.FullName)", "$($package.FullName).ext")
-[Io.Compression.ZipFile]::ExtractToDirectory("$($linuxBins.FullName)", "$($linuxBins.FullName).ext")
-[Io.Compression.ZipFile]::ExtractToDirectory("$($osxBins.FullName)", "$($osxBins.FullName).ext")
+Add-Type -assembly "System.IO.Compression.Filesystem"
+[IO.Compression.ZipFile]::ExtractToDirectory("$($package.FullName)", "$($package.FullName).ext")
 
-Write-Host -ForegroundColor "Yellow" "Including non Windows build artifacts"
-Move-Item "$($linuxBins.FullName).ext\libgit2\linux-x64\native\*.so" "$($package.FullName).ext\runtimes\linux-x64\native"
-Move-Item "$($osxBins.FullName).ext\libgit2\osx\native\*.dylib" "$($package.FullName).ext\runtimes\osx\native"
+ForEach ($binary in $binaries) {
+    [IO.Compression.ZipFile]::ExtractToDirectory("$($binary.FullName)", "$($package.FullName).ext")
+}
 
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"

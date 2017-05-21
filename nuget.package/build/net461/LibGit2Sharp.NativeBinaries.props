@@ -26,8 +26,12 @@
       <TargetPath>lib\osx\libgit2-6311e88.dylib</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-6311e88.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-6311e88.so">
-      <TargetPath>lib\linux\x86_64\libgit2-6311e88.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu-x64\native\libgit2-6311e88.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu-x64\native\libgit2-6311e88.so">
+      <TargetPath>lib\ubuntu-x64\libgit2-6311e88.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\centos-x64\native\libgit2-6311e88.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\centos-x64\native\libgit2-6311e88.so">
+      <TargetPath>lib\centos-x64\libgit2-6311e88.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">

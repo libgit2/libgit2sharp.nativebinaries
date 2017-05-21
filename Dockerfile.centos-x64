@@ -1,0 +1,7 @@
+FROM centos:7
+WORKDIR /nativebinaries
+COPY . /nativebinaries/
+
+RUN yum -y install gcc openssl cmake
+
+CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

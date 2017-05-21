@@ -22,27 +22,27 @@ popd
 
 OS=`uname`
 ARCH=`uname -m`
- 
-PACKAGEPATH="nuget.package/libgit2"
-LIBEXT="so"
 
-if [ $OS == "Linux" ]; then
-	if [ "$ARCH" == "x86_64" ]; then
-		ARCH="x64"
+PACKAGEPATH="nuget.package/runtimes"
+
+if [[ $RID == "" ]]; then
+	if [[ $ARCH == "x86_64" ]]; then
+		RID="unix-x64"
+	else
+		RID="unix-x86"
 	fi
-
-	OSPATH="/linux"
-	ARCHPATH="-$ARCH"
-elif [ $OS == "Darwin" ]; then
-	OSPATH="/osx"
-	LIBEXT="dylib"
-else
-	OSPATH="/unix"
+	echo "$(tput setaf 3)RID not defined. Falling back to '$RID'.$(tput sgr0)"
 fi
 
-rm -rf $PACKAGEPATH$OSPATH
-mkdir -p $PACKAGEPATH$OSPATH$ARCHPATH/native
+if [[ $OS == "Darwin" ]]; then
+	LIBEXT="dylib"
+else
+	LIBEXT="so"
+fi
 
-cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH$OSPATH$ARCHPATH/native
+rm -rf $PACKAGEPATH/$RID
+mkdir -p $PACKAGEPATH/$RID/native
+
+cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native
 
 exit $?

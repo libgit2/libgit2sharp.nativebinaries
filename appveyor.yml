@@ -7,7 +7,7 @@ branches:
 skip_tags: true
 
 install:
-- git submodule update --init --recursive
+- git submodule update --init
 
 build_script:
 - ps: .\build.libgit2.ps1 -vs 12

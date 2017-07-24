@@ -137,9 +137,7 @@ Add-Type -assembly "System.Io.Compression.Filesystem"
 
 Write-Host -ForegroundColor "Yellow" "Including non Windows build artifacts"
 Move-Item "$($linuxBins.FullName).ext\libgit2\linux-x64\native\*.so" "$($package.FullName).ext\runtimes\linux-x64\native"
-Remove-Item "$($package.FullName).ext\runtimes\linux-x64\native\addbinaries.here"
 Move-Item "$($osxBins.FullName).ext\libgit2\osx\native\*.dylib" "$($package.FullName).ext\runtimes\osx\native"
-Remove-Item "$($package.FullName).ext\runtimes\osx\native\addbinaries.here"
 
 Write-Host -ForegroundColor "Yellow" "Building final NuGet package"
 Push-location "$($package.FullName).ext"

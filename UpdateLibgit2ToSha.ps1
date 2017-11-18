@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Updates the libgit2 submodule to the specified commit and updates NativeBinaries.props with the new hash value.
+    Updates the libgit2 submodule to the specified commit and updates libgit2_hash.txt and NativeBinaries.props with the new hash value.
 .PARAMETER sha
     Desired libgit2 version. This is run through `git rev-parse`, so branch names are okay too.
 #>
@@ -87,6 +87,8 @@ Push-Location $libgit2Directory
     } else {
         $binaryFilename = "git2-" + $sha.Substring(0,7)
     }
+
+    sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
 
     $buildProperties = @"
 <Project>

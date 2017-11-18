@@ -92,38 +92,37 @@ Push-Location $libgit2Directory
     sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\contentFiles\any\any\libgit2_filename.txt") $binaryFilename
 
     $buildProperties = @"
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <ItemGroup>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll">
-            <Link>lib\win32\x64\$binaryFilename.dll</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.pdb">
-            <Link>lib\win32\x64\$binaryFilename.pdb</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.dll">
-            <Link>lib\win32\x86\$binaryFilename.dll</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.pdb">
-            <Link>lib\win32\x86\$binaryFilename.pdb</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\lib$binaryFilename.dylib">
-            <Link>lib\osx\lib$binaryFilename.dylib</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so">
-            <Link>lib\linux\x86_64\lib$binaryFilename.so</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <None Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
-            <Link>LibGit2Sharp.dll.config</Link>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
+<Project>
+  <ItemGroup>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll">
+      <TargetPath>lib\win32\x64\$binaryFilename.dll</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.pdb">
+      <TargetPath>lib\win32\x64\$binaryFilename.pdb</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.dll">
+      <TargetPath>lib\win32\x86\$binaryFilename.dll</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.pdb">
+      <TargetPath>lib\win32\x86\$binaryFilename.pdb</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\lib$binaryFilename.dylib">
+      <TargetPath>lib\osx\lib$binaryFilename.dylib</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\linux\x86_64\lib$binaryFilename.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
+      <TargetPath>LibGit2Sharp.dll.config</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+  </ItemGroup>
 </Project>
 "@
 

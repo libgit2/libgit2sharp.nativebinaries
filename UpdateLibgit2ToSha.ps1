@@ -16,7 +16,7 @@ $self = Split-Path -Leaf $MyInvocation.MyCommand.Path
 $projectDirectory = Split-Path $MyInvocation.MyCommand.Path
 $libgit2Directory = Join-Path $projectDirectory "libgit2"
 
-function Run-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
+function Invoke-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
     $output = ""
     if ($Quiet) {
         $output = & $Command 2>&1
@@ -67,18 +67,18 @@ Push-Location $libgit2Directory
     $git = Find-Git
 
     Write-Output "Fetching..."
-    Run-Command -Quiet { & $git fetch }
+    Invoke-Command -Quiet { & $git fetch }
 
     Write-Output "Verifying $sha..."
     $sha = & $git rev-parse $sha
     if ($LASTEXITCODE -ne 0) {
         write-host -foregroundcolor red "Error: invalid SHA. USAGE: $self <SHA>"
-        popd
+        Pop-Location
         break
     }
 
     Write-Output "Checking out $sha..."
-    Run-Command -Quiet -Fatal { & $git checkout $sha }
+    Invoke-Command -Quiet -Fatal { & $git checkout $sha }
 
     Pop-Location
 
@@ -88,7 +88,7 @@ Push-Location $libgit2Directory
         $binaryFilename = "git2-" + $sha.Substring(0,7)
     }
 
-    sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
+    Set-Content -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
 
     $buildProperties = @"
 <Project>
@@ -99,7 +99,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
+    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
 
     $net40BuildProperties = @"
 <Project>
@@ -140,7 +140,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net40\LibGit2Sharp.NativeBinaries.props") $net40BuildProperties
+    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net40\LibGit2Sharp.NativeBinaries.props") $net40BuildProperties
 
     $dllConfig = @"
 <configuration>
@@ -149,7 +149,7 @@ Push-Location $libgit2Directory
 </configuration>
 "@
 
-    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\libgit2\LibGit2Sharp.dll.config") $dllConfig
+    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\libgit2\LibGit2Sharp.dll.config") $dllConfig
 
     Write-Output "Done!"
 }

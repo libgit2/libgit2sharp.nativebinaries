@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Updates the libgit2 submodule to the specified commit and updates libgit2_hash.txt and NativeBinaries.props with the new hash value.
+    Updates the libgit2 submodule to the specified commit and updates NativeBinaries.props with the new hash value.
 .PARAMETER sha
     Desired libgit2 version. This is run through `git rev-parse`, so branch names are okay too.
 #>
@@ -88,11 +88,23 @@ Push-Location $libgit2Directory
         $binaryFilename = "git2-" + $sha.Substring(0,7)
     }
 
-    sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\contentFiles\any\any\libgit2_hash.txt") $sha
-    sc -Encoding ASCII (Join-Path $projectDirectory "nuget.package\contentFiles\any\any\libgit2_filename.txt") $binaryFilename
-
     $buildProperties = @"
 <Project>
+  <PropertyGroup>
+    <libgit2_hash>$sha</libgit2_hash>
+    <libgit2_filename>$binaryFilename</libgit2_filename>
+  </PropertyGroup>
+</Project>
+"@
+
+    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
+
+    $net40BuildProperties = @"
+<Project>
+  <PropertyGroup>
+    <libgit2_hash>$sha</libgit2_hash>
+    <libgit2_filename>$binaryFilename</libgit2_filename>
+  </PropertyGroup>
   <ItemGroup>
     <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll">
       <TargetPath>lib\win32\x64\$binaryFilename.dll</TargetPath>
@@ -126,7 +138,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net40\LibGit2Sharp.NativeBinaries.props") $buildProperties
+    sc -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net40\LibGit2Sharp.NativeBinaries.props") $net40BuildProperties
 
     $dllConfig = @"
 <configuration>

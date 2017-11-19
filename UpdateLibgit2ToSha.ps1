@@ -93,6 +93,8 @@ Push-Location $libgit2Directory
     $buildProperties = @"
 <Project>
   <PropertyGroup>
+    <MSBuildAllProjects>`$(MSBuildAllProjects);`$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <libgit2_propsfile>`$(MSBuildThisFileFullPath)</libgit2_propsfile>
     <libgit2_hash>$sha</libgit2_hash>
     <libgit2_filename>$binaryFilename</libgit2_filename>
   </PropertyGroup>
@@ -104,6 +106,8 @@ Push-Location $libgit2Directory
     $net461BuildProperties = @"
 <Project>
   <PropertyGroup>
+    <MSBuildAllProjects>`$(MSBuildAllProjects);`$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <libgit2_propsfile>`$(MSBuildThisFileFullPath)</libgit2_propsfile>
     <libgit2_hash>$sha</libgit2_hash>
     <libgit2_filename>$binaryFilename</libgit2_filename>
   </PropertyGroup>

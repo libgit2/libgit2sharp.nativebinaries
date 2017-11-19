@@ -101,7 +101,7 @@ Push-Location $libgit2Directory
 
     Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
 
-    $net40BuildProperties = @"
+    $net461BuildProperties = @"
 <Project>
   <PropertyGroup>
     <libgit2_hash>$sha</libgit2_hash>
@@ -140,7 +140,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net40\LibGit2Sharp.NativeBinaries.props") $net40BuildProperties
+    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net461\LibGit2Sharp.NativeBinaries.props") $net461BuildProperties
 
     $dllConfig = @"
 <configuration>

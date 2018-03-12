@@ -10,6 +10,7 @@ os:
 branches:
  only:
    - master
+   - /^maint.*/
 
 before_install:
  - date -u

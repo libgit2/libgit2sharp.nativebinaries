@@ -16,7 +16,7 @@ build_script:
 after_build:
 - ps: |
     $pre = $true
-    if (($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) -and ($env:APPVEYOR_REPO_BRANCH -ne $null) -and (($env:APPVEYOR_REPO_BRANCH -eq "master") -or ($env::APPVEYOR_REPO_BRANCH.StartsWith("maint/"))))
+    if (($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $null) -and ($env:APPVEYOR_REPO_BRANCH -ne $null) -and (($env:APPVEYOR_REPO_BRANCH -eq "master") -or ($env:APPVEYOR_REPO_BRANCH.StartsWith("maint/"))))
     {
     	$pre = $false
     }

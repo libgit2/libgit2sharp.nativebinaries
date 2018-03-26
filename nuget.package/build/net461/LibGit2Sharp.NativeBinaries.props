@@ -2,32 +2,32 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
-    <libgit2_hash>2d2a60258f83b937a9a840ae1bea4968492b099e</libgit2_hash>
-    <libgit2_filename>git2-2d2a602</libgit2_filename>
+    <libgit2_hash>6311e886d8b5377c6037cd9937ccf66a71f3361d</libgit2_hash>
+    <libgit2_filename>git2-6311e88</libgit2_filename>
   </PropertyGroup>
   <ItemGroup>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-2d2a602.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-2d2a602.dll">
-      <TargetPath>lib\win32\x64\git2-2d2a602.dll</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-6311e88.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-6311e88.dll">
+      <TargetPath>lib\win32\x64\git2-6311e88.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-2d2a602.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-2d2a602.pdb">
-      <TargetPath>lib\win32\x64\git2-2d2a602.pdb</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-6311e88.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\git2-6311e88.pdb">
+      <TargetPath>lib\win32\x64\git2-6311e88.pdb</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-2d2a602.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-2d2a602.dll">
-      <TargetPath>lib\win32\x86\git2-2d2a602.dll</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-6311e88.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-6311e88.dll">
+      <TargetPath>lib\win32\x86\git2-6311e88.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-2d2a602.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-2d2a602.pdb">
-      <TargetPath>lib\win32\x86\git2-2d2a602.pdb</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-6311e88.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\git2-6311e88.pdb">
+      <TargetPath>lib\win32\x86\git2-6311e88.pdb</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-2d2a602.dylib')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-2d2a602.dylib">
-      <TargetPath>lib\osx\libgit2-2d2a602.dylib</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-6311e88.dylib')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-6311e88.dylib">
+      <TargetPath>lib\osx\libgit2-6311e88.dylib</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-2d2a602.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-2d2a602.so">
-      <TargetPath>lib\linux\x86_64\libgit2-2d2a602.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-6311e88.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-6311e88.so">
+      <TargetPath>lib\linux\x86_64\libgit2-6311e88.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">

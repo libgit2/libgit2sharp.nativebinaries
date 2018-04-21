@@ -132,8 +132,8 @@ Push-Location $libgit2Directory
       <TargetPath>lib\osx\lib$binaryFilename.dylib</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu-x64\native\lib$binaryFilename.so">
-      <TargetPath>lib\ubuntu-x64\lib$binaryFilename.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\linux-x64\lib$binaryFilename.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\centos-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\centos-x64\native\lib$binaryFilename.so">
@@ -152,7 +152,7 @@ Push-Location $libgit2Directory
 
     $dllConfig = @"
 <configuration>
-    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/ubuntu-x64/lib$binaryFilename.so" />
+    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/linux-x64/lib$binaryFilename.so" />
     <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="lib/osx/lib$binaryFilename.dylib" />
 </configuration>
 "@

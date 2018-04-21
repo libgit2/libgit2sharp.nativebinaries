@@ -8,7 +8,7 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      env: RID=ubuntu-x64
+      env: RID=linux-x64
     - os: linux
       dist: trusty
       sudo: required
@@ -30,7 +30,7 @@ before_install:
 install: true
 
 script:
-  - if [[ $RID == "osx" ]] || [[ $RID == "ubuntu-x64" ]]; then ./build.libgit2.sh ; fi
-  - if [[ $RID != "osx" ]] && [[ $RID != "ubuntu-x64" ]]; then ./dockerbuild.sh   ; fi
+  - if [[ $RID == "osx" ]] || [[ $RID == "linux-x64" ]]; then ./build.libgit2.sh ; fi
+  - if [[ $RID != "osx" ]] && [[ $RID != "linux-x64" ]]; then ./dockerbuild.sh   ; fi
 
 after_success: ./uploadbinaries.sh

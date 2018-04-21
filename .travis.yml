@@ -13,6 +13,14 @@ matrix:
       dist: trusty
       sudo: required
       env: RID=rhel-x64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=fedora-x64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=debian.9-x64
     - os: osx
       env: RID=osx
 

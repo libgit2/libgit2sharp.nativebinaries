@@ -98,6 +98,15 @@ Push-Location $libgit2Directory
     <libgit2_hash>$sha</libgit2_hash>
     <libgit2_filename>$binaryFilename</libgit2_filename>
   </PropertyGroup>
+  <ItemGroup>
+    <libgit2_rid Include='"win-x64"' />
+    <libgit2_rid Include='"win-x86"' />
+    <libgit2_rid Include='"osx"' />
+    <libgit2_rid Include='"linux-x64"' />
+    <libgit2_rid Include='"rhel-x64"' />
+    <libgit2_rid Include='"fedora-x64"' />
+    <libgit2_rid Include='"debian.9-x64"' />
+  </ItemGroup>
 </Project>
 "@
 
@@ -105,51 +114,10 @@ Push-Location $libgit2Directory
 
     $net461BuildProperties = @"
 <Project>
-  <PropertyGroup>
-    <MSBuildAllProjects>`$(MSBuildAllProjects);`$(MSBuildThisFileFullPath)</MSBuildAllProjects>
-    <libgit2_propsfile>`$(MSBuildThisFileFullPath)</libgit2_propsfile>
-    <libgit2_hash>$sha</libgit2_hash>
-    <libgit2_filename>$binaryFilename</libgit2_filename>
-  </PropertyGroup>
+  <Import Project="`$(MSBuildThisFileDirectory)\..\LibGit2Sharp.NativeBinaries.props" />
   <ItemGroup>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.dll">
-      <TargetPath>lib\win32\x64\$binaryFilename.dll</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.pdb">
-      <TargetPath>lib\win32\x64\$binaryFilename.pdb</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.dll">
-      <TargetPath>lib\win32\x86\$binaryFilename.dll</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.pdb">
-      <TargetPath>lib\win32\x86\$binaryFilename.pdb</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\lib$binaryFilename.dylib')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\lib$binaryFilename.dylib">
-      <TargetPath>lib\osx\lib$binaryFilename.dylib</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so">
-      <TargetPath>lib\linux-x64\lib$binaryFilename.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\lib$binaryFilename.so">
-      <TargetPath>lib\rhel-x64\lib$binaryFilename.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\lib$binaryFilename.so">
-      <TargetPath>lib\fedora-x64\lib$binaryFilename.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\lib$binaryFilename.so">
-      <TargetPath>lib\debian.9-x64\lib$binaryFilename.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
-      <TargetPath>LibGit2Sharp.dll.config</TargetPath>
+    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\**\*">
+      <TargetPath>runtimes\%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
   </ItemGroup>
@@ -157,15 +125,6 @@ Push-Location $libgit2Directory
 "@
 
     Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net461\LibGit2Sharp.NativeBinaries.props") $net461BuildProperties
-
-    $dllConfig = @"
-<configuration>
-    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/linux-x64/lib$binaryFilename.so" />
-    <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="lib/osx/lib$binaryFilename.dylib" />
-</configuration>
-"@
-
-    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\libgit2\LibGit2Sharp.dll.config") $dllConfig
 
     Write-Output "Done!"
 }

@@ -5,4 +5,13 @@
     <libgit2_hash>6311e886d8b5377c6037cd9937ccf66a71f3361d</libgit2_hash>
     <libgit2_filename>git2-6311e88</libgit2_filename>
   </PropertyGroup>
+  <ItemGroup>
+    <libgit2_rid Include='"win-x64"' />
+    <libgit2_rid Include='"win-x86"' />
+    <libgit2_rid Include='"osx"' />
+    <libgit2_rid Include='"linux-x64"' />
+    <libgit2_rid Include='"rhel-x64"' />
+    <libgit2_rid Include='"fedora-x64"' />
+    <libgit2_rid Include='"debian.9-x64"' />
+  </ItemGroup>
 </Project>

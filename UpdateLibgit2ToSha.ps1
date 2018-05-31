@@ -112,19 +112,19 @@ Push-Location $libgit2Directory
     <libgit2_filename>$binaryFilename</libgit2_filename>
   </PropertyGroup>
   <ItemGroup>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.dll">
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.dll">
       <TargetPath>lib\win32\x64\$binaryFilename.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x64\native\$binaryFilename.pdb">
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\$binaryFilename.pdb">
       <TargetPath>lib\win32\x64\$binaryFilename.pdb</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.dll">
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.dll')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.dll">
       <TargetPath>lib\win32\x86\$binaryFilename.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win7-x86\native\$binaryFilename.pdb">
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.pdb')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\$binaryFilename.pdb">
       <TargetPath>lib\win32\x86\$binaryFilename.pdb</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
@@ -133,7 +133,19 @@ Push-Location $libgit2Directory
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\lib$binaryFilename.so">
-      <TargetPath>lib\linux\x86_64\lib$binaryFilename.so</TargetPath>
+      <TargetPath>lib\linux-x64\lib$binaryFilename.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\rhel-x64\lib$binaryFilename.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\fedora-x64\lib$binaryFilename.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\debian.9-x64\lib$binaryFilename.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
@@ -148,7 +160,7 @@ Push-Location $libgit2Directory
 
     $dllConfig = @"
 <configuration>
-    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/linux/x86_64/lib$binaryFilename.so" />
+    <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/linux-x64/lib$binaryFilename.so" />
     <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="lib/osx/lib$binaryFilename.dylib" />
 </configuration>
 "@

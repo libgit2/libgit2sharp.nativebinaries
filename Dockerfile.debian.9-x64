@@ -1,0 +1,7 @@
+FROM debian:9
+WORKDIR /nativebinaries
+COPY . /nativebinaries/
+
+RUN apt update && apt -y install cmake gcc libcurl4-openssl-dev libssl-dev pkg-config zlib1g-dev
+
+CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

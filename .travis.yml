@@ -3,9 +3,26 @@ git:
 
 language: c
 
-os:
- - osx
- - linux
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=linux-x64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=rhel-x64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=fedora-x64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=debian.9-x64
+    - os: osx
+      env: RID=osx
 
 branches:
  only:
@@ -20,6 +37,8 @@ before_install:
 
 install: true
 
-script: ./build.libgit2.sh
+script:
+  - if [[ $RID == "osx" ]] || [[ $RID == "linux-x64" ]]; then ./build.libgit2.sh ; fi
+  - if [[ $RID != "osx" ]] && [[ $RID != "linux-x64" ]]; then ./dockerbuild.sh   ; fi
 
 after_success: ./uploadbinaries.sh

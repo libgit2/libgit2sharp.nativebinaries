@@ -37,8 +37,6 @@ before_install:
 
 install: true
 
-script:
-  - if [[ $RID == "osx" ]] || [[ $RID == "linux-x64" ]]; then ./build.libgit2.sh ; fi
-  - if [[ $RID != "osx" ]] && [[ $RID != "linux-x64" ]]; then ./dockerbuild.sh   ; fi
+script: if [[ $RID == "osx" ]]; then ./build.libgit2.sh ; else ./dockerbuild.sh ; fi
 
 after_success: ./uploadbinaries.sh

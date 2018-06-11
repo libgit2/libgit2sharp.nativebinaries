@@ -6,6 +6,9 @@ Param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+$PSDefaultParameterValues['Invoke-RestMethod:SkipHeaderValidation'] = $true
+$PSDefaultParameterValues['Invoke-WebRequest:SkipHeaderValidation'] = $true
+
 function Invoke-RestMethod-Ex($url, $downloadLocation) {
   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -29,7 +32,7 @@ function Invoke-RestMethod-Ex($url, $downloadLocation) {
         $irmParams.OutFile = "$downloadLocation"
     }
 
-    $output = Invoke-RestMethod @irmParams -ContentType "application/json" -Method "Get" -Uri "$url"
+    $output = Invoke-RestMethod @irmParams -Method "Get" -Uri "$url"
 
     if ($verbose) {
         Write-Host -ForegroundColor "Gray" "output = $(ConvertTo-Json $output)"

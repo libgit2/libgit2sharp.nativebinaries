@@ -42,6 +42,10 @@
       <TargetPath>lib\debian.9-x64\libgit2-b0d9952.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-b0d9952.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-b0d9952.so">
+      <TargetPath>lib\alpine-x64\libgit2-b0d9952.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
     <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
       <TargetPath>LibGit2Sharp.dll.config</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

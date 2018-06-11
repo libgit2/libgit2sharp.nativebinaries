@@ -148,6 +148,10 @@ Push-Location $libgit2Directory
       <TargetPath>lib\debian.9-x64\lib$binaryFilename.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\alpine-x64\lib$binaryFilename.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
     <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
       <TargetPath>LibGit2Sharp.dll.config</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

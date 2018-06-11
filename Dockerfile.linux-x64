@@ -1,0 +1,7 @@
+FROM ubuntu:14.04
+WORKDIR /nativebinaries
+COPY . /nativebinaries/
+
+RUN apt update && apt -y install cmake libcurl4-openssl-dev libssl-dev pkg-config
+
+CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

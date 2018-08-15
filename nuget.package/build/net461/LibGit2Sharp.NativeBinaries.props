@@ -30,6 +30,10 @@
       <TargetPath>lib\linux-x64\libgit2-8e0b172.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-8e0b172.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-8e0b172.so">
+      <TargetPath>lib\ubuntu.18.04-x64\libgit2-8e0b172.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
     <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-8e0b172.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-8e0b172.so">
       <TargetPath>lib\rhel-x64\libgit2-8e0b172.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -12,6 +12,10 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
+      env: RID=ubuntu.18.04-x64
+    - os: linux
+      dist: trusty
+      sudo: required
       env: RID=rhel-x64
     - os: linux
       dist: trusty

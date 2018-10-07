@@ -9,26 +9,6 @@ matrix:
       dist: trusty
       sudo: required
       env: RID=linux-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=ubuntu.18.04-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=rhel-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=fedora-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=debian.9-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=alpine-x64
     - os: osx
       env: RID=osx
 
@@ -45,6 +25,6 @@ before_install:
 
 install: true
 
-script: if [[ $RID == "osx" ]]; then ./build.libgit2.sh ; else ./dockerbuild.sh ; fi
+script: ./build.libgit2.sh
 
 after_success: ./uploadbinaries.sh

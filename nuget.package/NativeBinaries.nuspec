@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
-    <id>LibGit2Sharp.NativeBinaries</id>
+    <id>LibGit2Sharp.NativeBinaries.NoTLS</id>
     <version>1.0.155</version>
     <authors>LibGit2Sharp contributors</authors>
-    <owners>nulltoken</owners>
+    <owners>ethomson</owners>
     <licenseUrl>https://raw.githubusercontent.com/libgit2/libgit2/master/COPYING</licenseUrl>
     <projectUrl>https://github.com/libgit2/libgit2sharp.nativebinaries</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/libgit2/libgit2sharp/master/square-logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Native binaries for LibGit2Sharp</description>
+    <description>Native binaries for LibGit2Sharp: Experimental Builtin HTTPS Support</description>
   </metadata>
 </package>

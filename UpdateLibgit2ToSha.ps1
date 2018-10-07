@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Updates the libgit2 submodule to the specified commit and updates libgit2_hash.txt and NativeBinaries.props with the new hash value.
+    Updates the libgit2 submodule to the specified commit and updates libgit2_hash.txt and NativeBinaries.NoTLS.props with the new hash value.
 .PARAMETER sha
     Desired libgit2 version. This is run through `git rev-parse`, so branch names are okay too.
 #>
@@ -101,7 +101,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
+    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.NoTLS.props") $buildProperties
 
     $net461BuildProperties = @"
 <Project>
@@ -164,7 +164,7 @@ Push-Location $libgit2Directory
 </Project>
 "@
 
-    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net461\LibGit2Sharp.NativeBinaries.props") $net461BuildProperties
+    Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\net461\LibGit2Sharp.NativeBinaries.NoTLS.props") $net461BuildProperties
 
     $dllConfig = @"
 <configuration>

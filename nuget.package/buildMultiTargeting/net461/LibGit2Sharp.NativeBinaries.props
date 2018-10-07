@@ -1,3 +1,0 @@
-<Project>
-  <Import Project="..\..\build\net461\LibGit2Sharp.NativeBinaries.props" />
-</Project>

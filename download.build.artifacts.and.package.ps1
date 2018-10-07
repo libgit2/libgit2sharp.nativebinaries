@@ -149,7 +149,7 @@ Push-location "$($package.FullName).ext"
 Remove-Item -Path ".\_rels\" -Recurse
 Remove-Item -Path ".\package\" -Recurse
 Remove-Item -Path '.\`[Content_Types`].xml'
-& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
+& "$root/Nuget.exe" pack "LibGit2Sharp.NativeBinaries.NoTLS.nuspec" -OutputDirectory "$path" -NoPackageAnalysis -Verbosity "detailed"
 
 $newPackage = Get-ChildItem -Path $path -Filter "*.nupkg"
 Pop-Location

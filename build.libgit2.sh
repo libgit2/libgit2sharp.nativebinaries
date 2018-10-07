@@ -15,6 +15,9 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DENABLE_TRACE=ON \
       -DLIBGIT2_FILENAME=git2-$SHORTSHA \
       -DCMAKE_OSX_ARCHITECTURES="i386;x86_64" \
+      -DUSE_HTTPS=OFF \
+      -DCURL=OFF \
+      -DUSE_BUNDLED_ZLIB=ON \
       ..
 cmake --build .
 

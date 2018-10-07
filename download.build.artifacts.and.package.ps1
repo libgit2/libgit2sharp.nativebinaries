@@ -64,7 +64,7 @@ function Download-AppVeyor-Artifacts($statuses, $downloadLocation) {
     $buildIdentifier = Extract-BuildIdentifier $statuses "continuous-integration/appveyor/$prOrBranch"
 
     Write-Host -ForegroundColor "Yellow" "Retrieving AppVeyor build `"$buildIdentifier`""
-    $build = Invoke-RestMethod-Ex "https://ci.appveyor.com/api/projects/libgit2/libgit2sharp-nativebinaries/build/$buildIdentifier"
+    $build = Invoke-RestMethod-Ex "https://ci.appveyor.com/api/projects/libgit2/libgit2sharp-nativebinaries/builds/$buildIdentifier"
 
     $jobId = $build.build.jobs[0].jobId
 

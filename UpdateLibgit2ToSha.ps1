@@ -136,6 +136,10 @@ Push-Location $libgit2Directory
       <TargetPath>lib\linux-x64\lib$binaryFilename.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\lib$binaryFilename.so">
+      <TargetPath>lib\ubuntu.18.04-x64\lib$binaryFilename.so</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
     <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\lib$binaryFilename.so">
       <TargetPath>lib\rhel-x64\lib$binaryFilename.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

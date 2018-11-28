@@ -2,52 +2,52 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
-    <libgit2_hash>f23dc5b29f1394928a940d7ec447f4bfd53dad1f</libgit2_hash>
-    <libgit2_filename>git2-f23dc5b</libgit2_filename>
+    <libgit2_hash>4aecb64300ffda85422b1f61e47ba4fb92517249</libgit2_hash>
+    <libgit2_filename>git2-4aecb64</libgit2_filename>
   </PropertyGroup>
   <ItemGroup>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-f23dc5b.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-f23dc5b.dll">
-      <TargetPath>lib\win32\x64\git2-f23dc5b.dll</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-4aecb64.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-4aecb64.dll">
+      <TargetPath>lib\win32\x64\git2-4aecb64.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-f23dc5b.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-f23dc5b.pdb">
-      <TargetPath>lib\win32\x64\git2-f23dc5b.pdb</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-4aecb64.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-4aecb64.pdb">
+      <TargetPath>lib\win32\x64\git2-4aecb64.pdb</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-f23dc5b.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-f23dc5b.dll">
-      <TargetPath>lib\win32\x86\git2-f23dc5b.dll</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-4aecb64.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-4aecb64.dll">
+      <TargetPath>lib\win32\x86\git2-4aecb64.dll</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-f23dc5b.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-f23dc5b.pdb">
-      <TargetPath>lib\win32\x86\git2-f23dc5b.pdb</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-4aecb64.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-4aecb64.pdb">
+      <TargetPath>lib\win32\x86\git2-4aecb64.pdb</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-f23dc5b.dylib')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-f23dc5b.dylib">
-      <TargetPath>lib\osx\libgit2-f23dc5b.dylib</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-4aecb64.dylib')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-4aecb64.dylib">
+      <TargetPath>lib\osx\libgit2-4aecb64.dylib</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-f23dc5b.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-f23dc5b.so">
-      <TargetPath>lib\linux-x64\libgit2-f23dc5b.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-4aecb64.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-4aecb64.so">
+      <TargetPath>lib\linux-x64\libgit2-4aecb64.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-f23dc5b.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-f23dc5b.so">
-      <TargetPath>lib\ubuntu.18.04-x64\libgit2-f23dc5b.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-4aecb64.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-4aecb64.so">
+      <TargetPath>lib\ubuntu.18.04-x64\libgit2-4aecb64.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-f23dc5b.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-f23dc5b.so">
-      <TargetPath>lib\rhel-x64\libgit2-f23dc5b.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-4aecb64.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-4aecb64.so">
+      <TargetPath>lib\rhel-x64\libgit2-4aecb64.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\libgit2-f23dc5b.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\libgit2-f23dc5b.so">
-      <TargetPath>lib\fedora-x64\libgit2-f23dc5b.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\libgit2-4aecb64.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\libgit2-4aecb64.so">
+      <TargetPath>lib\fedora-x64\libgit2-4aecb64.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\libgit2-f23dc5b.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\libgit2-f23dc5b.so">
-      <TargetPath>lib\debian.9-x64\libgit2-f23dc5b.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\libgit2-4aecb64.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\libgit2-4aecb64.so">
+      <TargetPath>lib\debian.9-x64\libgit2-4aecb64.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-f23dc5b.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-f23dc5b.so">
-      <TargetPath>lib\alpine-x64\libgit2-f23dc5b.so</TargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-4aecb64.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-4aecb64.so">
+      <TargetPath>lib\alpine-x64\libgit2-4aecb64.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">

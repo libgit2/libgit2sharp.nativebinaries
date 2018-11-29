@@ -2,6 +2,6 @@ FROM ubuntu:18.04
 WORKDIR /nativebinaries
 COPY . /nativebinaries/
 
-RUN apt update && apt -y install cmake libcurl4-openssl-dev libssl-dev pkg-config zlib1g-dev
+RUN apt update && apt -y install cmake libssl-dev pkg-config zlib1g-dev
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

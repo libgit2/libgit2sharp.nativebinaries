@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>LibGit2Sharp.NativeBinaries</id>
-    <version>1.0.155</version>
+    <version>2.0.0</version>
     <authors>LibGit2Sharp contributors</authors>
     <owners>nulltoken</owners>
     <licenseUrl>https://raw.githubusercontent.com/libgit2/libgit2/master/COPYING</licenseUrl>

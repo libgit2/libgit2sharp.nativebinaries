@@ -9,6 +9,10 @@ pushd libgit2/build
 
 export _BINPATH=`pwd`
 
+if [[ $RID == *arm64 ]]; then
+	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
+fi
+
 cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DBUILD_CLAR:BOOL=OFF \
       -DUSE_SSH=OFF \
@@ -16,6 +20,7 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DLIBGIT2_FILENAME=git2-$SHORTSHA \
       -DCMAKE_OSX_ARCHITECTURES="i386;x86_64" \
       -DUSE_BUNDLED_ZLIB=ON \
+      -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
       ..
 cmake --build .
 

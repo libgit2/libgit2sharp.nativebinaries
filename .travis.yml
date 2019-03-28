@@ -43,6 +43,10 @@ matrix:
       dist: trusty
       sudo: required
       env: RID=ubuntu.18.04-arm64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=debian.9-arm64
 
 branches:
  only:

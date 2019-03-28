@@ -35,6 +35,14 @@ matrix:
       env: RID=alpine.3.9-x64
     - os: osx
       env: RID=osx
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=linux-arm64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=ubuntu.18.04-arm64
 
 branches:
  only:

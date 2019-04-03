@@ -17,6 +17,10 @@ matrix:
       dist: trusty
       sudo: required
       env: RID=linux-arm64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=linux-arm
     - os: osx
       env: RID=osx
 

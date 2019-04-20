@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
@@ -49,6 +49,10 @@
     <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-572e4d8.so">
       <TargetPath>lib\alpine-x64\libgit2-572e4d8.so</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine.3.9-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine.3.9-x64\native\libgit2-572e4d8.so">
+      <TargetPath>lib\alpine.3.9-x64\libgit2-572e4d8.so</TargetPath>
+      CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
       <TargetPath>LibGit2Sharp.dll.config</TargetPath>

@@ -29,6 +29,10 @@ matrix:
       dist: trusty
       sudo: required
       env: RID=alpine-x64
+    - os: linux
+      dist: trusty
+      sudo: required
+      env: RID=alpine.3.9-x64
     - os: osx
       env: RID=osx
 

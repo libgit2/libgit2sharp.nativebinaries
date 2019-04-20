@@ -1,62 +1,13 @@
 <Project>
   <PropertyGroup>
-    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
     <libgit2_hash>572e4d8c1f1d42feac1c770f0cddf6fda6c4eca0</libgit2_hash>
     <libgit2_filename>git2-572e4d8</libgit2_filename>
   </PropertyGroup>
   <ItemGroup>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-572e4d8.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-572e4d8.dll">
-      <TargetPath>lib\win32\x64\git2-572e4d8.dll</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-572e4d8.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\git2-572e4d8.pdb">
-      <TargetPath>lib\win32\x64\git2-572e4d8.pdb</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-572e4d8.dll')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-572e4d8.dll">
-      <TargetPath>lib\win32\x86\git2-572e4d8.dll</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-572e4d8.pdb')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\git2-572e4d8.pdb">
-      <TargetPath>lib\win32\x86\git2-572e4d8.pdb</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-572e4d8.dylib')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\osx\native\libgit2-572e4d8.dylib">
-      <TargetPath>lib\osx\libgit2-572e4d8.dylib</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\linux-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\linux-x64\libgit2-572e4d8.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\ubuntu.18.04-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\ubuntu.18.04-x64\libgit2-572e4d8.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\rhel-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\rhel-x64\libgit2-572e4d8.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\fedora-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\fedora-x64\libgit2-572e4d8.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\debian.9-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\debian.9-x64\libgit2-572e4d8.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\alpine-x64\libgit2-572e4d8.so</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Condition="Exists('$(MSBuildThisFileDirectory)\..\..\runtimes\alpine.3.9-x64\native\libgit2-572e4d8.so')" Include="$(MSBuildThisFileDirectory)\..\..\runtimes\alpine.3.9-x64\native\libgit2-572e4d8.so">
-      <TargetPath>lib\alpine.3.9-x64\libgit2-572e4d8.so</TargetPath>
-      CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
-      <TargetPath>LibGit2Sharp.dll.config</TargetPath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\*" TargetPath="lib\win32\x86\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\*" TargetPath="lib\win32\x64\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\runtimes\**\*" Exclude="$(MSBuildThisFileDirectory)\..\..\runtimes\win-*\**\*" TargetPath="lib\%(RecursiveDir)..\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config" TargetPath="LibGit2Sharp.dll.config" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

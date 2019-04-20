@@ -158,7 +158,7 @@ Push-Location $libgit2Directory
     </ContentWithTargetPath>
     <ContentWithTargetPath Condition="Exists('`$(MSBuildThisFileDirectory)\..\..\runtimes\alpine.3.9-x64\native\lib$binaryFilename.so')" Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\alpine.3.9-x64\native\lib$binaryFilename.so">
       <TargetPath>lib\alpine.3.9-x64\lib$binaryFilename.so</TargetPath>
-      CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </ContentWithTargetPath>
     <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
       <TargetPath>LibGit2Sharp.dll.config</TargetPath>

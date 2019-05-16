@@ -91,7 +91,7 @@ Push-Location $libgit2Directory
     Set-Content -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
 
     $buildProperties = @"
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <libgit2_propsfile>`$(MSBuildThisFileFullPath)</libgit2_propsfile>
     <libgit2_hash>$sha</libgit2_hash>
@@ -103,17 +103,29 @@ Push-Location $libgit2Directory
     Set-Content -Encoding UTF8 (Join-Path $projectDirectory "nuget.package\build\LibGit2Sharp.NativeBinaries.props") $buildProperties
 
     $net46BuildProperties = @"
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <libgit2_propsfile>`$(MSBuildThisFileFullPath)</libgit2_propsfile>
     <libgit2_hash>$sha</libgit2_hash>
     <libgit2_filename>$binaryFilename</libgit2_filename>
   </PropertyGroup>
   <ItemGroup>
-    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\*" TargetPath="lib\win32\x86\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
-    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\*" TargetPath="lib\win32\x64\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
-    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\**\*`" Exclude="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-*\**\*" TargetPath="lib\%(RecursiveDir)..\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
-    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config" TargetPath="LibGit2Sharp.dll.config" CopyToOutputDirectory="PreserveNewest" />
+    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\*">
+      <TargetPath>lib\win32\x86\%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-x64\native\*">
+      <TargetPath>lib\win32\x64\%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\runtimes\**\*" Exclude="`$(MSBuildThisFileDirectory)\..\..\runtimes\win-*\**\*">
+      <TargetPath>lib\%(RecursiveDir)..\%(Filename)%(Extension)</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="`$(MSBuildThisFileDirectory)\..\..\libgit2\LibGit2Sharp.dll.config">
+      <TargetPath>LibGit2Sharp.dll.config</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ContentWithTargetPath>
   </ItemGroup>
 </Project>
 "@

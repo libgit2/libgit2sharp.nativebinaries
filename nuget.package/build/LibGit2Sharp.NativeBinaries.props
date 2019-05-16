@@ -1,4 +1,4 @@
-<Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
     <libgit2_hash>572e4d8c1f1d42feac1c770f0cddf6fda6c4eca0</libgit2_hash>

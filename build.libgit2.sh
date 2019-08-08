@@ -34,6 +34,8 @@ PACKAGEPATH="nuget.package/runtimes"
 if [[ $RID == "" ]]; then
 	if [[ $ARCH == "x86_64" ]]; then
 		RID="unix-x64"
+	elif [[ $ARCH == "aarch64" ]]; then
+		RID="unix-arm64"
 	else
 		RID="unix-x86"
 	fi

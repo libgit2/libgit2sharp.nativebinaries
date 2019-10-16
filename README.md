@@ -22,10 +22,62 @@ currently *experimental*. Would you encounter any issue with it, please open an
  [lg2s]: http://libgit2sharp.com/
  [tracker]: https://github.com/libgit2/libgit2sharp.nativebinaries/issues
 
-## How to build your own native binaries
+## How to update the native binaries for LibGit2Sharp
 
-If you need to build your own native binaries for some reason, you can
-do so easily with the scripts in this repository:
+If you want to create a native binaries package for the
+[LibGit2Sharp](https://github.com/libgit2/libgit2sharp) project, then there
+is a simple process do so:
+
+1. Clone the `LibGit2Sharp.NativeBinaries` repository.  Do so recursively
+   to ensure that the `libgit2` submodule is initialized automatically:
+
+   `git clone --recursive https://github.com/libgit2/libgit2sharp.nativebinaries`
+
+   (If you have already cloned this repository (which seems quite
+   likely since you are reading this file!) then you can simply run
+   `git submodule init` followed by `git submodule update`.)
+
+2. Update the included libgit2 sources and configuration files to the
+   version of libgit2 you want to build.  For example, to build
+   commit `1a2b3c4`:
+
+   `UpdateLibgit2ToSha.ps1 1a2b3c4`
+
+   Or you can specify references.  To build the remote's `master` branch:
+
+   `UpdateLibgit2ToSha.ps1 master`
+
+   This will update the libgit2 submodule, and update the references within
+   the project to the correct libgit2 revision.
+
+3. Check these changes in, then open a pull request to the
+   [`LibGit2Sharp.NativeBinaries`](https://github.com/libgit2/LibGit2Sharp.NativeBinaries)
+   project and get the changes reviewed and merged into `master`.
+
+
+4. Once merged, the Travis and AppVeyor builds will run.  Once those
+   are done, you can create the nativebinaries nuget package from the
+   build artifacts that were created by the CI systems.
+
+   `download.build.artifacts.and.package.ps1`
+
+   This will emit a nuget package, eg `LibGit2Sharp.NativeBinaries.2.0.291.nupkg`.
+
+5. Upload the package created in step 4 to [nuget.org](https://nuget.org/).
+
+6. Now you can update [LibGit2Sharp](https://github.com/libgit2/libgit2sharp)
+   to reference this package.
+   
+   **Note**: the package reference should pin to the NativeBinaries package version
+   _exactly_, it should not allow for a nativebinaries range.  This is for strict
+   ABI compatibiity.  The `PackageReference` in the LibGit2Sharp project should be
+   `[2.0.291]` (with square brackets).
+
+## How to build custom native binaries for your own project
+
+If you use this native binaries package for your own project (a fork of
+LibGit2Sharp, or something else entirely) then you can also use the tools
+in this project to do that:
 
 1. Clone the `LibGit2Sharp.NativeBinaries` repository.  Do so recursively
    to ensure that the `libgit2` submodule is initialized automatically:

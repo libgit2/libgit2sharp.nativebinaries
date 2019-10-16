@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 LIBGIT2SHA=`cat ./nuget.package/libgit2/libgit2_hash.txt`
 SHORTSHA=${LIBGIT2SHA:0:7}
 
@@ -50,5 +52,3 @@ rm -rf $PACKAGEPATH/$RID
 mkdir -p $PACKAGEPATH/$RID/native
 
 cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native
-
-exit $?

@@ -2,6 +2,8 @@ FROM ubuntu:14.04
 WORKDIR /nativebinaries
 COPY . /nativebinaries/
 
-RUN apt update && apt -y install cmake libssl-dev pkg-config
+RUN apt update && apt -y install libssl-dev pkg-config curl make gcc build-essential
+
+RUN curl -L https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4-Linux-x86_64.sh -o /tmp/cmake.sh && bash /tmp/cmake.sh --skip-license --prefix=/usr/local
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

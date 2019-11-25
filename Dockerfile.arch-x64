@@ -1,0 +1,5 @@
+FROM archlinux/base:latest
+RUN pacman -Syq --noconfirm base-devel cmake
+WORKDIR /nativebinaries
+COPY . /nativebinaries/
+CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

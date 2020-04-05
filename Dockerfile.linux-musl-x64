@@ -1,7 +1,7 @@
-FROM fedora:26
+FROM alpine:3.7
 WORKDIR /nativebinaries
 COPY . /nativebinaries/
 
-RUN yum -y install cmake gcc make openssl-devel
+RUN apk add --no-cache bash build-base cmake
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

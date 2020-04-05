@@ -12,37 +12,17 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      env: RID=ubuntu.18.04-x64
+      env: RID=linux-musl-x64
     - os: linux
       dist: trusty
       sudo: required
-      env: RID=rhel-x64
+      env: RID=linux-arm64
     - os: linux
       dist: trusty
       sudo: required
-      env: RID=fedora-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=debian.9-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=alpine-x64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=alpine.3.9-x64
+      env: RID=linux-arm
     - os: osx
       env: RID=osx
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=ubuntu.16.04-arm64
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: RID=debian-arm64
 
 branches:
  only:

@@ -10,6 +10,8 @@ PACKAGEPATH="nuget.package/runtimes"
 
 if [[ $OS == "Darwin" ]]; then
 	USEHTTPS="ON"
+elif [[ $OS == "MINGW64"* ]]; then
+	USEHTTPS="WinHTTP"
 else
 	USEHTTPS="OFF"
 fi
@@ -28,6 +30,10 @@ if [[ $RID == *arm64 ]]; then
 	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
 fi
 
+if [[ $OS == "MINGW64"* ]]; then
+	export CMAKE_GENERATOR="MSYS Makefiles"
+fi
+
 cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DBUILD_CLAR:BOOL=OFF \
       -DUSE_SSH=OFF \
@@ -42,17 +48,25 @@ cmake --build .
 
 popd
 
+if [[ $OS == "MINGW64"* ]]; then
+	RID_PREFIX="win"
+else
+	RID_PREFIX="unix"
+fi
+
 if [[ $RID == "" ]]; then
 	if [[ $ARCH == "x86_64" ]]; then
-		RID="unix-x64"
+		RID="$RID_PREFIX-x64"
 	else
-		RID="unix-x86"
+		RID="$RID_PREFIX-x86"
 	fi
 	echo "$(tput setaf 3)RID not defined. Falling back to '$RID'.$(tput sgr0)"
 fi
 
 if [[ $OS == "Darwin" ]]; then
 	LIBEXT="dylib"
+elif [[ $OS == "MINGW64"* ]]; then
+	LIBEXT="dll"
 else
 	LIBEXT="so"
 fi

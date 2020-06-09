@@ -2,7 +2,7 @@
 .SYNOPSIS
     Builds a version of libgit2 and copies it to the nuget packaging directory.
 .PARAMETER vs
-    Version of Visual Studio project files to generate. Cmake supports "10" (default), "11" and "12".
+    Version of Visual Studio project files to generate. Set to 15 by default.
 .PARAMETER test
     If set, run the libgit2 tests on the desired version.
 .PARAMETER debug
@@ -10,7 +10,7 @@
 #>
 
 Param(
-    [string]$vs = '10',
+    [string]$vs = '15',
     [string]$libgit2Name = '',
     [switch]$test,
     [switch]$debug

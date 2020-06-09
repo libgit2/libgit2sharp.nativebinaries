@@ -46,17 +46,21 @@ do so easily with the scripts in this repository:
 
    `UpdateLibgit2ToSha.ps1 master`
 
-3. Build the libgit2 binaries.  For Windows, this requires a Visual Studio
-   installation, and will compile both x86 and amd64 variants.  (See
+3. Build the libgit2 binaries.  On Windows you can use either Visual Studio
+   or MinGW inside MSYS2.
+   
+   If you build for Windows using a Visual Studio installation,
+   it will compile both x86 and amd64 variants.  (See
    "Notes on Visual Studio", below).  Run the build PowerShell script,
    specifying the version number of Visual Studio as the first argument.
    For example, to build with Visual Studio 2013 (aka "Visual Studio 12.0"):
 
    `build.libgit2.ps1 12`
 
-   For Linux, this will build only the architecture that you're running
-   (x86 or amd64).  For Mac OS X, this will build a fat library that
-   includes both x86 and amd64.  Run the shell script:
+   For MinGW on Windows and for Linux, this will build only the architecture
+   that you're running (x86 or amd64).
+   For Mac OS X, this will build a fat library that includes both x86 and amd64.
+   Run the shell script:
 
    `build.libgit2.sh`
 

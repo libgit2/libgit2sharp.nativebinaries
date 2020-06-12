@@ -74,4 +74,8 @@ fi
 rm -rf $PACKAGEPATH/$RID
 mkdir -p $PACKAGEPATH/$RID/native
 
-cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native
+if [[ $OS == "MINGW64"* ]]; then
+	cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native/git2-$SHORTSHA.$LIBEXT
+else
+	cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native
+fi

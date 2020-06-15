@@ -10,8 +10,12 @@ PACKAGEPATH="nuget.package/runtimes"
 
 if [[ $OS == "Darwin" ]]; then
 	USEHTTPS="ON"
+elif [[ $OS == "MINGW32"* ]]; then
+	USEHTTPS="WinHTTP"
+	ARCH="x86"
 elif [[ $OS == "MINGW64"* ]]; then
 	USEHTTPS="WinHTTP"
+	ARCH="x86_64"
 else
 	USEHTTPS="OFF"
 fi
@@ -30,7 +34,7 @@ if [[ $RID == *arm64 ]]; then
 	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
 fi
 
-if [[ $OS == "MINGW64"* ]]; then
+if [[ $OS == "MINGW"* ]]; then
 	export CMAKE_GENERATOR="MSYS Makefiles"
 fi
 
@@ -48,7 +52,7 @@ cmake --build .
 
 popd
 
-if [[ $OS == "MINGW64"* ]]; then
+if [[ $OS == "MINGW"* ]]; then
 	RID_PREFIX="win"
 else
 	RID_PREFIX="unix"
@@ -65,7 +69,7 @@ fi
 
 if [[ $OS == "Darwin" ]]; then
 	LIBEXT="dylib"
-elif [[ $OS == "MINGW64"* ]]; then
+elif [[ $OS == "MINGW"* ]]; then
 	LIBEXT="dll"
 else
 	LIBEXT="so"
@@ -74,7 +78,7 @@ fi
 rm -rf $PACKAGEPATH/$RID
 mkdir -p $PACKAGEPATH/$RID/native
 
-if [[ $OS == "MINGW64"* ]]; then
+if [[ $OS == "MINGW"* ]]; then
 	cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native/git2-$SHORTSHA.$LIBEXT
 else
 	cp libgit2/build/libgit2-$SHORTSHA.$LIBEXT $PACKAGEPATH/$RID/native

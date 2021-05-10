@@ -93,8 +93,6 @@ function Assert-Consistent-Naming($expected, $path) {
     $dll = get-item $path
 
     Ensure-Property $expected $dll.Name "Name" $dll.Fullname
-    Ensure-Property $expected $dll.VersionInfo.InternalName "VersionInfo.InternalName" $dll.Fullname
-    Ensure-Property $expected $dll.VersionInfo.OriginalFilename "VersionInfo.OriginalFilename" $dll.Fullname
 }
 
 try {

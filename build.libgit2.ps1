@@ -124,12 +124,7 @@ try {
     cd ..
     Run-Command -Quiet { & mkdir build64 }
     cd build64
-    if ($vs -eq "16") {
-        Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs" -A x64 -D THREADSAFE=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
-    }
-    else {
-        Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs Win64" -D THREADSAFE=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }        
-    }
+    Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs" -A x64 -D THREADSAFE=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
     Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration }
     if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
     cd $configuration

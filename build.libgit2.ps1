@@ -23,7 +23,7 @@ $libgit2Directory = Join-Path $projectDirectory "libgit2"
 $x86Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x86\native"
 $x64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x64\native"
 $hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
-$sha = Get-Content $hashFile 
+$sha = Get-Content $hashFile
 
 if (![string]::IsNullOrEmpty($libgit2Name)) {
     $binaryFilename = $libgit2Name
@@ -124,7 +124,7 @@ try {
     cd ..
     Run-Command -Quiet { & mkdir build64 }
     cd build64
-    Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs Win64" -D THREADSAFE=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
+    Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs" -A x64 -D THREADSAFE=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
     Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration }
     if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
     cd $configuration

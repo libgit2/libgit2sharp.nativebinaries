@@ -50,9 +50,9 @@ do so easily with the scripts in this repository:
    installation, and will compile both x86 and amd64 variants.  (See
    "Notes on Visual Studio", below).  Run the build PowerShell script,
    specifying the version number of Visual Studio as the first argument.
-   For example, to build with Visual Studio 2013 (aka "Visual Studio 12.0"):
+   For example, to build with Visual Studio 2019:
 
-   `build.libgit2.ps1 12`
+   `build.libgit2.ps1 "16 2019"`
 
    For Linux, this will build only the architecture that you're running
    (x86 or amd64).  For Mac OS X, this will build a fat library that

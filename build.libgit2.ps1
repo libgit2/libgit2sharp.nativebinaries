@@ -1,19 +1,18 @@
 <#
 .SYNOPSIS
     Builds a version of libgit2 and copies it to the nuget packaging directory.
-.PARAMETER vs
-    Version of Visual Studio project files to generate. Cmake supports "10" (default), "11" and "12".
 .PARAMETER test
     If set, run the libgit2 tests on the desired version.
 .PARAMETER debug
-    If set, build the "Debug" configuration of libgit2, rather than "RelWithDebInfo" (default).
+    If set, build the "Debug" configuration of libgit2, rather than "Release" (default).
 #>
 
 Param(
-    [string]$vs = '10',
     [string]$libgit2Name = '',
     [switch]$test,
-    [switch]$debug
+    [switch]$debug,
+    [switch]$x86,
+    [switch]$x64
 )
 
 Set-StrictMode -Version Latest
@@ -34,7 +33,7 @@ if (![string]::IsNullOrEmpty($libgit2Name)) {
 $build_clar = 'OFF'
 if ($test.IsPresent) { $build_clar = 'ON' }
 
-$configuration = "RelWithDebInfo"
+$configuration = "Release"
 if ($debug.IsPresent) { $configuration = "Debug" }
 
 function Run-Command([scriptblock]$Command, [switch]$Fatal, [switch]$Quiet) {
@@ -106,33 +105,38 @@ try {
     $cmake = Find-CMake
     $ctest = Join-Path (Split-Path -Parent $cmake) "ctest.exe"
 
-    Write-Output "Building 32-bit..."
-    Run-Command -Quiet { & remove-item build -recurse -force }
+    Run-Command -Quiet { & remove-item build -recurse -force -ErrorAction Ignore }
     Run-Command -Quiet { & mkdir build }
     cd build
-    Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs" -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" .. }
-    Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration }
-    if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
-    cd $configuration
-    Assert-Consistent-Naming "$binaryFilename.dll" "*.dll"
-    Run-Command -Quiet { & rm *.exp }
-    Run-Command -Quiet { & rm $x86Directory\* }
-    Run-Command -Quiet { & mkdir -fo $x86Directory }
-    Run-Command -Quiet -Fatal { & copy -fo * $x86Directory -Exclude *.lib }
 
-    Write-Output "Building 64-bit..."
-    cd ..
-    Run-Command -Quiet { & mkdir build64 }
-    cd build64
-    Run-Command -Quiet -Fatal { & $cmake -G "Visual Studio $vs" -A x64 -D THREADSAFE=ON -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
-    Run-Command -Quiet -Fatal { & $cmake --build . --config $configuration }
-    if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
-    cd $configuration
-    Assert-Consistent-Naming "$binaryFilename.dll" "*.dll"
-    Run-Command -Quiet { & rm *.exp }
-    Run-Command -Quiet { & rm $x64Directory\* }
-    Run-Command -Quiet { & mkdir -fo $x64Directory }
-    Run-Command -Quiet -Fatal { & copy -fo * $x64Directory -Exclude *.lib }
+    if ($x86.IsPresent) {
+        Write-Output "Building 32-bit..."
+        Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -D ENABLE_TRACE=ON -D USE_SSH=OFF -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename"  .. }
+        Run-Command -Fatal { & $cmake --build . --config $configuration }
+        if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
+        cd $configuration
+        Assert-Consistent-Naming "$binaryFilename.dll" "*.dll"
+        Run-Command -Quiet { & rm *.exp }
+        Run-Command -Quiet { & rm $x86Directory\* -ErrorAction Ignore }
+        Run-Command -Quiet { & mkdir -fo $x86Directory }
+        Run-Command -Quiet -Fatal { & copy -fo * $x86Directory -Exclude *.lib }
+        cd ..
+    }
+
+    if ($x64.IsPresent) {
+        Write-Output "Building 64-bit..."
+        Run-Command -Quiet { & mkdir build64 }
+        cd build64
+        Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -A x64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
+        Run-Command -Fatal { & $cmake --build . --config $configuration }
+        if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
+        cd $configuration
+        Assert-Consistent-Naming "$binaryFilename.dll" "*.dll"
+        Run-Command -Quiet { & rm *.exp }
+        Run-Command -Quiet { & rm $x64Directory\* -ErrorAction Ignore }
+        Run-Command -Quiet { & mkdir -fo $x64Directory }
+        Run-Command -Quiet -Fatal { & copy -fo * $x64Directory -Exclude *.lib }
+    }
 
     Write-Output "Done!"
 }

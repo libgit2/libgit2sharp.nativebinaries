@@ -388,43 +388,71 @@ Copyright (C) 1995-2010 Jean-loup Gailly and Mark Adler
 
 ----------------------------------------------------------------------
 
-The priority queue implementation is based on code licensed under the
-Apache 2.0 license:
+The Clar framework is licensed under the ISC license:
 
-	Copyright 2010 Volkan Yazıcı <volkan.yazici@gmail.com>
-	Copyright 2006-2010 The Apache Software Foundation
+Copyright (c) 2011-2015 Vicent Marti
 
-The full text of the Apache 2.0 license is available at:
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
 
-	http://www.apache.org/licenses/LICENSE-2.0
-
-----------------------------------------------------------------------
-
-The Clay framework is licensed under the MIT license:
-
-Copyright (C) 2011 by Vicent Marti
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ----------------------------------------------------------------------
 
 The regex library (deps/regex/) is licensed under the GNU LGPL
+(available at the end of this file).
+
+Definitions for data structures and routines for the regular
+expression library.
+
+Copyright (C) 1985,1989-93,1995-98,2000,2001,2002,2003,2005,2006,2008
+Free Software Foundation, Inc.
+This file is part of the GNU C Library.
+
+The GNU C Library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+ 
+The GNU C Library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with the GNU C Library; if not, write to the Free
+Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+02110-1301 USA.
+
+----------------------------------------------------------------------
+
+The bundled winhttp definition files (deps/winhttp/) are licensed under
+the GNU LGPL (available at the end of this file).
+
+Copyright (C) 2007 Francois Gouget
+
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+
+----------------------------------------------------------------------
 
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
@@ -928,3 +956,66 @@ necessary.  Here is a sample; alter the names:
   Ty Coon, President of Vice
 
 That's all there is to it!
+
+----------------------------------------------------------------------
+
+The bundled SHA1 collision detection code is licensed under the MIT license:
+
+MIT License
+
+Copyright (c) 2017:
+    Marc Stevens
+    Cryptology Group
+    Centrum Wiskunde & Informatica
+    P.O. Box 94079, 1090 GB Amsterdam, Netherlands
+    marc@marc-stevens.nl
+
+    Dan Shumow
+    Microsoft Research
+    danshu@microsoft.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+----------------------------------------------------------------------
+
+The bundled wildmatch code is licensed under the BSD license:
+
+Copyright Rich Salz.
+All rights reserved.
+
+Redistribution and use in any form are permitted provided that the
+following restrictions are are met:
+
+1.  Source distributions must retain this entire copyright notice
+    and comment.
+2.  Binary distributions must include the acknowledgement ``This
+    product includes software developed by Rich Salz'' in the
+    documentation or other materials provided with the
+    distribution.  This must not be represented as an endorsement
+   or promotion without specific prior written permission.
+3.  The origin of this software must not be misrepresented, either
+    by explicit claim or by omission.  Credits must appear in the
+    source and documentation.
+4.  Altered versions must be plainly marked as such in the source
+    and documentation and must not be misrepresented as being the
+    original software.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.

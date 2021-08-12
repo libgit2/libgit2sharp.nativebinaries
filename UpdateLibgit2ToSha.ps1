@@ -90,6 +90,8 @@ Push-Location $libgit2Directory
 
     Set-Content -Encoding ASCII (Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt") $sha
 
+    Copy-Item -Path (Join-Path $libgit2Directory "COPYING") -Destination (Join-Path $projectDirectory "nuget.package\libgit2\libgit2.license.txt")
+
     $buildProperties = @"
 <Project>
   <PropertyGroup>

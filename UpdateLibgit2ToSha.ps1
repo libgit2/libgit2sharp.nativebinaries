@@ -123,7 +123,9 @@ Push-Location $libgit2Directory
     $dllConfig = @"
 <configuration>
     <dllmap os="linux" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/linux-x64/lib$binaryFilename.so" />
-    <dllmap os="osx" cpu="x86,x86-64" dll="$binaryFilename" target="lib/osx/lib$binaryFilename.dylib" />
+    <dllmap os="linux" cpu="arm" wordsize="32" dll="$binaryFilename" target="lib/linux-arm/lib$binaryFilename.so" />
+    <dllmap os="linux" cpu="armv8" wordsize="64" dll="$binaryFilename" target="lib/linux-arm64/lib$binaryFilename.so" />
+    <dllmap os="osx" cpu="x86-64" wordsize="64" dll="$binaryFilename" target="lib/osx-x64/lib$binaryFilename.dylib" />
 </configuration>
 "@
 

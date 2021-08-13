@@ -109,7 +109,7 @@ try {
 
     if ($x86.IsPresent) {
         Write-Output "Building 32-bit..."
-        Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -D ENABLE_TRACE=ON -D USE_SSH=OFF -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename"  .. }
+        Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -A Win32 -D ENABLE_TRACE=ON -D USE_SSH=OFF -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename"  .. }
         Run-Command -Fatal { & $cmake --build . --config $configuration }
         if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
         cd $configuration

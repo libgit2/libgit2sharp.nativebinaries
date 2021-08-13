@@ -5,10 +5,13 @@
     If set, run the libgit2 tests on the desired version.
 .PARAMETER debug
     If set, build the "Debug" configuration of libgit2, rather than "Release" (default).
+.PARAMETER x86
+    If set, the 32-bit version will be built.
+.PARAMETER x64
+    If set, the 64-bit version will be built.
 #>
 
 Param(
-    [string]$libgit2Name = '',
     [switch]$test,
     [switch]$debug,
     [switch]$x86,
@@ -23,12 +26,7 @@ $x86Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x86\nati
 $x64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x64\native"
 $hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
 $sha = Get-Content $hashFile 
-
-if (![string]::IsNullOrEmpty($libgit2Name)) {
-    $binaryFilename = $libgit2Name
-} else {
-    $binaryFilename = "git2-" + $sha.Substring(0,7)
-}
+$binaryFilename = "git2-" + $sha.Substring(0,7)
 
 $build_clar = 'OFF'
 if ($test.IsPresent) { $build_clar = 'ON' }

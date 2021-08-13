@@ -1,7 +1,7 @@
 # LibGit2Sharp.NativeBinaries
 
 **[Libgit2Sharp][lg2s]** is a managed wrapper around **[libgit2][lg2]**, and as
-such requires compilation of libgit2 for your platform.  
+such requires compilation of libgit2 for your platform.
 
 LibGit2Sharp makes this easy by distributing, and leveraging as a dependency,
 the **[LibGit2Sharp.NativeBinaries][lg2s-nb]** NuGet package.
@@ -9,113 +9,78 @@ the **[LibGit2Sharp.NativeBinaries][lg2s-nb]** NuGet package.
 This package contains the compiled versions of the libgit2 native library for
 the following platforms:
 
- - Windows (x86/amd64)
- - Mac OS X (x86/amd64)
- - Linux (amd64)
-
-**Note:** Due to the large number of distributions, the Linux support is
-currently *experimental*. Would you encounter any issue with it, please open an
-**[issue][tracker]**.
+ - Windows (x86, x64)
+ - macOS (x64)
+ - Linux (arm, arm64, x64)
 
  [lg2s-nb]: https://www.nuget.org/packages/LibGit2Sharp.NativeBinaries
  [lg2]: https://libgit2.github.com/
  [lg2s]: http://libgit2sharp.com/
- [tracker]: https://github.com/libgit2/libgit2sharp.nativebinaries/issues
 
-## How to build your own native binaries
+## Script overview
 
-If you need to build your own native binaries for some reason, you can
-do so easily with the scripts in this repository:
+The following scripts are used build and update this repo.
 
-1. Clone the `LibGit2Sharp.NativeBinaries` repository.  Do so recursively
-   to ensure that the `libgit2` submodule is initialized automatically:
+### build.libgit2.ps1
 
-   `git clone --recursive https://github.com/libgit2/libgit2sharp.nativebinaries`
+This script builds Windows libgit2 binaries. This requires Visual Studio 2019.
 
-   (If you have already cloned this repository (which seems quite
-   likely since you are reading this file!) then you can simply run
-   `git submodule init` followed by `git submodule update`.)
+To build x86 binaries:
 
-2. Update the included libgit2 sources and configuration files to the
-   version of libgit2 you want to build.  For example, to build
-   commit `1a2b3c4`:
+      `build.libgit2.ps1 -x86`
 
-   `UpdateLibgit2ToSha.ps1 1a2b3c4`
+To build x64 binaries:
 
-   Or you can specify references.  To build the remote's `master` branch:
+      `build.libgit2.ps1 -x64`
 
-   `UpdateLibgit2ToSha.ps1 master`
+If both parameters are specified, both will be built. See the script for additional parameters.
 
-3. Build the libgit2 binaries.  For Windows, this requires a Visual Studio
-   installation, and will compile both x86 and amd64 variants.  (See
-   "Notes on Visual Studio", below).  Run the build PowerShell script,
-   specifying the version number of Visual Studio as the first argument.
-   For example, to build with Visual Studio 2013 (aka "Visual Studio 12.0"):
+### build.libgit2.sh
 
-   `build.libgit2.ps1 12`
+This script builds Linux and macOS binaries. It can be invoked directly, but for Linux binaries, dockerbuild.sh should be used instead.
 
-   For Linux, this will build only the architecture that you're running
-   (x86 or amd64).  For Mac OS X, this will build a fat library that
-   includes both x86 and amd64.  Run the shell script:
+### dockerbuild.sh
 
-   `build.libgit2.sh`
+This script will build one of the Dockerfiles in the repo. It chooses which one to run based on the value of the RID environment variable. Using docker to build the Linux binaries for the various RIDs ensures that a specific environment and distro is used.
 
-4. Create the NuGet package from the built binaries.  You will need to
-   specify the version number of the resultant NuGet package that you
-   want to generate.  Note that you may wish to provide a suffix to
-   disambiguate your custom package from the official, published NuGet
-   packages.  For example, if you are building a product called
-   `fooproduct` then that may be a helpful suffix.
+### UpdateLibgit2ToSha.ps1
 
-    To build a NuGet package at version `1.2.3-foo`:
+This script is used to update the libgit2 submodule and update the references within the project to the correct libgit2 revision. 
 
-   `buildpackage.ps1 1.2.3-foo`
+You can update to a specific commit:
 
-   And the result will be a NuGet package in the current directory:
+     `UpdateLibgit2ToSha.ps1 1a2b3c4`
 
-   `LibGit2Sharp.NativeBinaries.1.2.3-foo.nupkg`
+Or you can specify references:
 
-   Note that the `-foo` suffix technically makes this a "prerelease"
-   package, according to NuGet, which may be further help in avoiding
-   any mixups with the official packages, but may also require you to
-   opt-in to prerelease packages in your NuGet package manager.
+      `UpdateLibgit2ToSha.ps1 master`
 
-## Specifying custom DLL names
+## Building the package locally
 
-If you want to redistribute a LibGit2Sharp that uses a custom libgit2,
-you may want to change the name of the libgit2 shared library file to
-disambiguate it from other installations.  This may be useful if you
-are running as a plugin inside a larger process and wish to avoid
-conflicting with other plugins who may wish to use LibGit2Sharp and
-want to ensure that *your* version of libgit2 is loaded into memory
-and available to you.
+After running the appropriate build script(s) to create binaries, the NuGet package needs to be created.
 
-For example, if your plugin names if `fooplugin`, you may wish to
-distribute a DLL named `git2-fooplugin.dll`.  You can specify the
-custom DLL name as the second argument to the update and build scripts:
+First, to use the same version locally that will be generated via CI, install the [minver-cli](https://www.nuget.org/packages/minver-cli) dotnet tool:
 
-    UpdateLibgit2ToSha.ps1 1a2b3c4 git2-fooplugin
-    build.libgit2.sh 14 git2-fooplugin
+      'dotnet tool install --global minver-cli`
 
-Then build the NuGet package as described above, making sure to provide
-a helpful suffix to ensure that your NuGet package will not be confused
-with the official packages.
+Once that is installed, running the `minver` command will output a version:
 
-### Notes on Visual Studio
+```
+MinVer: Using { Commit: 2453a6d, Tag: '2.0.312', Version: 2.0.312, Height: 3 }.
+MinVer: Calculated version 2.0.313-alpha.0.3.
+2.0.313-alpha.0.3
+```
 
-Visual Studio is required to build the native binaries, however you
-do not need to install a *paid* version of Visual Studio.  libgit2
-can be compiled using [Visual Studio Community](https://www.visualstudio.com/en-us/products/visual-studio-community-vs),
+To create the package, use the the following command:
+
+      `nuget.exe Pack nuget.package/NativeBinaries.nuspec -Version <version> -NoPackageAnalysis`
+
+Where `<version>` is the version from the MinVer tool or manually chosen version.
+
+
+## Notes on Visual Studio
+
+Visual Studio 2019 is required to build the Windows native binaries, however you
+do not need to install a *paid* version of Visual Studio. libgit2
+can be compiled using [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/),
 which is free for building open source applications.
-
-You need to specify the actual version number (not the marketing name)
-of Visual Studio.  (For example, "Visual Studio 2013" is the name of the
-product, but its actual version number is "12.0".)  A handy guide:
-
-| Marketing Name     | Version Number
-|--------------------|---------------
-| Visual Studio 2010 | 10
-| Visual Studio 2012 | 11
-| Visual Studio 2013 | 12
-| Visual Studio 2015 | 14
-| Visual Studio 2017 | 15

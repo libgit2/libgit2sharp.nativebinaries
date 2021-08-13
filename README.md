@@ -19,29 +19,33 @@ the following platforms:
 
 ## Script overview
 
-The following scripts are used build and update this repo.
+The following scripts are used to build libgit2 and update this repo.
 
 ### build.libgit2.ps1
 
-This script builds Windows libgit2 binaries. This requires Visual Studio 2019.
+This script builds Windows libgit2 binaries. It requires Visual Studio 2019 to run.
 
 To build x86 binaries:
 
-      `build.libgit2.ps1 -x86`
+```
+build.libgit2.ps1 -x86
+```
 
 To build x64 binaries:
 
-      `build.libgit2.ps1 -x64`
+```
+build.libgit2.ps1 -x64
+```
 
-If both parameters are specified, both will be built. See the script for additional parameters.
+If both parameters are specified, both architectures will be built. See the script for additional parameters.
 
 ### build.libgit2.sh
 
-This script builds Linux and macOS binaries. It can be invoked directly, but for Linux binaries, dockerbuild.sh should be used instead.
+This script builds Linux and macOS binaries. It can be invoked directly, but for Linux binaries, `dockerbuild.sh` should be used instead.
 
 ### dockerbuild.sh
 
-This script will build one of the Dockerfiles in the repo. It chooses which one to run based on the value of the RID environment variable. Using docker to build the Linux binaries for the various RIDs ensures that a specific environment and distro is used.
+This script will build one of the Dockerfiles in the repo. It chooses which one to run based on the value of the `RID` environment variable. Using docker to build the Linux binaries for the various RIDs ensures that a specific environment and distro is used.
 
 ### UpdateLibgit2ToSha.ps1
 
@@ -49,11 +53,15 @@ This script is used to update the libgit2 submodule and update the references wi
 
 You can update to a specific commit:
 
-     `UpdateLibgit2ToSha.ps1 1a2b3c4`
+```
+UpdateLibgit2ToSha.ps1 1a2b3c4
+```
 
 Or you can specify references:
 
-      `UpdateLibgit2ToSha.ps1 master`
+```
+UpdateLibgit2ToSha.ps1 master
+```
 
 ## Building the package locally
 
@@ -61,7 +69,9 @@ After running the appropriate build script(s) to create binaries, the NuGet pack
 
 First, to use the same version locally that will be generated via CI, install the [minver-cli](https://www.nuget.org/packages/minver-cli) dotnet tool:
 
-      'dotnet tool install --global minver-cli`
+```
+dotnet tool install --global minver-cli
+```
 
 Once that is installed, running the `minver` command will output a version:
 
@@ -73,7 +83,9 @@ MinVer: Calculated version 2.0.313-alpha.0.3.
 
 To create the package, use the the following command:
 
-      `nuget.exe Pack nuget.package/NativeBinaries.nuspec -Version <version> -NoPackageAnalysis`
+```
+nuget.exe Pack nuget.package/NativeBinaries.nuspec -Version <version> -NoPackageAnalysis
+```
 
 Where `<version>` is the version from the MinVer tool or manually chosen version.
 

@@ -2,7 +2,9 @@ name: CI
 on:
   push:
     branches: [master, release-*]
-    tags: ["*.*.*"]
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+-*'
   pull_request:
   workflow_dispatch:
 jobs:
@@ -69,7 +71,7 @@ jobs:
         run: dotnet tool install --global minver-cli
       - name: Run MinVer
         id: minver
-        run: echo "::set-output name=version::$(minver)"
+        run: echo '::set-output name=version::$(minver)'
       - name: Download artifacts
         uses: actions/download-artifact@v2.0.10
         with:

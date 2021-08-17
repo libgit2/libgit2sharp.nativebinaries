@@ -93,10 +93,16 @@ function Assert-Consistent-Naming($expected, $path) {
     $dll = get-item $path
 
     Ensure-Property $expected $dll.Name "Name" $dll.Fullname
+    Ensure-Property $expected $dll.VersionInfo.InternalName "VersionInfo.InternalName" $dll.Fullname
+    Ensure-Property $expected $dll.VersionInfo.OriginalFilename "VersionInfo.OriginalFilename" $dll.Fullname
 }
 
 try {
     Push-Location $libgit2Directory
+
+    # Patch CMakeLists.txt to fix LIBGIT2_FILENAME not being used when compiling the .rc file
+    $libgit2CMakeLists = Join-Path $libgit2Directory "src\CMakeLists.txt"
+    (Get-Content $libgit2CMakeLists).Replace('target_compile_definitions(git2internal PRIVATE LIBGIT2_FILENAME', 'target_compile_definitions(git2 PRIVATE LIBGIT2_FILENAME') | Set-Content $libgit2CMakeLists
 
     $cmake = Find-CMake
     $ctest = Join-Path (Split-Path -Parent $cmake) "ctest.exe"

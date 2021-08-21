@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
-    <libgit2_hash>6777db8e8343014d57c41b335e0c60af44d4e9f2</libgit2_hash>
-    <libgit2_filename>git2-6777db8</libgit2_filename>
+    <libgit2_hash>8a0dc6783c340e61a44c179c48f832165ad2053c</libgit2_hash>
+    <libgit2_filename>git2-8a0dc67</libgit2_filename>
   </PropertyGroup>
   <ItemGroup>
     <ContentWithTargetPath Include="$(MSBuildThisFileDirectory)\..\..\runtimes\win-x86\native\*" TargetPath="lib\win32\x86\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />

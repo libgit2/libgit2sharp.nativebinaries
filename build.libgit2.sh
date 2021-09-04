@@ -11,7 +11,7 @@ PACKAGEPATH="nuget.package/runtimes"
 if [[ $OS == "Darwin" ]]; then
 	USEHTTPS="ON"
 else
-	USEHTTPS="OFF"
+	USEHTTPS="OpenSSL-Dynamic"
 fi
 
 rm -rf libgit2/build

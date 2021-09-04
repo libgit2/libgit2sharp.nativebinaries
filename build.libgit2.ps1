@@ -100,11 +100,6 @@ function Assert-Consistent-Naming($expected, $path) {
 try {
     Push-Location $libgit2Directory
 
-    # Patch CMakeLists.txt to fix LIBGIT2_FILENAME not being used when compiling the .rc file
-    # To remove when https://github.com/libgit2/libgit2/pull/5994 is included
-    $libgit2CMakeLists = Join-Path $libgit2Directory "src\CMakeLists.txt"
-    (Get-Content $libgit2CMakeLists).Replace('target_compile_definitions(git2internal PRIVATE LIBGIT2_FILENAME', 'target_compile_definitions(git2 PRIVATE LIBGIT2_FILENAME') | Set-Content $libgit2CMakeLists
-
     $cmake = Find-CMake
     $ctest = Join-Path (Split-Path -Parent $cmake) "ctest.exe"
 

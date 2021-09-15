@@ -17,7 +17,7 @@ Param(
     [switch]$test,
     [switch]$debug,
     [switch]$x86,
-    [switch]$x64
+    [switch]$x64,
     [switch]$arm64
 )
 

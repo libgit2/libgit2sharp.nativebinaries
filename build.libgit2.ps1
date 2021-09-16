@@ -6,16 +6,19 @@
 .PARAMETER debug
     If set, build the "Debug" configuration of libgit2, rather than "Release" (default).
 .PARAMETER x86
-    If set, the 32-bit version will be built.
+    If set, the x86 version will be built.
 .PARAMETER x64
-    If set, the 64-bit version will be built.
+    If set, the x64 version will be built.
+.PARAMETER arm64
+    If set, the arm64 version will be built.
 #>
 
 Param(
     [switch]$test,
     [switch]$debug,
     [switch]$x86,
-    [switch]$x64
+    [switch]$x64,
+    [switch]$arm64
 )
 
 Set-StrictMode -Version Latest
@@ -24,6 +27,7 @@ $projectDirectory = Split-Path $MyInvocation.MyCommand.Path
 $libgit2Directory = Join-Path $projectDirectory "libgit2"
 $x86Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x86\native"
 $x64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-x64\native"
+$arm64Directory = Join-Path $projectDirectory "nuget.package\runtimes\win-arm64\native"
 $hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
 $sha = Get-Content $hashFile 
 $binaryFilename = "git2-" + $sha.Substring(0,7)
@@ -108,7 +112,7 @@ try {
     cd build
 
     if ($x86.IsPresent) {
-        Write-Output "Building 32-bit..."
+        Write-Output "Building x86..."
         Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -A Win32 -D ENABLE_TRACE=ON -D USE_SSH=OFF -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename"  .. }
         Run-Command -Fatal { & $cmake --build . --config $configuration }
         if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
@@ -122,7 +126,7 @@ try {
     }
 
     if ($x64.IsPresent) {
-        Write-Output "Building 64-bit..."
+        Write-Output "Building x64..."
         Run-Command -Quiet { & mkdir build64 }
         cd build64
         Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -A x64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
@@ -134,6 +138,21 @@ try {
         Run-Command -Quiet { & rm $x64Directory\* -ErrorAction Ignore }
         Run-Command -Quiet { & mkdir -fo $x64Directory }
         Run-Command -Quiet -Fatal { & copy -fo * $x64Directory -Exclude *.lib }
+    }
+
+    if ($arm64.IsPresent) {
+        Write-Output "Building arm64..."
+        Run-Command -Quiet { & mkdir buildarm64 }
+        cd buildarm64
+        Run-Command -Fatal { & $cmake -G "Visual Studio 16 2019" -A ARM64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
+        Run-Command -Fatal { & $cmake --build . --config $configuration }
+        if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
+        cd $configuration
+        Assert-Consistent-Naming "$binaryFilename.dll" "*.dll"
+        Run-Command -Quiet { & rm *.exp }
+        Run-Command -Quiet { & rm $arm64Directory\* -ErrorAction Ignore  }
+        Run-Command -Quiet { & mkdir -fo $arm64Directory }
+        Run-Command -Quiet -Fatal { & copy -fo * $arm64Directory -Exclude *.lib }
     }
 
     Write-Output "Done!"

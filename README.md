@@ -9,7 +9,7 @@ the **[LibGit2Sharp.NativeBinaries][lg2s-nb]** NuGet package.
 This package contains the compiled versions of the libgit2 native library for
 the following platforms:
 
- - Windows (x86, x64)
+ - Windows (x86, x64, arm64)
  - macOS (x64)
  - Linux (arm, arm64, x64)
 
@@ -37,7 +37,15 @@ To build x64 binaries:
 build.libgit2.ps1 -x64
 ```
 
-If both parameters are specified, both architectures will be built. See the script for additional parameters.
+To build arm64 binaries:
+
+```
+build.libgit2.ps1 -arm64
+```
+
+Multiple architecture parameters can be specified to build multiple binaries with a single execution of the script.
+
+See the script for additional parameters.
 
 ### build.libgit2.sh
 

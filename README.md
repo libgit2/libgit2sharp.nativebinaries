@@ -43,7 +43,9 @@ To build arm64 binaries:
 build.libgit2.ps1 -arm64
 ```
 
-As many parameters are specified, as many architectures will be built. See the script for additional parameters.
+Multiple architecture parameters can be specified to build multiple binaries with a single execution of the script.
+
+See the script for additional parameters.
 
 ### build.libgit2.sh
 

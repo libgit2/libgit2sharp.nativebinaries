@@ -20,14 +20,6 @@ pushd libgit2/build
 
 export _BINPATH=`pwd`
 
-if [[ $RID == *arm ]]; then
-	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm.txt
-fi
-
-if [[ $RID == *arm64 ]]; then
-	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
-fi
-
 cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DBUILD_CLAR:BOOL=OFF \
       -DUSE_SSH=OFF \

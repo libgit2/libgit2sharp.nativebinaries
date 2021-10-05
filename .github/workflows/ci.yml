@@ -32,6 +32,10 @@ jobs:
           - os: ubuntu-20.04
             name: linux-arm64
           - os: ubuntu-20.04
+            name: linux-musl-arm
+          - os: ubuntu-20.04
+            name: linux-musl-arm64
+          - os: ubuntu-20.04
             name: linux-arm
           - os: macos-10.15
             name: osx-x64
@@ -47,6 +51,9 @@ jobs:
       - name: Build macOS
         if: runner.os == 'macOS'
         run: ./build.libgit2.sh
+      - name: Setup QEMU
+        run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
+        if: matrix.name == 'linux-musl-arm' || matrix.name == 'linux-musl-arm64'
       - name: Build Linux
         if: runner.os == 'Linux'
         run: ./dockerbuild.sh

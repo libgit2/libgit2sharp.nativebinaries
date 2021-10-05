@@ -1,9 +1,8 @@
-FROM debian:9
+FROM multiarch/crossbuild
+
+ENV CROSS_TRIPLE=armhf
+
 WORKDIR /nativebinaries
 COPY . /nativebinaries/
-
-RUN dpkg --add-architecture armhf
-
-RUN apt update && apt -y install cmake pkg-config crossbuild-essential-armhf
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

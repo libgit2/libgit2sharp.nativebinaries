@@ -1,8 +1,9 @@
 #!/bin/bash
 
 set -e
+echo "building for $RID"
 
-docker build -t $RID -f Dockerfile.$RID .
+docker buildx build -t $RID -f Dockerfile.$RID .
 
 docker run -t -e RID=$RID --name=$RID $RID
 

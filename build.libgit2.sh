@@ -26,7 +26,7 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DUSE_HTTPS=$USEHTTPS \
       -DUSE_BUNDLED_ZLIB=ON \
       ..
-cmake --build . --config Release
+cmake --build . --config Release -- -j 16
 
 popd
 

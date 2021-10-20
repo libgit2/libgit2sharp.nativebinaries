@@ -93,3 +93,7 @@ jobs:
         with:
           name: NuGet package
           path: ./*.nupkg
+      - name: Publish nuget to GitHub Packages
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          dotnet nuget push .\LibGit2Sharp.NativeBinaries.${{ steps.minver.outputs.version }}.nupkg --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate

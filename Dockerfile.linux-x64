@@ -1,8 +1,0 @@
-FROM multiarch/crossbuild
-
-ENV CROSS_TRIPLE=amd64
-
-WORKDIR /nativebinaries
-COPY . /nativebinaries/
-
-CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

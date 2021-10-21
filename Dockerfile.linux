@@ -1,6 +1,6 @@
 FROM multiarch/crossbuild
-
-ENV CROSS_TRIPLE=arm64
+ARG ARCH='amd64'
+ENV CROSS_TRIPLE=${ARCH}
 
 WORKDIR /nativebinaries
 COPY . /nativebinaries/

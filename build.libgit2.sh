@@ -28,7 +28,7 @@ if [[ $RID == *arm ]]; then
 	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm.txt
 fi
 
-if [[ $RID == *arm64 ]]; then
+if [[ $RID == *arm64 ]] && [[ $OS != "Darwin" ]]; then
 	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
 fi
 

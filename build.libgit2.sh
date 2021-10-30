@@ -28,8 +28,11 @@ if [[ $RID == *arm ]]; then
 	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm.txt
 fi
 
-if [[ $RID == *arm64 ]] && [[ $OS != "Darwin" ]]; then
-	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
+if [[ $RID == *arm64 ]]; then
+    DCMAKEOSXARCHITECTURES="arm64"
+	if [[ $OS != "Darwin" ]]; then
+		export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
+	fi
 fi
 
 cmake -DCMAKE_BUILD_TYPE:STRING=Release \

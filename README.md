@@ -10,7 +10,7 @@ This package contains the compiled versions of the libgit2 native library for
 the following platforms:
 
  - Windows (x86, x64, arm64)
- - macOS (x64)
+ - macOS (x64, arm64)
  - Linux (arm, arm64, x64)
 
  [lg2s-nb]: https://www.nuget.org/packages/LibGit2Sharp.NativeBinaries

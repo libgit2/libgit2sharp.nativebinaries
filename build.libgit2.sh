@@ -7,12 +7,12 @@ SHORTSHA=${LIBGIT2SHA:0:7}
 OS=`uname`
 ARCH=`uname -m`
 PACKAGEPATH="nuget.package/runtimes"
-DCMAKEOSXARCHITECTURES="x86_64"
+OSXARCHITECTURE="x86_64"
 
 if [[ $OS == "Darwin" ]]; then
 	USEHTTPS="ON"
 	if [[ $ARCH == "arm64" ]]; then
-		DCMAKEOSXARCHITECTURES="arm64"
+		OSXARCHITECTURE="arm64"
 	fi
 else
 	USEHTTPS="OpenSSL-Dynamic"
@@ -29,7 +29,6 @@ if [[ $RID == *arm ]]; then
 fi
 
 if [[ $RID == *arm64 ]]; then
-    DCMAKEOSXARCHITECTURES="arm64"
 	if [[ $OS != "Darwin" ]]; then
 		export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
 	fi
@@ -40,7 +39,7 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DUSE_SSH=OFF \
       -DENABLE_TRACE=ON \
       -DLIBGIT2_FILENAME=git2-$SHORTSHA \
-      -DCMAKE_OSX_ARCHITECTURES=$DCMAKEOSXARCHITECTURES \
+      -DCMAKE_OSX_ARCHITECTURES=$OSXARCHITECTURE \
       -DUSE_HTTPS=$USEHTTPS \
       -DUSE_BUNDLED_ZLIB=ON \
       -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \

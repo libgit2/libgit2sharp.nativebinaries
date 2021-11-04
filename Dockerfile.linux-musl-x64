@@ -1,7 +1,0 @@
-FROM alpine:3.7
-WORKDIR /nativebinaries
-COPY . /nativebinaries/
-
-RUN apk add --no-cache bash build-base cmake
-
-CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

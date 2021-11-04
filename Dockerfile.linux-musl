@@ -1,0 +1,8 @@
+ARG ARCH='amd64'
+FROM multiarch/alpine:${ARCH}-v3.12
+RUN apk add --no-cache bash build-base cmake
+
+WORKDIR /nativebinaries
+COPY . /nativebinaries/
+
+CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

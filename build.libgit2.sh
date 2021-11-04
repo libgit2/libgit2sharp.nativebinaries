@@ -24,16 +24,6 @@ pushd libgit2/build
 
 export _BINPATH=`pwd`
 
-if [[ $RID == *arm ]]; then
-	export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm.txt
-fi
-
-if [[ $RID == *arm64 ]]; then
-	if [[ $OS != "Darwin" ]]; then
-		export TOOLCHAIN_FILE=/nativebinaries/CMakeLists.arm64.txt
-	fi
-fi
-
 cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DBUILD_CLAR:BOOL=OFF \
       -DUSE_SSH=OFF \
@@ -42,7 +32,6 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DCMAKE_OSX_ARCHITECTURES=$OSXARCHITECTURE \
       -DUSE_HTTPS=$USEHTTPS \
       -DUSE_BUNDLED_ZLIB=ON \
-      -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
       ..
 cmake --build .
 

@@ -11,7 +11,7 @@ the following platforms:
 
  - Windows (x86, x64, arm64)
  - macOS (x64, arm64)
- - Linux (arm, arm64, x64, musl-x64, linux-musl-arm, linux-musl-arm64)
+ - Linux (x64, arm, arm64) for both musl and glibc
 
  [lg2s-nb]: https://www.nuget.org/packages/LibGit2Sharp.NativeBinaries
  [lg2]: https://libgit2.github.com/

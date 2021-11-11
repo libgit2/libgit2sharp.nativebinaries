@@ -7,15 +7,17 @@ SHORTSHA=${LIBGIT2SHA:0:7}
 OS=`uname`
 ARCH=`uname -m`
 PACKAGEPATH="nuget.package/runtimes"
-OSXARCHITECTURE="x86_64"
+OSXARCHITECTURE=$ARCH
 
 if [[ $OS == "Darwin" ]]; then
-	USEHTTPS="ON"
-	if [[ $ARCH == "arm64" ]]; then
-		OSXARCHITECTURE="arm64"
-	fi
+    USEHTTPS="ON"
+    if [[ $RID == "osx-arm64" ]]; then
+        OSXARCHITECTURE="arm64"
+    elif [[ $RID == "osx-x64" ]]; then
+        OSXARCHITECTURE="x86_64"
+    fi
 else
-	USEHTTPS="OpenSSL-Dynamic"
+    USEHTTPS="OpenSSL-Dynamic"
 fi
 
 rm -rf libgit2/build
@@ -38,18 +40,14 @@ cmake --build .
 popd
 
 if [[ $RID == "" ]]; then
-	if [[ $ARCH == "x86_64" ]]; then
-		RID="unix-x64"
-	else
-		RID="unix-x86"
-	fi
-	echo "$(tput setaf 3)RID not defined. Falling back to '$RID'.$(tput sgr0)"
+    echo "$(tput setaf 3)RID not defined. Skipping copy to package path.$(tput sgr0)"
+    exit 0
 fi
 
 if [[ $OS == "Darwin" ]]; then
-	LIBEXT="dylib"
+    LIBEXT="dylib"
 else
-	LIBEXT="so"
+    LIBEXT="so"
 fi
 
 rm -rf $PACKAGEPATH/$RID

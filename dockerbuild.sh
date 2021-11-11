@@ -4,11 +4,11 @@ set -e
 echo "building for $RID"
 
 if [[ $RID =~ arm64 ]]; then
-  arch="arm64"
+    arch="arm64"
 elif [[ $RID =~ arm ]]; then
-  arch="armhf"
+    arch="armhf"
 else
-  arch="amd64"
+    arch="amd64"
 fi
 
 if [[ $RID == linux-musl* ]]; then

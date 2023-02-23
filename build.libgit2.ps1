@@ -34,8 +34,8 @@ $hashFile = Join-Path $projectDirectory "nuget.package\libgit2\libgit2_hash.txt"
 $sha = Get-Content $hashFile 
 $binaryFilename = "git2-" + $sha.Substring(0,7)
 
-$build_clar = 'OFF'
-if ($test.IsPresent) { $build_clar = 'ON' }
+$build_tests = 'OFF'
+if ($test.IsPresent) { $build_tests = 'ON' }
 
 $configuration = "Release"
 if ($debug.IsPresent) { $configuration = "Debug" }
@@ -120,7 +120,7 @@ try {
 
     if ($x86.IsPresent) {
         Write-Output "Building x86..."
-        Run-Command -Fatal { & $cmake -A Win32 -D ENABLE_TRACE=ON -D USE_SSH=OFF -D "BUILD_CLAR=$build_clar" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=$binaryFilename"  .. }
+        Run-Command -Fatal { & $cmake -A Win32 -D ENABLE_TRACE=ON -D USE_SSH=OFF -D "BUILD_TESTS=$build_tests" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=$binaryFilename"  .. }
         Run-Command -Fatal { & $cmake --build . --config $configuration }
         if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
         cd $configuration
@@ -136,7 +136,7 @@ try {
         Write-Output "Building x64..."
         Run-Command -Quiet { & mkdir build64 }
         cd build64
-        Run-Command -Fatal { & $cmake -A x64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
+        Run-Command -Fatal { & $cmake -A x64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_TESTS=$build_tests" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
         Run-Command -Fatal { & $cmake --build . --config $configuration }
         if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
         cd $configuration
@@ -151,7 +151,7 @@ try {
         Write-Output "Building arm64..."
         Run-Command -Quiet { & mkdir buildarm64 }
         cd buildarm64
-        Run-Command -Fatal { & $cmake -A ARM64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_CLAR=$build_clar" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
+        Run-Command -Fatal { & $cmake -A ARM64 -D THREADSAFE=ON -D USE_SSH=OFF -D ENABLE_TRACE=ON -D "BUILD_TESTS=$build_tests" -D "BUILD_CLI=OFF" -D "LIBGIT2_FILENAME=$binaryFilename" ../.. }
         Run-Command -Fatal { & $cmake --build . --config $configuration }
         if ($test.IsPresent) { Run-Command -Quiet -Fatal { & $ctest -V . } }
         cd $configuration

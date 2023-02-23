@@ -104,6 +104,11 @@ function Assert-Consistent-Naming($expected, $path) {
 }
 
 try {
+    if ((!$x86.isPresent -and !$x64.IsPresent) -and !$arm64.IsPresent) {
+        Write-Output -Stderr "Error: usage $MyInvocation.MyCommand [-x86] [-x64] [-arm64]"
+	Exit
+    }
+
     Push-Location $libgit2Directory
 
     $cmake = Find-CMake

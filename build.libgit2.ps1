@@ -11,6 +11,8 @@
     If set, the x64 version will be built.
 .PARAMETER arm64
     If set, the arm64 version will be built.
+.PARAMETER arm64
+    If set, the arm64 version will be built.
 #>
 
 Param(

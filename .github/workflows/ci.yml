@@ -44,7 +44,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.5.0
         with:
           submodules: true
       - name: Build Windows
@@ -60,7 +60,7 @@ jobs:
         if: runner.os == 'Linux'
         run: ./dockerbuild.sh
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: ${{ matrix.name }}
           path: nuget.package/runtimes/${{ matrix.name }}
@@ -72,26 +72,26 @@ jobs:
        DOTNET_NOLOGO: true
      steps:
       - name: Checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v1.7.2
+        uses: actions/setup-dotnet@v3.0.3
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 7.0.x
       - name: Install MinVer
         run: dotnet tool install --global minver-cli
       - name: Run MinVer
         id: minver
         run: echo '::set-output name=version::$(minver)'
       - name: Download artifacts
-        uses: actions/download-artifact@v2.0.10
+        uses: actions/download-artifact@v3.0.2
         with:
           path: nuget.package/runtimes/
       - name: Create package
         run: ./nuget.exe Pack nuget.package/NativeBinaries.nuspec -Version ${{ steps.minver.outputs.version }} -NoPackageAnalysis 
       - name: Upload NuGet package
-        uses: actions/upload-artifact@v2.2.2
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: NuGet package
           path: ./*.nupkg

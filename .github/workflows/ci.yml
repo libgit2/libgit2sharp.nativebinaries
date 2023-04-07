@@ -83,7 +83,7 @@ jobs:
         run: dotnet tool install --global minver-cli
       - name: Run MinVer
         id: minver
-        run: echo '::set-output name=version::$(minver)'
+        run: echo "version=$(minver)" >> $env:GITHUB_OUTPUT
       - name: Download artifacts
         uses: actions/download-artifact@v3.0.2
         with:

@@ -17,6 +17,10 @@ if [[ $OS == "Darwin" ]]; then
         OSXARCHITECTURE="x86_64"
     fi
 else
+    if [[ $OS == *NT* ]]; then
+        CMAKE_MAKEFILES="-G=Unix Makefiles"
+    fi
+
     if [[ $RID == android-* ]]; then
         if [[ $NDK_PATH == "" ]]; then
             echo "NDK_PATH not found"
@@ -24,22 +28,27 @@ else
         fi
 
         USEHTTPS="OpenSSL"
-        CMAKE_MAKEFILES="-G=Unix Makefiles"
         if [[ $RID == "android-arm64" ]]; then
             ABI=arm64-v8a
         else 
             ABI=armeabi-v7a
         fi
 
-        CMAKE_ANDROID=" -DOPENSSL_INCLUDE_DIR=$PWD/OpenSSL/$ABI/include/ \
-                        -DOPENSSL_SSL_LIBRARY=$PWD/OpenSSL/$ABI/lib/libssl.a \
-                        -DOPENSSL_CRYPTO_LIBRARY=$PWD/OpenSSL/$ABI/lib/libcrypto.a \
+        if [[ $SSL_PATH == "" ]]; then
+            SSL_PATH=$PWD/OpenSSL/$ABI
+        fi
+
+        CMAKE_ANDROID=" -DOPENSSL_INCLUDE_DIR=$SSL_PATH/include/ \
+                        -DOPENSSL_SSL_LIBRARY=$SSL_PATH/libssl.a \
+                        -DOPENSSL_CRYPTO_LIBRARY=$SSL_PATH/libcrypto.a \
                         -DCMAKE_TOOLCHAIN_FILE=$NDK_PATH/build/cmake/android.toolchain.cmake \
                         -DANDROID_PLATFORM=android-24 \
                         -DANDROID_ABI=$ABI"
     else
         USEHTTPS="OpenSSL-Dynamic"
     fi
+
+    echo $CMAKE_ANDROID
 fi
 
 rm -rf libgit2/build

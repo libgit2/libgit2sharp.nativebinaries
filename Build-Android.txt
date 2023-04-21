@@ -14,8 +14,8 @@ $ sudo apt-get install git-core build-essential cmake
 
 输入命令字母“o”，切换为插入模式（--INSERT--），可以在光标末尾插入新行对文件进行修改。
 在文件末尾加入相应的路径：
-export ANDROID_NDK=/home/book/android-ndk-r25c
-export PATH=$PATH:$ANDROID_NDK
+export NDK_PATH=/home/book/android-ndk-r25c
+export PATH=$PATH:$NDK_PATH
 按 esc 键，退出插入模式即可进入命令模式。在末尾输入 :wq ，即可写入保存并离开
 # source /etc/profile
 # ​​​​​​​ndk-build
@@ -27,18 +27,30 @@ export PATH=$PATH:$ANDROID_NDK
 每次进入命令提示符均需要设置. Tell configure what flags Android requires.
 # export CFLAGS="-fPIE -fPIC"
 # export LDFLAGS="-pie"
-# PATH=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
+# PATH=$NDK_PATH/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 # ./Configure android-arm64
 # make
 
 # find . -type f -name "*.o" -exec rm -v {} \;
 # find . -type f -name "*.S" -exec rm -v {} \;
-# ./Configure android-arm
+# ./Configure android-arm -fPIC
 # make
 
-二. 编译LibGit2
+二. 如果CMAKE版本过低需要升级
+wget https://cmake.org/files/v3.26/cmake-3.26.3.tar.gz
+tar -xvzf cmake-3.26.3.tar.gz
+cd cmake-3.26.3
+chmod 777 ./configure
+./configure
+make
+sudo make install
+sudo update-alternatives --install /usr/bin/cmake cmake /usr/local/bin/cmake 1 --force
+
+
+三. 编译LibGit2
 # git clone --recursive https://gitee.com/Git-Fork/libgit2sharp.nativebinaries
 # cd libgit2sharp.nativebinaries/
+## export SSL_PATH=/home/book/openssl/
 # export RID=android-arm
 # ./build.libgit2.sh
 # export RID=android-arm64

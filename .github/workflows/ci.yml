@@ -37,7 +37,7 @@ jobs:
             name: linux-musl-arm64
           - os: ubuntu-20.04
             name: linux-arm
-          - os: macos-10.15
+          - os: macos-11
             name: osx-x64
           - os: macos-11
             name: osx-arm64

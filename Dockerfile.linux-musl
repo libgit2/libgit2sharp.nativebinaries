@@ -1,5 +1,5 @@
 ARG ARCH='amd64'
-FROM multiarch/alpine:${ARCH}-v3.12
+FROM multiarch/alpine:${ARCH}-v3.13
 RUN apk add --no-cache bash build-base cmake
 
 WORKDIR /nativebinaries

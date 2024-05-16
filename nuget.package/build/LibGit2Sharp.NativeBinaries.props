@@ -1,7 +1,7 @@
-﻿<Project>
+<Project>
   <PropertyGroup>
     <libgit2_propsfile>$(MSBuildThisFileFullPath)</libgit2_propsfile>
-    <libgit2_hash>2c5c31e8119c8b068066cf755573cb9dd8c78fbb</libgit2_hash>
-    <libgit2_filename>git2-2c5c31e</libgit2_filename>
+    <libgit2_hash>36f7e21ad757a3dacc58cf7944329da6bc1d6e96</libgit2_hash>
+    <libgit2_filename>git2-36f7e21</libgit2_filename>
   </PropertyGroup>
 </Project>

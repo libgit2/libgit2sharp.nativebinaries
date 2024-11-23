@@ -26,7 +26,8 @@ pushd libgit2/build
 
 export _BINPATH=`pwd`
 
-cmake -DCMAKE_BUILD_TYPE:STRING=Release \
+cmake  xx-clang --print-cmake-defines \
+      -DCMAKE_BUILD_TYPE:STRING=Release \
       -DBUILD_TESTS:BOOL=OFF \
       -DUSE_SSH=exec \
       -DLIBGIT2_FILENAME=git2-$SHORTSHA \

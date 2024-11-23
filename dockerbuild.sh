@@ -6,9 +6,9 @@ echo "building for $RID"
 if [[ $RID =~ arm64 ]]; then
     arch="arm64"
 elif [[ $RID =~ arm ]]; then
-    arch="arm/v7"
+    arch="armhf"
 elif [[ $RID =~ ppc64le ]]; then
-    arch="ppc64le"
+    arch="powerpc64le"
 else
     arch="amd64"
 fi
@@ -19,7 +19,7 @@ else
     dockerfile="Dockerfile.linux"
 fi
 
-docker buildx build -t $RID -f $dockerfile --platform=linux/$arch .
+docker buildx build -t $RID -f $dockerfile --platform=linux/$arch --build-arg ARCH=$arch .
 
 docker run -t -e RID=$RID --name=$RID $RID
 

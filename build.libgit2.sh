@@ -26,7 +26,7 @@ pushd libgit2/build
 
 export _BINPATH=`pwd`
 
-cmake  xx-clang --print-cmake-defines \
+cmake  $(xx-clang --print-cmake-defines) \
       -DCMAKE_BUILD_TYPE:STRING=Release \
       -DBUILD_TESTS:BOOL=OFF \
       -DUSE_SSH=exec \

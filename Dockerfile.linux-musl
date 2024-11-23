@@ -4,7 +4,7 @@ FROM --platform=$BUILDPLATFORM alpine
 
 COPY --from=xx / /
 
-RUN apk add cmake clang lld bash build-base
+RUN apk add cmake clang lld bash build-base pkg-config
 
 WORKDIR /nativebinaries
 COPY . /nativebinaries/

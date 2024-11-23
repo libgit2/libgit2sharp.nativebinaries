@@ -4,3 +4,7 @@
 *.dylib
 *.so
 *.zip
+
+bin/
+obj/
+.vs/

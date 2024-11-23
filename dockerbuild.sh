@@ -7,6 +7,8 @@ if [[ $RID =~ arm64 ]]; then
     arch="arm64"
 elif [[ $RID =~ arm ]]; then
     arch="armhf"
+elif [[ $RID =~ ppc64le ]]; then
+    arch="powerpc64le"
 else
     arch="amd64"
 fi

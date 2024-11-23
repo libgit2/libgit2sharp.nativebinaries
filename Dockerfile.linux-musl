@@ -4,12 +4,12 @@ FROM --platform=$BUILDPLATFORM alpine
 
 COPY --from=xx / /
 
-RUN apk add cmake clang lld
+RUN apk add cmake clang lld bash build-base
 
 WORKDIR /nativebinaries
 COPY . /nativebinaries/
 
 ARG TARGETPLATFORM
-RUN xx-apk add musl-dev gcc bash
+RUN xx-apk add musl-dev gcc 
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

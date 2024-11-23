@@ -1,8 +1,13 @@
-ARG ARCH='amd64'
-FROM multiarch/alpine:${ARCH}-v3.13
-RUN apk add --no-cache bash build-base cmake
+FROM --platform=$BUILDPLATFORM tonistiigi/xx AS xx
+
+FROM --platform=$BUILDPLATFORM alpine
+
+RUN apk add cmake clang lld
 
 WORKDIR /nativebinaries
 COPY . /nativebinaries/
+
+ARG TARGETPLATFORM
+RUN xx-apk musl-dev gcc
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

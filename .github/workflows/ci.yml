@@ -25,17 +25,17 @@ jobs:
           - os: windows-2019
             name: win-arm64
             param: -arm64
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             name: linux-x64
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             name: linux-musl-x64
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             name: linux-arm64
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             name: linux-musl-arm
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             name: linux-musl-arm64
-          - os: ubuntu-20.04
+          - os: ubuntu-24.04
             name: linux-arm
           - os: macos-12
             name: osx-x64

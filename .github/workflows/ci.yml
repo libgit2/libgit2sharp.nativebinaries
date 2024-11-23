@@ -67,7 +67,7 @@ jobs:
   package:
      name: Create package
      needs: build
-     runs-on: windows-2019
+     runs-on: ubuntu-24.04
      env:
        DOTNET_NOLOGO: true
      steps:
@@ -78,20 +78,15 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4.1.0
         with:
-          dotnet-version: 8.0.x
-      - name: Install MinVer
-        run: dotnet tool install --global minver-cli
-      - name: Run MinVer
-        id: minver
-        run: echo "version=$(minver)" >> $env:GITHUB_OUTPUT
+          dotnet-version: 9.0.x
       - name: Download artifacts
         uses: actions/download-artifact@v4.1.8
         with:
           path: nuget.package/runtimes/
       - name: Create package
-        run: ./nuget.exe Pack nuget.package/NativeBinaries.nuspec -Version ${{ steps.minver.outputs.version }} -NoPackageAnalysis 
+        run: dotnet pack nuget.package
       - name: Upload NuGet package
         uses: actions/upload-artifact@v4.4.3
         with:
           name: NuGet package
-          path: ./*.nupkg
+          path: ./nuget.package/*.nupkg

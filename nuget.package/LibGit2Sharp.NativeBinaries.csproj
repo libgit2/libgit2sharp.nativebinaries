@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <NoBuild>true</NoBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <Authors>LibGit2Sharp contributors</Authors>
+    <PackageLicenseFile>libgit2\libgit2.license.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/libgit2/libgit2sharp.nativebinaries</PackageProjectUrl>
+    <PackageIcon>libgit2\libgit2.png</PackageIcon>
+    <Description>Native binaries for LibGit2Sharp</Description>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)</PackageOutputPath>
+    <NoWarn>$(NoWarn);NU5127</NoWarn>
+  </PropertyGroup>
+
+<ItemGroup>
+  <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="all" />
+</ItemGroup>
+
+  <ItemGroup>
+    <None Update="build\**\*" Pack="true" PackagePath="" />
+    <None Update="buildMultiTargeting\**\*" Pack="true" PackagePath="" />
+    <None Update="libgit2\**\*" Pack="true" PackagePath="" />
+    <None Update="runtimes\**\*" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

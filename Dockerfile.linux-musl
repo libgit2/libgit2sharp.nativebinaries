@@ -10,6 +10,6 @@ WORKDIR /nativebinaries
 COPY . /nativebinaries/
 
 ARG TARGETPLATFORM
-RUN xx-apk add musl-dev gcc
+RUN xx-apk add musl-dev gcc bash
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

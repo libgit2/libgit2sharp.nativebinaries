@@ -1,7 +1,6 @@
 FROM bording/crossbuild
 ARG ARCH='amd64'
-ARG CC_ARCH='amd64'
-ENV CROSS_TRIPLE=${CC_ARCH}
+ENV CROSS_TRIPLE=${ARCH}
 RUN apt update && apt -y install pkg-config
 
 WORKDIR /nativebinaries

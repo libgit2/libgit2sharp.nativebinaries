@@ -16,15 +16,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: windows-2019
-            name: win-x86
-            param: -x86
-          - os: windows-2019
-            name: win-x64
-            param: -x64
-          - os: windows-2019
-            name: win-arm64
-            param: -arm64
+        #   - os: windows-2019
+        #     name: win-x86
+        #     param: -x86
+        #   - os: windows-2019
+        #     name: win-x64
+        #     param: -x64
+        #   - os: windows-2019
+        #     name: win-arm64
+        #     param: -arm64
           - os: ubuntu-24.04
             name: linux-x64
           - os: ubuntu-24.04
@@ -39,10 +39,10 @@ jobs:
             name: linux-musl-arm
           - os: ubuntu-24.04
             name: linux-musl-arm64
-          - os: macos-13
-            name: osx-x64
-          - os: macos-13
-            name: osx-arm64
+        #   - os: macos-13
+        #     name: osx-x64
+        #   - os: macos-13
+        #     name: osx-arm64
       fail-fast: false
     steps:
       - name: Checkout
@@ -55,9 +55,6 @@ jobs:
       - name: Build macOS
         if: runner.os == 'macOS'
         run: ./build.libgit2.sh
-      - name: Setup QEMU
-        if: matrix.name == 'linux-musl-arm' || matrix.name == 'linux-musl-arm64'
-        run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
       - name: Build Linux
         if: runner.os == 'Linux'
         run: ./dockerbuild.sh

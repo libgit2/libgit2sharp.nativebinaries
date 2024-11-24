@@ -21,7 +21,7 @@ fi
 
 docker buildx build -t $RID -f $dockerfile --platform=linux/$arch --build-arg ARCH=$arch .
 
-docker run -t -e RID=$RID --name=$RID $RID --platform=linux/$arch
+docker run -t -e RID=$RID --name=$RID --platform=linux/$arch $RID
 
 docker cp $RID:/nativebinaries/nuget.package/runtimes nuget.package
 

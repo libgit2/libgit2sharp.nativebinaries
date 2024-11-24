@@ -13,5 +13,6 @@ ARG TARGETPLATFORM
 RUN xx-apk add musl-dev gcc 
 
 RUN xx-info env
+RUN xx-clang --setup-target-triple
 
 CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

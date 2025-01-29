@@ -26,16 +26,49 @@ pushd libgit2/build
 
 export _BINPATH=`pwd`
 
-cmake -DCMAKE_BUILD_TYPE:STRING=Release \
-      -DBUILD_TESTS:BOOL=OFF \
-      -DUSE_SSH=exec \
-      -DLIBGIT2_FILENAME=git2-$SHORTSHA \
-      -DCMAKE_OSX_ARCHITECTURES=$OSXARCHITECTURE \
-      -DUSE_HTTPS=$USEHTTPS \
-      -DUSE_BUNDLED_ZLIB=ON \
-      ..
-cmake --build .
+# Проверка, собираем ли для Android
+if [[ "$RID" == *"android"* ]]; then
+    echo "Building for Android: $RID"
+    export ANDROID_TOOLCHAIN_ROOT="${ANDROID_NDK}"
+    export android_target_abi=21
 
+    if [[ "$RID" == "android-arm64" ]]; then
+        export TOOLCHAIN_FILE="../cmake-toolchains/libgit2-arm64-toolchain.cmake"
+    else
+        export TOOLCHAIN_FILE="../cmake-toolchains/libgit2-armv7-toolchain.cmake"
+    fi
+
+    cmake -DCMAKE_BUILD_TYPE=Release \
+          -DUSE_SSH=exec \
+          -DLIBGIT2_FILENAME=git2-$SHORTSHA \
+          -DUSE_HTTPS=$USEHTTPS \
+          -DUSE_BUNDLED_ZLIB=ON \
+          -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+          ..
+
+else
+    # Сборка для Mac/Linux по умолчанию
+    if [[ $OS == "Darwin" ]]; then
+        cmake -DCMAKE_BUILD_TYPE=Release \
+              -DBUILD_TESTS=OFF \
+              -DUSE_SSH=exec \
+              -DLIBGIT2_FILENAME=git2-$SHORTSHA \
+              -DCMAKE_OSX_ARCHITECTURES=$OSXARCHITECTURE \
+              -DUSE_HTTPS=$USEHTTPS \
+              -DUSE_BUNDLED_ZLIB=ON \
+              ..
+    else
+        cmake -DCMAKE_BUILD_TYPE=Release \
+              -DBUILD_TESTS=OFF \
+              -DUSE_SSH=exec \
+              -DLIBGIT2_FILENAME=git2-$SHORTSHA \
+              -DUSE_HTTPS=$USEHTTPS \
+              -DUSE_BUNDLED_ZLIB=ON \
+              ..
+    fi
+fi
+
+cmake --build .
 popd
 
 if [[ $RID == "" ]]; then

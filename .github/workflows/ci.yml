@@ -69,6 +69,8 @@ jobs:
         run: |
           chmod +x install_ndk.sh
           ./install_ndk.sh
+      - name: Force the correct SDK/NDK path
+        run: echo "ANDROID_TOOLCHAIN_ROOT=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64" >> $GITHUB_ENV
       - name: Debug environment
         run: |
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"

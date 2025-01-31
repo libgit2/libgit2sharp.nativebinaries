@@ -1,55 +1,76 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-set -e
+#####################
+# usage: ./thisscript.sh [repo_path]
+# the repo path used for locate the `local.properties` file,
+#  this script will append cmake.dir into it,
+#  if not specify, will use $GITHUB_WORKSPACE,
+#  if $GITHUB_WORKSPACE is empty, will use `/home/runner/work/PuppyGit/PuppyGit`, it is the actually value of $GITHUB_WORKSPACE
+#####################
 
-# OPTIONAL: Install required packages (uncomment if needed)
-# sudo apt-get update
-# sudo apt-get install -y curl unzip
+#echo "Updating package list..."
+#sudo apt update
+#
+#echo "Installing: curl cmake make tar libssl-dev maven unzip"
+#sudo apt install -y curl cmake make tar libssl-dev maven unzip
 
-BUILD_ROOT="$HOME/puppylibsbuild"
-mkdir -p "$BUILD_ROOT"
-cd "$BUILD_ROOT"
 
-# Paths and versions
-TOOLS="$BUILD_ROOT/tools"
-ANDROID_CMD_TOOLS="$TOOLS/android-cmdline-tools"
-ANDROID_HOME="$BUILD_ROOT/android-sdk"
-CMAKE_VERSION="3.31.1"
-NDK_VERSION="26.3.11579264"
 
-# Create directories
-mkdir -p "$ANDROID_CMD_TOOLS"
-mkdir -p "$ANDROID_HOME"
+export build_root=$HOME/libsbuild
+mkdir -p $build_root
+cd $build_root
 
-echo "Downloading Android command line tools..."
+# export ndk_filename="android-ndk-r26d-linux"
+# echo "Downloading: ndk"
+# curl -L -o "${build_root}/$ndk_filename.zip" "https://dl.google.com/android/repository/${ndk_filename}.zip"
+# export ANDROID_NDK_ROOT=$build_root/android-ndk
+# mkdir -p $ANDROID_NDK_ROOT
+# echo "Extracting: ndk"
+# -q : only show msg when err
+# unzip -q "$ndk_filename.zip"
+# mv android-ndk-r26d/* $ANDROID_NDK_ROOT
+
+echo "Downloading: Android SDK"
+# ANDROID_HOME is android sdk root, is sdk root, not ndk root
+export TOOLS=$build_root/tools
+export ANDROID_CMD_TOOLS=$TOOLS/android-cmdline-tools
+export ANDROID_HOME=$build_root/android-sdk
+export CMAKE_VERSION=3.31.1
+export NDK_VERSION=26.3.11579264
+# 创建目标目录以及依赖目录，虽然后面会删一下cmd tools目录，但这个创建依然是有意义的，意义在于创建依赖目录，所以即使后面会删除cmd tools目录，这条命令也依然应该保留
+mkdir -p $ANDROID_CMD_TOOLS
+mkdir -p $ANDROID_HOME
 curl -L -o cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+# 删一下，确保mv后目录结构不变
+rm -rf $ANDROID_CMD_TOOLS
+# 解压然后移动，确保先删后解压移动，以免当解压后的目录和移动的目标目录同名时误删
+unzip cmdline-tools.zip -d $TOOLS/
+mv $TOOLS/cmdline-tools $ANDROID_CMD_TOOLS
+export ANDROID_SDKMANAGER=$ANDROID_CMD_TOOLS/bin/sdkmanager
+chmod +x $ANDROID_SDKMANAGER
+echo "install cmake by Android sdkmanager"
+yes | $ANDROID_SDKMANAGER --install "cmake;$CMAKE_VERSION" --sdk_root=$ANDROID_HOME
+# $ANDROID_HOME/cmdline-tools/bin/sdkmanager --list --sdk_root=$ANDROID_HOME
+# cmake root dir
+export CMAKE_DIR=$ANDROID_HOME/cmake/$CMAKE_VERSION
+# cmake 可执行文件路径
+export CMAKE_PATH=$CMAKE_DIR/bin/cmake
 
-# Unzip and move to the final location
-unzip cmdline-tools.zip -d "$TOOLS/"
-mv "$TOOLS/cmdline-tools" "$ANDROID_CMD_TOOLS"
+echo "print cmake version"
+$CMAKE_PATH --version
 
-# Define sdkmanager path
-ANDROID_SDKMANAGER="$ANDROID_CMD_TOOLS/bin/sdkmanager"
-chmod +x "$ANDROID_SDKMANAGER"
+echo "downloading android ndk..."
+# channel 0 stable, 1 beta, 3 canary, see: https://github.com/android/ndk-samples/wiki/Configure-NDK-Path#the-sdkmanager-command-line-tool
+yes | $ANDROID_SDKMANAGER --channel=0 --install "ndk;$NDK_VERSION" --sdk_root=$ANDROID_HOME
 
-echo "Installing CMake $CMAKE_VERSION via sdkmanager..."
-yes | "$ANDROID_SDKMANAGER" --install "cmake;$CMAKE_VERSION" --sdk_root="$ANDROID_HOME"
+echo "set sdk.dir to local.properties for gradle"
+REPO_PATH=${1:-$GITHUB_WORKSPACE}
+REPO_PATH=${REPO_PATH:-/home/runner/work/PuppyGit/PuppyGit}
+LOCAL_PROPERTIES_PATH=$REPO_PATH/local.properties
+echo -e "\nsdk.dir=$ANDROID_HOME" >> $LOCAL_PROPERTIES_PATH
+echo "local.properties at: $LOCAL_PROPERTIES_PATH"
+echo "cat local.properties:"
+cat $LOCAL_PROPERTIES_PATH
 
-# Path to the installed CMake
-CMAKE_DIR="$ANDROID_HOME/cmake/$CMAKE_VERSION"
-CMAKE_PATH="$CMAKE_DIR/bin/cmake"
 
-echo "CMake version:"
-"$CMAKE_PATH" --version
-
-echo "Installing NDK $NDK_VERSION..."
-yes | "$ANDROID_SDKMANAGER" --channel=0 --install "ndk;$NDK_VERSION" --sdk_root="$ANDROID_HOME"
-
-echo "NDK installation complete."
-
-# OPTIONAL: If you need to automatically set environment variables for subsequent steps,
-# you can echo them into $GITHUB_ENV or similar:
-# echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
-# echo "ANDROID_NDK=$ANDROID_HOME/ndk/$NDK_VERSION" >> $GITHUB_ENV
-
-echo "All done."
+echo "Installation complete"

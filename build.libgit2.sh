@@ -39,7 +39,7 @@ if [[ "$RID" == *"android"* ]]; then
     fi
 
     cmake -DCMAKE_BUILD_TYPE=Release \
-        -DUSE_SSH=ON \
+        -DUSE_SSH=OFF \
         -DBUILD_TESTS=OFF \
         -DBUILD_CLI=OFF \
         -DBUILD_EXAMPLES=OFF \

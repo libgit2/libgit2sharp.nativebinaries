@@ -29,7 +29,7 @@ export _BINPATH=`pwd`
 # Проверка, собираем ли для Android
 if [[ "$RID" == *"android"* ]]; then
     echo "Building for Android: $RID"
-    export ANDROID_TOOLCHAIN_ROOT="${ANDROID_NDK}"
+    export ANDROID_TOOLCHAIN_ROOT="${ANDROID_NDK}/toolchains/llvm/prebuilt/linux-x86_64"
     export android_target_abi=21
 
     if [[ "$RID" == "android-arm64" ]]; then

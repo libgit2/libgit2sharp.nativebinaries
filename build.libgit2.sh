@@ -39,13 +39,18 @@ if [[ "$RID" == *"android"* ]]; then
     fi
 
     cmake -DCMAKE_BUILD_TYPE=Release \
-          -DUSE_SSH=exec \
-          -DLIBGIT2_FILENAME=git2-$SHORTSHA \
-          -DUSE_HTTPS=$USEHTTPS \
-          -DUSE_BUNDLED_ZLIB=ON \
-          -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
-          ..
-
+        -DUSE_SSH=ON \
+        -DBUILD_TESTS=OFF \
+        -DBUILD_CLI=OFF \
+        -DBUILD_EXAMPLES=OFF \
+        -DBUILD_FUZZERS=OFF \
+        -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_C_STANDARD=99 \
+        -DLIBGIT2_FILENAME=git2-$SHORTSHA \
+        -DUSE_HTTPS=$USEHTTPS \
+        -DUSE_BUNDLED_ZLIB=ON \
+        -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
+        ..
 else
     # Сборка для Mac/Linux по умолчанию
     if [[ $OS == "Darwin" ]]; then

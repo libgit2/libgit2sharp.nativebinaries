@@ -33,9 +33,9 @@ if [[ "$RID" == *"android"* ]]; then
     export android_target_abi=21
 
     if [[ "$RID" == "android-arm64" ]]; then
-        export TOOLCHAIN_FILE="../cmake-toolchains/libgit2-arm64-toolchain.cmake"
+        export TOOLCHAIN_FILE="./cmake-toolchains/libgit2-arm64-toolchain.cmake"
     else
-        export TOOLCHAIN_FILE="../cmake-toolchains/libgit2-armv7-toolchain.cmake"
+        export TOOLCHAIN_FILE="./cmake-toolchains/libgit2-armv7-toolchain.cmake"
     fi
 
     cmake -DCMAKE_BUILD_TYPE=Release \

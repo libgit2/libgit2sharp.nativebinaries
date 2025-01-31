@@ -75,7 +75,16 @@ jobs:
           TOOLCHAIN_ROOT="$PWD/android-ndk-r23b/toolchains/llvm/prebuilt/linux-x86_64"
           echo "ANDROID_TOOLCHAIN_ROOT=$TOOLCHAIN_ROOT" >> $GITHUB_ENV
           echo "ANDROID_NDK=$PWD/android-ndk-r23b" >> $GITHUB_ENV
+      - name: Debug NDK
+        if: contains(matrix.name, 'android')
+        run: |
+          echo "ANDROID_NDK=$ANDROID_NDK"
+          echo "Contents of $ANDROID_NDK:"
+          ls -R $ANDROID_NDK | head -n 200
 
+          echo "ANDROID_TOOLCHAIN_ROOT=$ANDROID_TOOLCHAIN_ROOT"
+          echo "Contents of $ANDROID_TOOLCHAIN_ROOT/bin:"
+          ls -l $ANDROID_TOOLCHAIN_ROOT/bin | head -n 50
       - name: Build Linux
         if: runner.os == 'Linux' && (!contains(matrix.name, 'android'))
         run: ./dockerbuild.sh

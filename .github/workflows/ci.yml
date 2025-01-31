@@ -67,6 +67,7 @@ jobs:
       - name: Setup Android NDK
         if: contains(matrix.name, 'android')
         run: |
+          chmod +x install_ndk.sh
           ./install_ndk.sh
           echo "ANDROID_TOOLCHAIN_ROOT=$ANDROID_HOME/ndk/$NDK_VERSION/toolchains/llvm/prebuilt/linux-x86_64" >> $GITHUB_ENV
       - name: Build Linux

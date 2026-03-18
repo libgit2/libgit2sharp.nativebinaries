@@ -67,12 +67,12 @@ jobs:
           name: ${{ matrix.name }}
           path: nuget.package/runtimes/${{ matrix.name }}
   package:
-     name: Create package
-     needs: build
-     runs-on: ubuntu-24.04
-     env:
-       DOTNET_NOLOGO: true
-     steps:
+    name: Create package
+    needs: build
+    runs-on: ubuntu-24.04
+    env:
+      DOTNET_NOLOGO: true
+    steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
         with:
@@ -92,3 +92,10 @@ jobs:
         with:
           name: NuGet package
           path: ./nuget.package/*.nupkg
+      - name: Push package to feed 🐙
+        id: push-feed
+        shell: bash
+        env:
+          FEED_API_KEY: ${{ secrets.FEED_API_KEY }}
+          FEED_SOURCE: ${{ secrets.FEED_SOURCE }}
+        run: dotnet nuget push ./nuget.package/*.nupkg --api-key "$FEED_API_KEY" --source "$FEED_SOURCE"

@@ -1,108 +1,33 @@
-# LibGit2Sharp.NativeBinaries
+# libgit2 native binaries nuget package
 
-**[Libgit2Sharp][lg2s]** is a managed wrapper around **[libgit2][lg2]**, and as
-such requires compilation of libgit2 for your platform.
+[![CI](https://github.com/gigi81/libgit2sharp-nativebinaries/actions/workflows/ci.yml/badge.svg)](https://github.com/gigi81/libgit2sharp-nativebinaries/actions/workflows/ci.yml)
 
-LibGit2Sharp makes this easy by distributing, and leveraging as a dependency,
-the **[LibGit2Sharp.NativeBinaries][lg2s-nb]** NuGet package.
+This is a modernized fork of the original `LibGit2Sharp.NativeBinaries` project. It provides the native `libgit2` binaries required by [LibGit2Sharp](https://github.com/libgit2/libgit2sharp).
 
-This package contains the compiled versions of the libgit2 native library for
-the following platforms:
+## Key Enhancements
 
- - Windows (x86, x64, arm64)
- - macOS (x64, arm64)
- - Linux
-   - glibc: (x64, arm, arm64, ppc64le)
-   - musl: (x64, arm, arm64)
+*   **Expanded Architecture Support:** Now supports 12 RIDs including Windows (x86, x64, ARM64), macOS (x64, ARM64), Linux Glibc (x64, ARM, ARM64, PPC64LE), and Linux Musl (x64, ARM, ARM64).
+*   **Pure CMake Build:** Replaced legacy shell scripts and complex Docker setups with a standard CMake workflow, making the build process more transparent and easier to maintain.
+*   **Modern CI/CD:** Fully automated GitHub Actions pipeline that builds, packages, and publishes to GitHub Packages and NuGet.org.
+*   **Deterministic Versioning:** Package versions are automatically derived from the underlying `libgit2` source version with an appended build number for unique releases.
 
- [lg2s-nb]: https://www.nuget.org/packages/LibGit2Sharp.NativeBinaries
- [lg2]: https://libgit2.github.com/
- [lg2s]: http://libgit2sharp.com/
+## Supported RIDs
 
-## Script overview
+| Operating System | Architecture | RID |
+| :--- | :--- | :--- |
+| **Windows** | x86, x64, ARM64 | `win-x86`, `win-x64`, `win-arm64` |
+| **macOS** | x64, ARM64 (M-series) | `osx-x64`, `osx-arm64` |
+| **Linux (Glibc)** | x64, ARM, ARM64, PPC64LE | `linux-x64`, `linux-arm`, `linux-arm64`, `linux-ppc64le` |
+| **Linux (Musl)** | x64, ARM, ARM64 | `linux-musl-x64`, `linux-musl-arm`, `linux-musl-arm64` |
 
-The following scripts are used to build libgit2 and update this repo.
+## Usage
 
-### build.libgit2.ps1
+To use these binaries in your project, simply add the NuGet package:
 
-This script builds Windows libgit2 binaries. It requires Visual Studio 2019 to run.
-
-To build x86 binaries:
-
-```
-build.libgit2.ps1 -x86
+```bash
+dotnet package add libgit2
 ```
 
-To build x64 binaries:
+## License
 
-```
-build.libgit2.ps1 -x64
-```
-
-To build arm64 binaries:
-
-```
-build.libgit2.ps1 -arm64
-```
-
-Multiple architecture parameters can be specified to build multiple binaries with a single execution of the script.
-
-See the script for additional parameters.
-
-### build.libgit2.sh
-
-This script builds Linux and macOS binaries. It can be invoked directly, but for Linux binaries, `dockerbuild.sh` should be used instead.
-
-### dockerbuild.sh
-
-This script will build one of the Dockerfiles in the repo. It chooses which one to run based on the value of the `RID` environment variable. Using docker to build the Linux binaries for the various RIDs ensures that a specific environment and distro is used.
-
-### UpdateLibgit2ToSha.ps1
-
-This script is used to update the libgit2 submodule and update the references within the project to the correct libgit2 revision. 
-
-You can update to a specific commit:
-
-```
-UpdateLibgit2ToSha.ps1 1a2b3c4
-```
-
-Or you can specify references:
-
-```
-UpdateLibgit2ToSha.ps1 master
-```
-
-## Building the package locally
-
-After running the appropriate build script(s) to create binaries, the NuGet package needs to be created.
-
-First, to use the same version locally that will be generated via CI, install the [minver-cli](https://www.nuget.org/packages/minver-cli) dotnet tool:
-
-```
-dotnet tool install --global minver-cli
-```
-
-Once that is installed, running the `minver` command will output a version:
-
-```
-MinVer: Using { Commit: 2453a6d, Tag: '2.0.312', Version: 2.0.312, Height: 3 }.
-MinVer: Calculated version 2.0.313-alpha.0.3.
-2.0.313-alpha.0.3
-```
-
-To create the package, use the the following command:
-
-```
-nuget.exe Pack nuget.package/NativeBinaries.nuspec -Version <version> -NoPackageAnalysis
-```
-
-Where `<version>` is the version from the MinVer tool or manually chosen version.
-
-
-## Notes on Visual Studio
-
-Visual Studio 2019 is required to build the Windows native binaries, however you
-do not need to install a *paid* version of Visual Studio. libgit2
-can be compiled using [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/),
-which is free for building open source applications.
+This project is licensed under the MIT license (see `LICENSE.md`). The `libgit2` library itself is licensed under a modified GPLv2 with a linking exception (see `libgit2/COPYING`).

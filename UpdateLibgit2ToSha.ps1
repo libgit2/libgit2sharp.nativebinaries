@@ -77,9 +77,41 @@ Push-Location $libgit2Directory
     }
 
     Write-Output "Checking out $sha..."
-    Invoke-Command -Quiet -Fatal { & $git checkout $sha }
+    $currentSha = & $git rev-parse HEAD
+    if ($sha -ne $currentSha) {
+        Invoke-Command -Quiet { & $git fetch }
+        Invoke-Command -Quiet -Fatal { & $git checkout $sha }
+    }
 
     Pop-Location
+
+    # Extract version from CMakeLists.txt
+    $cmakeContent = Get-Content (Join-Path $libgit2Directory "CMakeLists.txt") -Raw
+    if ($cmakeContent -match 'project\(libgit2 VERSION "([^"]+)"') {
+        $baseVersion = $Matches[1]
+        $buildNumber = if ($env:GITHUB_RUN_NUMBER) { $env:GITHUB_RUN_NUMBER } else { "0" }
+        $version = "$baseVersion.$buildNumber"
+        Write-Output "LibGit2 Version: $version"
+        if ($env:GITHUB_OUTPUT) {
+            "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+        }
+
+        # Update Version in csproj
+        $csprojPath = Join-Path $projectDirectory "nuget.package\LibGit2Sharp.NativeBinaries.csproj"
+        [xml]$csproj = Get-Content $csprojPath
+        $versionNode = $csproj.SelectSingleNode("//Version")
+        if ($null -eq $versionNode) {
+            $versionNode = $csproj.CreateElement("Version")
+            $propertyGroup = $csproj.SelectSingleNode("//PropertyGroup")
+            if ($null -eq $propertyGroup) {
+                $propertyGroup = $csproj.CreateElement("PropertyGroup")
+                $csproj.DocumentElement.AppendChild($propertyGroup) | Out-Null
+            }
+            $propertyGroup.AppendChild($versionNode) | Out-Null
+        }
+        $versionNode.InnerText = $version
+        $csproj.Save($csprojPath)
+    }
 
     $binaryFilename = "git2-" + $sha.Substring(0,7)
 

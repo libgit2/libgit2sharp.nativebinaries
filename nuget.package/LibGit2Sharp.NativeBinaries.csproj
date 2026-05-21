@@ -5,25 +5,25 @@
     <NoBuild>true</NoBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <PackageId>libgit2</PackageId>
     <Authors>LibGit2Sharp contributors</Authors>
     <PackageLicenseFile>libgit2\libgit2.license.txt</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/libgit2/libgit2sharp.nativebinaries</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/gigi81/libgit2sharp-nativebinaries</PackageProjectUrl>
     <PackageIcon>libgit2\libgit2.png</PackageIcon>
-    <Description>Native binaries for LibGit2Sharp</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Libgit2 native binaries for x86, x64, ARM, ARM64, Musl, PPC64LE</Description>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageOutputPath>$(MSBuildThisFileDirectory)</PackageOutputPath>
     <NoWarn>$(NoWarn);NU5127</NoWarn>
+    <RepositoryUrl>https://github.com/gigi81/libgit2sharp-nativebinaries</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
-<ItemGroup>
-  <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="all" />
-</ItemGroup>
-
   <ItemGroup>
-    <None Update="build\**\*" Pack="true" PackagePath="" />
-    <None Update="buildMultiTargeting\**\*" Pack="true" PackagePath="" />
-    <None Update="libgit2\**\*" Pack="true" PackagePath="" />
-    <None Update="runtimes\**\*" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="build\**\*" Pack="true" PackagePath="build/" />
+    <None Include="buildMultiTargeting\**\*" Pack="true" PackagePath="buildMultiTargeting/" />
+    <None Include="libgit2\**\*" Pack="true" PackagePath="libgit2/" />
+    <None Include="runtimes\**\*" Pack="true" PackagePath="runtimes/" />
   </ItemGroup>
 
 </Project>

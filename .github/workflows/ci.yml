@@ -1,94 +1,206 @@
-name: CI
+name: Build and Publish
+
 on:
   push:
-    branches: [master, release-*]
+    branches: [master, release-*, feature/*]
     tags:
       - '[0-9]+.[0-9]+.[0-9]+'
       - '[0-9]+.[0-9]+.[0-9]+-*'
   pull_request:
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
-    name: ${{ matrix.name }}
+    name: Build on ${{ matrix.os }} (${{ matrix.ridRequested }})
     runs-on: ${{ matrix.os }}
-    env:
-      RID: ${{ matrix.name }}
     strategy:
       matrix:
         include:
-          - os: windows-2019
-            name: win-x86
-            param: -x86
-          - os: windows-2019
-            name: win-x64
-            param: -x64
-          - os: windows-2019
-            name: win-arm64
-            param: -arm64
-          - os: ubuntu-24.04
-            name: linux-x64
-          - os: ubuntu-24.04
-            name: linux-arm
-          - os: ubuntu-24.04
-            name: linux-arm64
-          - os: ubuntu-24.04
-            name: linux-ppc64le
-          - os: ubuntu-24.04
-            name: linux-musl-x64
-          - os: ubuntu-24.04
-            name: linux-musl-arm
-          - os: ubuntu-24.04
-            name: linux-musl-arm64
-          - os: macos-13
-            name: osx-x64
-          - os: macos-13
-            name: osx-arm64
+          # Windows
+          - { os: windows-latest, ridRequested: win-x86,   cmake_args: '-A Win32 -DUSE_HTTPS=Schannel -DSTATIC_CRT=ON' }
+          - { os: windows-latest, ridRequested: win-x64,   cmake_args: '-A x64 -DUSE_HTTPS=Schannel -DSTATIC_CRT=ON' }
+          - { os: windows-latest, ridRequested: win-arm64, cmake_args: '-A ARM64 -DUSE_HTTPS=Schannel -DSTATIC_CRT=ON' }
+
+          # macOS
+          - { os: macos-latest, ridRequested: osx-x64,   cmake_args: '-DCMAKE_OSX_ARCHITECTURES=x86_64 -DUSE_HTTPS=ON' }
+          - { os: macos-latest, ridRequested: osx-arm64, cmake_args: '-DCMAKE_OSX_ARCHITECTURES=arm64 -DUSE_HTTPS=ON' }
+
+          # Linux (Glibc)
+          - { os: ubuntu-latest, ridRequested: linux-x64,   cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-latest, ridRequested: linux-arm,   cmake_args: '-DCMAKE_C_COMPILER=arm-linux-gnueabihf-gcc -DCMAKE_CXX_COMPILER=arm-linux-gnueabihf-g++ -DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=arm' }
+          - { os: ubuntu-latest, ridRequested: linux-arm64, cmake_args: '-DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ -DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=aarch64' }
+          - { os: ubuntu-latest, ridRequested: linux-ppc64le, cmake_args: '-DCMAKE_C_COMPILER=powerpc64le-linux-gnu-gcc -DCMAKE_CXX_COMPILER=powerpc64le-linux-gnu-g++ -DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_PROCESSOR=ppc64le' }
+
+          # Linux (Musl)
+          - { os: ubuntu-latest, ridRequested: linux-musl-x64,   container: 'alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-latest, ridRequested: linux-musl-arm,   container: 'multiarch/alpine:armhf-v3.13', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-latest, ridRequested: linux-musl-arm64, container: 'multiarch/alpine:aarch64-v3.13', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
       fail-fast: false
     steps:
+      - name: Setup QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v3
+
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Build Windows
-        if: runner.os == 'Windows'
-        run: ./build.libgit2.ps1 ${{ matrix.param }}
-      - name: Build macOS
-        if: runner.os == 'macOS'
-        run: ./build.libgit2.sh
-      - name: Setup QEMU
-        if: matrix.name == 'linux-musl-arm' || matrix.name == 'linux-musl-arm64'
-        run: docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      - name: Build Linux
-        if: runner.os == 'Linux'
-        run: ./dockerbuild.sh
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4.4.3
+
+      - name: Get libgit2 SHA
+        id: get_sha
+        shell: bash
+        run: echo "sha=$(cat nuget.package/libgit2/libgit2_hash.txt | head -c 7)" >> $GITHUB_OUTPUT
+
+      - name: Install Dependencies (Linux Glibc)
+        if: runner.os == 'Linux' && matrix.container == ''
+        run: |
+          sudo apt-get update
+          if [ "${{ matrix.ridRequested }}" == "linux-x64" ]; then
+            sudo apt-get install -y libssl-dev
+          elif [ "${{ matrix.ridRequested }}" == "linux-arm64" ]; then
+            sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu qemu-user-static
+          elif [ "${{ matrix.ridRequested }}" == "linux-arm" ]; then
+            sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf qemu-user-static
+          elif [ "${{ matrix.ridRequested }}" == "linux-ppc64le" ]; then
+            sudo apt-get install -y gcc-powerpc64le-linux-gnu g++-powerpc64le-linux-gnu
+          fi
+
+      - name: Build Project
+        uses: threeal/cmake-action@v2.1.0
+        if: matrix.container == ''
         with:
-          name: ${{ matrix.name }}
-          path: nuget.package/runtimes/${{ matrix.name }}
-  package:
-     name: Create package
-     needs: build
-     runs-on: ubuntu-24.04
-     env:
-       DOTNET_NOLOGO: true
-     steps:
+          source-dir: libgit2
+          build-dir: libgit2/build
+          args: >
+            ${{ matrix.cmake_args }}
+            -DLIBGIT2_FILENAME=git2-${{ steps.get_sha.outputs.sha }}
+            -DBUILD_TESTS=OFF
+            -DBUILD_CLI=OFF
+            -DUSE_SSH=exec
+          build-args: '--config Release'
+
+      - name: Build Project (Docker Musl)
+        if: matrix.container != ''
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/work -w /work ${{ matrix.container }} /bin/sh -c "
+            apk add --no-cache build-base cmake bash pkgconfig openssl-dev zlib-dev &&
+            cmake -B libgit2/build -S libgit2 ${{ matrix.cmake_args }} -DLIBGIT2_FILENAME=git2-${{ steps.get_sha.outputs.sha }} -DBUILD_TESTS=OFF -DBUILD_CLI=OFF -DUSE_SSH=exec &&
+            cmake --build libgit2/build --config Release
+          "
+
+      - name: Prepare Artifact Directory
+        shell: bash
+        run: |
+          mkdir -p staging/native
+          SHA=${{ steps.get_sha.outputs.sha }}
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            cp libgit2/build/Release/git2-$SHA.dll staging/native/
+          else
+            cp libgit2/build/libgit2-$SHA.* staging/native/ 2>/dev/null || cp libgit2/build/git2-$SHA.* staging/native/
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.ridRequested }}
+          path: staging/
+          retention-days: 7
+
+  create-nuget:
+    name: Create NuGet Package
+    needs: build
+    permissions:
+      packages: write
+    runs-on: windows-latest
+    steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          submodules: true
+
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4.1.0
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
+
+      - name: Update Metadata and Get Version
+        id: update_metadata
+        shell: pwsh
+        run: |
+          ./UpdateLibgit2ToSha.ps1
+
       - name: Download artifacts
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4
         with:
           path: nuget.package/runtimes/
+
       - name: Create package
-        run: dotnet pack nuget.package
-      - name: Upload NuGet package
-        uses: actions/upload-artifact@v4.4.3
+        run: dotnet pack nuget.package/LibGit2Sharp.NativeBinaries.csproj --output packages
+
+      - name: Log package size
+        run: ls -lh packages/
+        shell: bash
+
+      - name: Upload NuGet package artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: NuGet package
-          path: ./nuget.package/*.nupkg
+          name: nuget-package
+          path: packages/*.nupkg
+
+      - name: Configure NuGet authentication
+        if: github.event_name != 'pull_request'
+        run: dotnet nuget add source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+
+      - name: NuGet push to GitHub Packages
+        if: github.event_name != 'pull_request'
+        run: dotnet nuget push *.nupkg --source github --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate --timeout 90
+        working-directory: packages
+
+      - name: NuGet push to nuget.org
+        if: startsWith(github.ref, 'refs/tags/')
+        run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+        working-directory: packages
+
+  create-release:
+    name: Create GitHub Release
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: create-nuget
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: Prepare Release Assets
+        run: |
+          mkdir -p assets
+          for rid_dir in release-artifacts/*; do
+            rid=$(basename $rid_dir)
+            if [ "$rid" == "nuget-package" ]; then
+              cp $rid_dir/*.nupkg assets/
+              continue
+            fi
+            
+            # Find the binary in the native folder
+            binary=$(find $rid_dir -name "*git2-*" -type f)
+            if [ -n "$binary" ]; then
+              # Get extension
+              ext="${binary##*.}"
+              cp "$binary" "assets/git2-$rid.$ext"
+            fi
+          done
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: assets/*
+          generate_release_notes: true
+          draft: false
+          prerelease: false

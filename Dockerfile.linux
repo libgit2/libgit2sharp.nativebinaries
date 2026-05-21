@@ -1,9 +1,0 @@
-FROM bording/crossbuild
-ARG ARCH='amd64'
-ENV CROSS_TRIPLE=${ARCH}
-RUN apt update && apt -y install pkg-config
-
-WORKDIR /nativebinaries
-COPY . /nativebinaries/
-
-CMD ["/bin/bash", "-c", "./build.libgit2.sh"]

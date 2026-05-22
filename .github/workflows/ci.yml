@@ -11,6 +11,10 @@ on:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  CCACHE_DIR: ${{ github.workspace }}/.ccache
+  CCACHE_BASEDIR: ${{ github.workspace }}
+  CCACHE_MAXSIZE: 200M
+  CCACHE_COMPILERCHECK: content
 
 jobs:
   build:
@@ -55,7 +59,6 @@ jobs:
         run: echo "sha=$(cat nuget.package/libgit2/libgit2_hash.txt | head -c 7)" >> $GITHUB_OUTPUT
 
       - name: Cache CCache
-        if: matrix.container != ''
         uses: actions/cache@v4
         with:
           path: .ccache
@@ -67,6 +70,7 @@ jobs:
         if: runner.os == 'Linux' && matrix.container == ''
         run: |
           sudo apt-get update
+          sudo apt-get install -y ccache
           if [ "${{ matrix.ridRequested }}" == "linux-x64" ]; then
             sudo apt-get install -y libssl-dev
           elif [ "${{ matrix.ridRequested }}" == "linux-arm64" ]; then
@@ -77,6 +81,14 @@ jobs:
             sudo apt-get install -y gcc-powerpc64le-linux-gnu g++-powerpc64le-linux-gnu
           fi
 
+      - name: Install Dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ccache
+
+      - name: Install Dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ccache
+
       - name: Build Project
         uses: threeal/cmake-action@v2.1.0
         if: matrix.container == ''
@@ -85,6 +97,8 @@ jobs:
           build-dir: libgit2/build
           args: >
             ${{ matrix.cmake_args }}
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
             -DLIBGIT2_FILENAME=git2-${{ steps.get_sha.outputs.sha }}
             -DBUILD_TESTS=OFF
             -DBUILD_CLI=OFF

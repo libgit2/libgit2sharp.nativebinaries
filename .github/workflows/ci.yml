@@ -139,7 +139,7 @@ jobs:
           path: nuget.package/runtimes/
 
       - name: Create package
-        run: dotnet pack nuget.package/LibGit2Sharp.NativeBinaries.csproj --output packages
+        run: dotnet pack nuget.package/libgit2.csproj --output packages
 
       - name: Log package size
         run: ls -lh packages/
@@ -188,13 +188,24 @@ jobs:
               continue
             fi
             
-            # Find the binary in the native folder
-            binary=$(find $rid_dir -name "*git2-*" -type f)
-            if [ -n "$binary" ]; then
-              # Get extension
-              ext="${binary##*.}"
+            # Find the binaries in the native folder and process them individually
+            find "$rid_dir" -name "*git2-*" -type f | while read -r binary; do
+              # Skip package config files
+              if [[ "$binary" == *.pc ]]; then continue; fi
+              
+              # Determine the target extension
+              if [[ "$binary" == *.dll ]]; then
+                ext="dll"
+              elif [[ "$binary" == *.dylib ]]; then
+                ext="dylib"
+              elif [[ "$binary" == *.so* ]]; then
+                ext="so"
+              else
+                ext="${binary##*.}"
+              fi
+              
               cp "$binary" "assets/git2-$rid.$ext"
-            fi
+            done
           done
 
       - name: Create Release

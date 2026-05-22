@@ -97,7 +97,7 @@ Push-Location $libgit2Directory
         }
 
         # Update Version in csproj
-        $csprojPath = Join-Path $projectDirectory "nuget.package\LibGit2Sharp.NativeBinaries.csproj"
+        $csprojPath = Join-Path $projectDirectory "nuget.package\libgit2.csproj"
         [xml]$csproj = Get-Content $csprojPath
         $versionNode = $csproj.SelectSingleNode("//Version")
         if ($null -eq $versionNode) {

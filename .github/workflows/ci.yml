@@ -36,8 +36,8 @@ jobs:
 
           # Linux (Musl)
           - { os: ubuntu-latest, ridRequested: linux-musl-x64,   container: 'alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
-          - { os: ubuntu-latest, ridRequested: linux-musl-arm,   container: 'multiarch/alpine:armhf-v3.13', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
-          - { os: ubuntu-latest, ridRequested: linux-musl-arm64, container: 'multiarch/alpine:aarch64-v3.13', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-24.04-arm64, ridRequested: linux-musl-arm,   container: 'arm32v7/alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-24.04-arm64, ridRequested: linux-musl-arm64, container: 'alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
       fail-fast: false
     steps:
       - name: Setup QEMU
@@ -80,7 +80,7 @@ jobs:
             -DBUILD_TESTS=OFF
             -DBUILD_CLI=OFF
             -DUSE_SSH=exec
-          build-args: '--config Release'
+          build-args: '--config Release --parallel'
 
       - name: Build Project (Docker Musl)
         if: matrix.container != ''
@@ -88,7 +88,7 @@ jobs:
           docker run --rm -v ${{ github.workspace }}:/work -w /work ${{ matrix.container }} /bin/sh -c "
             apk add --no-cache build-base cmake bash pkgconfig openssl-dev zlib-dev &&
             cmake -B libgit2/build -S libgit2 ${{ matrix.cmake_args }} -DLIBGIT2_FILENAME=git2-${{ steps.get_sha.outputs.sha }} -DBUILD_TESTS=OFF -DBUILD_CLI=OFF -DUSE_SSH=exec &&
-            cmake --build libgit2/build --config Release
+            cmake --build libgit2/build --config Release --parallel
           "
 
       - name: Prepare Artifact Directory

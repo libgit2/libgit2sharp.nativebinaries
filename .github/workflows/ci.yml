@@ -36,8 +36,8 @@ jobs:
 
           # Linux (Musl)
           - { os: ubuntu-latest, ridRequested: linux-musl-x64,   container: 'alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
-          - { os: ubuntu-latest, ridRequested: linux-musl-arm,   container: 'arm32v7/alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
-          - { os: ubuntu-latest, ridRequested: linux-musl-arm64, container: 'alpine:latest', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-latest, ridRequested: linux-musl-arm,   container: 'multiarch/alpine:armhf-v3.13', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
+          - { os: ubuntu-latest, ridRequested: linux-musl-arm64, container: 'multiarch/alpine:aarch64-v3.13', cmake_args: '-DUSE_HTTPS=OpenSSL-Dynamic -DUSE_BUNDLED_ZLIB=ON' }
       fail-fast: false
     steps:
       - name: Setup QEMU
@@ -53,6 +53,15 @@ jobs:
         id: get_sha
         shell: bash
         run: echo "sha=$(cat nuget.package/libgit2/libgit2_hash.txt | head -c 7)" >> $GITHUB_OUTPUT
+
+      - name: Cache CCache
+        if: matrix.container != ''
+        uses: actions/cache@v4
+        with:
+          path: .ccache
+          key: ${{ matrix.ridRequested }}-${{ steps.get_sha.outputs.sha }}
+          restore-keys: |
+            ${{ matrix.ridRequested }}-
 
       - name: Install Dependencies (Linux Glibc)
         if: runner.os == 'Linux' && matrix.container == ''
@@ -85,16 +94,17 @@ jobs:
       - name: Build Project (Docker Musl)
         if: matrix.container != ''
         run: |
-          PLATFORM_ARG=""
-          if [[ "${{ matrix.ridRequested }}" == *"arm64"* ]]; then
-            PLATFORM_ARG="--platform linux/arm64"
-          elif [[ "${{ matrix.ridRequested }}" == *"arm"* && "${{ matrix.ridRequested }}" != *"arm64"* ]]; then
-            PLATFORM_ARG="--platform linux/arm/v7"
-          fi
-          
-          docker run --rm $PLATFORM_ARG -v ${{ github.workspace }}:/work -w /work ${{ matrix.container }} /bin/sh -c "
-            apk add --no-cache build-base cmake ninja bash pkgconfig openssl-dev zlib-dev &&
-            cmake -G Ninja -B libgit2/build -S libgit2 ${{ matrix.cmake_args }} -DLIBGIT2_FILENAME=git2-${{ steps.get_sha.outputs.sha }} -DBUILD_TESTS=OFF -DBUILD_CLI=OFF -DUSE_SSH=exec &&
+          mkdir -p .ccache
+          docker run --rm \
+            -v ${{ github.workspace }}:/work \
+            -v ${{ github.workspace }}/.ccache:/root/.ccache \
+            -e CCACHE_DIR=/root/.ccache \
+            -w /work ${{ matrix.container }} /bin/sh -c "
+            apk add --no-cache build-base cmake ccache bash pkgconfig openssl-dev zlib-dev &&
+            cmake -B libgit2/build -S libgit2 ${{ matrix.cmake_args }} \
+              -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+              -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+              -DLIBGIT2_FILENAME=git2-${{ steps.get_sha.outputs.sha }} -DBUILD_TESTS=OFF -DBUILD_CLI=OFF -DUSE_SSH=exec &&
             cmake --build libgit2/build --config Release --parallel
           "
 

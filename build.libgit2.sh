@@ -33,6 +33,7 @@ cmake -DCMAKE_BUILD_TYPE:STRING=Release \
       -DCMAKE_OSX_ARCHITECTURES=$OSXARCHITECTURE \
       -DUSE_HTTPS=$USEHTTPS \
       -DUSE_BUNDLED_ZLIB=ON \
+      $(xx-clang --print-cmake-defines) \
       ..
 cmake --build .
 
